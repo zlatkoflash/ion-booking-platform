@@ -27,70 +27,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // 1. Load Stripe outside of render to avoid recreating Stripe object on every render
-  // const stripePromise = loadStripe(zconfig.stripe.pk);
 
-  /*const handlePayment = async () => {
-    setProcessing(true);
-    setError(null);
-
-    try {
-      // Create checkout session
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/create-checkout-session`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`
-          },
-          body: JSON.stringify({
-            tourTitle,
-            price,
-            ...metadata
-          })
-        }
-      );
-
-      const { id: sessionId, error: sessionError } = await response.json();
-
-      if (sessionError) {
-        throw new Error(sessionError);
-      }*/
-
-  // Redirect to Stripe Checkout
-  // const stripe = await stripePromise;
-  /*if (stripe) {
-    console.log("ai vibed stripe.redirectToCheckout, but stripe.redirectToCheckout is old way");*/
-  // 
-  /*
-  this code is not good: const { error: stripeError } = await stripe.redirectToCheckout({ sessionId });redirectToCheckout is old stripe way for redirection");
-  if (stripeError) {
-      throw new Error(stripeError.message);
-    }*/
-
-  /**
-   * The Correct Client-Side Flow:
-      Your Next.js Client Component: Calls your server/Edge Function (e.g., your Deno function) to create the session.
-
-      Your Server/Edge Function: Calls stripe.checkout.sessions.create() and gets back an object containing the unique URL: session.url.
-
-      Your Server/Edge Function: Sends that session.url back to the client.
-
-      Your Next.js Client Component: Directly redirects the user using native browser JavaScript.
-
-      So this is with redirection, make the payment with stripe elements
-   * 
-   */
-  /*}
-} catch (err) {
-  const errorMessage = err instanceof Error ? err.message : 'Payment failed';
-  setError(errorMessage);
-  onError?.(errorMessage);
-} finally {
-  setProcessing(false);
-}
-};*/
 
   return (
     <div className="bg-white rounded-2xl p-8 shadow-lg">
@@ -146,26 +83,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
         </div>
       )}
 
-      {/* Payment Button */}
-      {/*<button
-        onClick={() => {
-          // handlePayment
-        }}
-        disabled={processing}
-        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-4 px-6 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg disabled:transform-none disabled:cursor-not-allowed"
-      >
-        {processing ? (
-          <div className="flex items-center justify-center">
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-            Processing Payment...
-          </div>
-        ) : (
-          <div className="flex items-center justify-center">
-            <CreditCard className="w-5 h-5 mr-2" />
-            Pay €{price.toFixed(2)} with Stripe
-          </div>
-        )}
-      </button>*/}
+
 
       <div className="text-center text-xs text-gray-500 mt-4">
         <p>Powered by Stripe • Your payment information is secure</p>

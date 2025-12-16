@@ -31,12 +31,15 @@ export const SupabaseEdgeFetchPost = async (path: string, body: any, useToken: b
     headers['X-Custom-Z-Auth'] = token;
   }
 
-  if (zconfig.supabase.isForLive === true) {
+  /*if (zconfig.supabase.isForLive === true) {
     headers.Authorization = `Bearer ${zconfig.supabase.anon}`
   }
   else {
     headers.apikey = zconfig.supabase.api_key;
-  }
+  }*/
+
+  headers.Authorization = `Bearer ${zconfig.supabase.anon}`
+  headers.apikey = zconfig.supabase.api_key;
   // headers.Authorization = `Bearer ${zconfig.supabase.anon}`
 
   const results = await fetch(`${zconfig.supabase.api_link}${path}`,
