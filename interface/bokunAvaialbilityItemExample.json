@@ -1,0 +1,121 @@
+{
+    "id": "4460872_20251201",
+    "activityId": 1119226,
+    "activityTitle": "Skopje Walking",
+    "activityOwnerId": 129962,
+    "activityOwnerTitle": "TEsting Supplier(Vendor)",
+    "startTime": "12:00",
+    "startTimeId": 4460872,
+    "startTimeLabel": "",
+    "flexible": false,
+    "date": 1764547200000,
+    "localizedDate": "Mon 01.Dec'25",
+    "availabilityCount": 15,
+    "bookedParticipants": 0,
+    "minParticipants": 1,
+    "minParticipantsToBookNow": 1,
+    "productGroupId": null,
+    "recurrenceId": 10373255,
+    "pickupAllotment": false,
+    "pickupAvailabilityCount": 1000,
+    "unlimitedAvailability": false,
+    "defaultRateId": 2224483,
+    "rates": [
+        {
+            "id": 2224483,
+            "title": "Standard rate",
+            "description": null,
+            "index": 0,
+            "rateCode": null,
+            "pricedPerPerson": true,
+            "minPerBooking": 1,
+            "maxPerBooking": null,
+            "cancellationPolicy": {
+                "id": 246999,
+                "title": "Non refundable",
+                "penaltyRules": [],
+                "tax": null,
+                "defaultPolicy": true,
+                "policyType": "NON_REFUNDABLE",
+                "simpleCutoffHours": null,
+                "policyTypeEnum": "NON_REFUNDABLE"
+            },
+            "fixedPassExpiryDate": null,
+            "passValidForDays": null,
+            "pickupSelectionType": "UNAVAILABLE",
+            "pickupPricingType": "INCLUDED_IN_PRICE",
+            "pickupPricedPerPerson": false,
+            "dropoffSelectionType": "UNAVAILABLE",
+            "dropoffPricingType": "INCLUDED_IN_PRICE",
+            "dropoffPricedPerPerson": false,
+            "extraConfigs": [],
+            "startTimeIds": [],
+            "allStartTimes": true,
+            "tieredPricingEnabled": false,
+            "tiers": [],
+            "pricingCategoryIds": [
+                1086130,
+                1086132
+            ],
+            "allPricingCategories": true,
+            "details": [],
+            "textItems": [
+                {
+                    "id": 2224483,
+                    "created": [
+                        2025,
+                        12,
+                        1,
+                        9,
+                        11,
+                        43,
+                        848142591
+                    ],
+                    "language": "en_GB",
+                    "title": "Standard rate",
+                    "activityRateId": 2224483,
+                    "description": null
+                }
+            ]
+        }
+    ],
+    "pricesByRate": [
+        {
+            "activityRateId": 2224483,
+            "pricePerCategoryUnit": [
+                {
+                    "id": 1086130,
+                    "amount": {
+                        "amount": 5634,
+                        "currency": "ISK"
+                    },
+                    "minParticipantsRequired": 1
+                },
+                {
+                    "id": 1086132,
+                    "amount": {
+                        "amount": 4226,
+                        "currency": "ISK"
+                    },
+                    "minParticipantsRequired": 1
+                }
+            ],
+            "extraPricePerUnit": [],
+            "extraPricePerCategoryUnit": []
+        }
+    ],
+    "comboActivity": false,
+    "comboStartTimes": [],
+    "flags": [],
+    "defaultPrice": null,
+    "pricesByCategory": {},
+    "pickupPrice": null,
+    "pickupPricesByCategory": {},
+    "dropoffPrice": null,
+    "dropoffPricesByCategory": {},
+    "extraPrices": {},
+    "guidedLanguages": [],
+    "unavailable": false,
+    "pickupSoldOut": false,
+    "soldOut": false
+}

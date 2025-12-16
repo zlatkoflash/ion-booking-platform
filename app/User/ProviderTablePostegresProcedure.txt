@@ -1,0 +1,100 @@
+CREATE OR REPLACE FUNCTION fbookingslistv4(
+    p_user_id uuid DEFAULT NULL,
+    p_tour_id text DEFAULT NULL,
+    p_user_email text DEFAULT NULL,
+    p_user_name text DEFAULT NULL,
+    p_from_date timestamp with time zone DEFAULT NULL,
+    p_to_date timestamp with time zone DEFAULT NULL,
+    p_limit integer DEFAULT NULL,
+    p_offset integer DEFAULT NULL,
+    -- NEW: Parameter for global search across multiple fields
+    p_global_search text DEFAULT NULL 
+)
+RETURNS TABLE (
+    total_rows bigint,
+    booking_id uuid,
+    booking_status text,
+    booking_financial_status text,
+    booking_created_at timestamp with time zone,
+    tour_title text,
+    tour_price numeric,
+    user_name text,
+    user_email text,
+    payment_intent_id text,
+    payment_amount_cents integer,
+    payment_status text,
+    -- New Column Added Here
+    booking_currency text, 
+    total_refunded_cents bigint
+)
+LANGUAGE sql
+AS $$
+SELECT
+    -- 1. Total Rows (using a Window Function - unaffected by LIMIT/OFFSET)
+    COUNT(*) OVER() AS total_rows,
+
+    -- Standard Selected Columns
+    b.id AS booking_id,
+    b.status AS booking_status,
+    b.financial_status AS booking_financial_status,
+    b.created_at AS booking_created_at,
+    t.title AS tour_title,
+    t.price AS tour_price,
+    u.name AS user_name,
+    u.email AS user_email,
+    p.stripe_payment_intent_id AS payment_intent_id,
+    p.amount_cents AS payment_amount_cents,
+    p.status AS payment_status,
+    
+    -- New Column Selected Here
+    b.currency AS booking_currency,
+
+    -- Correlated Subquery for Refunds
+    COALESCE((
+        SELECT
+            SUM(r.amount_cents)
+        FROM
+            public.refunds r
+        WHERE
+            r.payment_intent_id = p.stripe_payment_intent_id
+            AND r.status = 'succeeded'
+    ), 0) AS total_refunded_cents
+FROM
+    public.bookings b
+LEFT JOIN
+    public.tours t ON b.tour_id = t.id
+LEFT JOIN
+    public.users u ON b.user_id = u.id
+LEFT JOIN
+    public.payments p ON b.id = p.booking_id
+WHERE
+    -- Existing Filters
+    (p_user_id IS NULL OR b.user_id = p_user_id)
+    AND (p_tour_id IS NULL OR b.tour_id = p_tour_id)
+
+    -- User Filters
+    AND (p_user_email IS NULL OR u.email ILIKE ('%' || p_user_email || '%'))
+    AND (p_user_name IS NULL OR u.name ILIKE ('%' || p_user_name || '%'))
+
+    -- Date Range Filter
+    AND (p_from_date IS NULL OR b.created_at >= p_from_date)
+    AND (p_to_date IS NULL OR b.created_at <= p_to_date)
+
+    -- NEW: GLOBAL SEARCH IMPLEMENTATION
+    -- This checks the single p_global_search string against multiple columns
+    AND (p_global_search IS NULL OR
+        (
+            u.email ILIKE ('%' || p_global_search || '%') OR
+            u.name ILIKE ('%' || p_global_search || '%') OR
+            t.title ILIKE ('%' || p_global_search || '%') OR
+            b.id::text ILIKE ('%' || p_global_search || '%') -- Optional: Allow searching by booking UUID fragment
+        )
+    )
+
+ORDER BY
+    b.created_at DESC
+
+-- Apply Pagination: LIMIT and OFFSET clauses
+LIMIT CASE WHEN p_limit IS NULL OR p_limit < 0 THEN NULL ELSE p_limit END
+OFFSET CASE WHEN p_offset IS NULL OR p_offset < 0 THEN 0 ELSE p_offset END;
+$$;

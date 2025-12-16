@@ -1,0 +1,519 @@
+{
+  "checkoutOption": "AGENT_AFFILIATE",
+  "paymentMethod": "CARD",
+  "source": "SHOPPING_CART",
+  "shoppingCart": {
+    "uuid": "string",
+    "externalBookingReference": "string",
+    "externalBookingEntityName": "string",
+    "externalBookingEntityCode": "string",
+    "bookingAnswers": {
+      "mainContactDetails": [
+        {
+          "questionId": "string",
+          "values": [
+            "string"
+          ]
+        }
+      ],
+      "activityBookings": [
+        {
+          "activityId": 0,
+          "answers": [
+            {
+              "questionId": "string",
+              "values": [
+                "string"
+              ]
+            }
+          ],
+          "pickupAnswers": [
+            {
+              "questionId": "string",
+              "values": [
+                "string"
+              ]
+            }
+          ],
+          "dropoffAnswers": [
+            {
+              "questionId": "string",
+              "values": [
+                "string"
+              ]
+            }
+          ],
+          "bookingId": 0,
+          "passengers": [
+            {
+              "pricingCategoryId": 0,
+              "passengerDetails": [
+                {
+                  "questionId": "string",
+                  "values": [
+                    "string"
+                  ]
+                }
+              ],
+              "answers": [
+                {
+                  "questionId": "string",
+                  "values": [
+                    "string"
+                  ]
+                }
+              ],
+              "bookingId": 0,
+              "extras": [
+                {
+                  "extraId": 0,
+                  "answers": [
+                    {
+                      "questionId": "string",
+                      "values": [
+                        "string"
+                      ]
+                    }
+                  ],
+                  "bookingId": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "accommodationBookings": [
+        {
+          "accommodationId": 0,
+          "answers": [
+            {
+              "questionId": "string",
+              "values": [
+                "string"
+              ]
+            }
+          ],
+          "bookingId": 0,
+          "rooms": [
+            {
+              "roomTypeId": 0,
+              "answers": [
+                {
+                  "questionId": "string",
+                  "values": [
+                    "string"
+                  ]
+                }
+              ],
+              "guests": [
+                {
+                  "details": [
+                    {
+                      "questionId": "string",
+                      "values": [
+                        "string"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "bookingId": 0,
+              "extras": [
+                {
+                  "extraId": 0,
+                  "answers": [
+                    {
+                      "questionId": "string",
+                      "values": [
+                        "string"
+                      ]
+                    }
+                  ],
+                  "bookingId": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rentalBookings": [
+        {
+          "rentalId": 0,
+          "answers": [
+            {
+              "questionId": "string",
+              "values": [
+                "string"
+              ]
+            }
+          ],
+          "bookingId": 0,
+          "items": [
+            {
+              "itemTypeId": 0,
+              "answers": [
+                {
+                  "questionId": "string",
+                  "values": [
+                    "string"
+                  ]
+                }
+              ],
+              "people": [
+                {
+                  "details": [
+                    {
+                      "questionId": "string",
+                      "values": [
+                        "string"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "bookingId": 0,
+              "extras": [
+                {
+                  "extraId": 0,
+                  "answers": [
+                    {
+                      "questionId": "string",
+                      "values": [
+                        "string"
+                      ]
+                    }
+                  ],
+                  "bookingId": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "transportBookings": [
+        {
+          "bookingId": 0,
+          "routeId": 0,
+          "answers": [
+            {
+              "questionId": "string",
+              "values": [
+                "string"
+              ]
+            }
+          ],
+          "pickupAnswers": [
+            {
+              "questionId": "string",
+              "values": [
+                "string"
+              ]
+            }
+          ],
+          "dropoffAnswers": [
+            {
+              "questionId": "string",
+              "values": [
+                "string"
+              ]
+            }
+          ],
+          "passengers": [
+            {
+              "pricingCategoryId": 0,
+              "passengerDetails": [
+                {
+                  "questionId": "string",
+                  "values": [
+                    "string"
+                  ]
+                }
+              ],
+              "answers": [
+                {
+                  "questionId": "string",
+                  "values": [
+                    "string"
+                  ]
+                }
+              ],
+              "bookingId": 0,
+              "extras": [
+                {
+                  "extraId": 0,
+                  "answers": [
+                    {
+                      "questionId": "string",
+                      "values": [
+                        "string"
+                      ]
+                    }
+                  ],
+                  "bookingId": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "directBooking": {
+    "mainContactDetails": [
+      {
+        "questionId": "string",
+        "values": [
+          "string"
+        ]
+      }
+    ],
+    "activityBookings": [
+      {
+        "activityId": 0,
+        "answers": [
+          {
+            "questionId": "string",
+            "values": [
+              "string"
+            ]
+          }
+        ],
+        "pickupAnswers": [
+          {
+            "questionId": "string",
+            "values": [
+              "string"
+            ]
+          }
+        ],
+        "dropoffAnswers": [
+          {
+            "questionId": "string",
+            "values": [
+              "string"
+            ]
+          }
+        ],
+        "rateId": 0,
+        "startTimeId": 0,
+        "date": "string",
+        "pickup": true,
+        "pickupPlaceId": 0,
+        "pickupDescription": "string",
+        "dropoff": true,
+        "dropoffPlaceId": 0,
+        "dropoffDescription": "string",
+        "checkedIn": true,
+        "note": "string",
+        "customized": true,
+        "customizedTime": "string",
+        "customizedPrice": 0,
+        "passengers": [
+          {
+            "pricingCategoryId": 0,
+            "groupSize": 0,
+            "passengerDetails": [
+              {
+                "questionId": "string",
+                "values": [
+                  "string"
+                ]
+              }
+            ],
+            "answers": [
+              {
+                "questionId": "string",
+                "values": [
+                  "string"
+                ]
+              }
+            ],
+            "extras": [
+              {
+                "extraId": 0,
+                "answers": [
+                  {
+                    "questionId": "string",
+                    "values": [
+                      "string"
+                    ]
+                  }
+                ],
+                "quantity": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "accommodationBookings": [
+      {
+        "accommodationId": 0,
+        "answers": [
+          {
+            "questionId": "string",
+            "values": [
+              "string"
+            ]
+          }
+        ],
+        "travelType": "BUSINESS",
+        "note": "string",
+        "rooms": [
+          {
+            "roomTypeId": 0,
+            "answers": [
+              {
+                "questionId": "string",
+                "values": [
+                  "string"
+                ]
+              }
+            ],
+            "guests": [
+              {
+                "details": [
+                  {
+                    "questionId": "string",
+                    "values": [
+                      "string"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "roomRateId": 0,
+            "roomId": 0,
+            "externalReference": "string",
+            "checkInDate": "string",
+            "checkOutDate": "string",
+            "adults": 0,
+            "children": 0,
+            "infants": 0,
+            "extras": [
+              {
+                "extraId": 0,
+                "answers": [
+                  {
+                    "questionId": "string",
+                    "values": [
+                      "string"
+                    ]
+                  }
+                ],
+                "quantity": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rentalBookings": [
+      {
+        "rentalId": 0,
+        "answers": [
+          {
+            "questionId": "string",
+            "values": [
+              "string"
+            ]
+          }
+        ],
+        "pickupDateAndTime": "string",
+        "dropoffDateAndTime": "string",
+        "pickupPlaceId": 0,
+        "dropoffPlaceId": 0,
+        "note": "string",
+        "items": [
+          {
+            "itemTypeId": 0,
+            "answers": [
+              {
+                "questionId": "string",
+                "values": [
+                  "string"
+                ]
+              }
+            ],
+            "people": [
+              {
+                "details": [
+                  {
+                    "questionId": "string",
+                    "values": [
+                      "string"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "quantity": 0,
+            "extras": [
+              {
+                "extraId": 0,
+                "answers": [
+                  {
+                    "questionId": "string",
+                    "values": [
+                      "string"
+                    ]
+                  }
+                ],
+                "quantity": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "externalBookingReference": "string",
+    "externalBookingEntityName": "string",
+    "externalBookingEntityCode": "string",
+    "labels": [
+      "string"
+    ],
+    "promoCode": "string",
+    "giftCardCode": "string"
+  },
+  "sendNotificationToMainContact": true,
+  "showPricesInNotification": true,
+  "amount": 0,
+  "currency": "string",
+  "uti": "string",
+  "paymentToken": {
+    "token": "string"
+  },
+  "transactionDetails": {
+    "transactionDate": "string",
+    "transactionId": "string",
+    "cardBrand": "string",
+    "last4": "string"
+  },
+  "successUrl": "string",
+  "errorUrl": "string",
+  "cancelUrl": "string",
+  "providerPaymentParameters": {
+    "additionalProp1": "string",
+    "additionalProp2": "string",
+    "additionalProp3": "string"
+  },
+  "cardPaymentProviderAnswers": [
+    {
+      "questionId": "string",
+      "values": [
+        "string"
+      ]
+    }
+  ],
+  "checkoutOptionAnswers": [
+    {
+      "questionId": "string",
+      "values": [
+        "string"
+      ]
+    }
+  ],
+  "affiliateCode": "string",
+  "bookingReferralSource": "GOOGLE_TTD_SEARCH_TICKETS_BOOKING_MODULE,",
+  "googleClickId": "string"
+}
