@@ -2,7 +2,9 @@
 import { GetBookingDetailsByToken, IBokunBookingActivityBooking, IBokunBookingPricingCategoryBooking } from '@/utils/bokun';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
-import puppeteer from 'puppeteer';
+// import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium-min';
 
 
 /**
@@ -200,63 +202,74 @@ const getBookingConfirmationHtml = (
   `;
 };
 
-// 2. Use NAMED EXPORT and NextRequest type
+// Vercel Hobby plan limit is 10s. Pro is 300s.
+// PDF generation is slow, so we set a higher duration if possible.
+// export const maxDuration = 60; 
+
 export async function GET(request: NextRequest) {
   const token = request.nextUrl.searchParams.get('token');
   const bookingDetailsForToken = await GetBookingDetailsByToken(token as string);
-  if (bookingDetailsForToken === null || bookingDetailsForToken.data === null || bookingDetailsForToken.data === undefined || bookingDetailsForToken.data.bookingBokun === undefined) {
+
+  if (!bookingDetailsForToken?.data?.bookingBokun) {
     return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
   }
+
   const { bookingDB, paymentDB, bookingBokun } = bookingDetailsForToken.data;
+  let browser = null;
+
   try {
-    const invoiceId = 'invoice-number'; // Placeholder. Get this dynamically from request.url if needed.
-    const htmlContent = getBookingConfirmationHtml(
-      bookingDB, paymentDB, bookingBokun
-    );
+    const htmlContent = getBookingConfirmationHtml(bookingDB, paymentDB, bookingBokun);
+    const isProduction = process.env.NODE_ENV === 'production';
 
-    // 1. Launch a headless browser
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    // 1. Launch Browser with Conditional Config
+    browser = await puppeteer.launch({
+      args: isProduction ? chromium.args : ['--no-sandbox', '--disable-setuid-sandbox'],
+      defaultViewport: {
+        width: 1280,
+        height: 720,
+        deviceScaleFactor: 1,
+      },
+      executablePath: isProduction
+        ? await chromium.executablePath('https://github.com/Sparticuz/chromium/releases/download/v131.0.1/chromium-v131.0.1-pack.tar')
+        : 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', // Change this path if you are on Mac
+      headless: isProduction ? true : true,
     });
-    const page = await browser.newPage();
 
-    // 2. Load content
+    const page = await browser.newPage();
     await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
 
-    // 3. Generate the PDF buffer
     const pdfBuffer = await page.pdf({
       format: 'A4',
       printBackground: true,
       margin: { top: '20px', right: '20px', bottom: '20px', left: '20px' },
     });
 
+    // Cleanup browser immediately
     await browser.close();
+    browser = null;
 
-    // 2. FIX: Convert the Node.js Buffer to a standard ArrayBuffer
-    // This resolves the TypeScript type conflict for NextResponse
+    // Convert Buffer to ArrayBuffer for NextResponse
     const arrayBuffer = pdfBuffer.buffer.slice(
       pdfBuffer.byteOffset,
       pdfBuffer.byteOffset + pdfBuffer.byteLength
-    ) as ArrayBuffer;;
+    ) as ArrayBuffer;
 
-    // 4. FIX: Use new NextResponse() to return the PDF buffer and set headers
     return new NextResponse(arrayBuffer, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="billing_query_invoice_${invoiceId}.pdf"`,
+        'Content-Disposition': `attachment; filename="invoice_${bookingBokun.confirmationCode}.pdf"`,
       },
     });
 
   } catch (error) {
     console.error('PDF generation error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-
-    // 5. FIX: Use NextResponse.json() for error responses
     return NextResponse.json(
-      { message: 'Failed to generate PDF', error: errorMessage },
+      { message: 'Failed to generate PDF', error: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
+  } finally {
+    // Safety check: close browser if it crashed during the process
+    if (browser) await browser.close();
   }
 }

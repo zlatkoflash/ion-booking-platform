@@ -111,69 +111,6 @@ export function AuthProvider({ children, token, userFromOut }: PropsWithChildren
     isInitialized: true,
   });
 
-  // const supabase = createClientComponentClient();
-
-  // Initial check runs only once when the provider is mounted
-  /*
-  supabase auth login
-  useEffect(() => {
-    // 2. Initializing the state from Supabase's stored session
-    const initializeAuth = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        
-        if (session) {
-          // If a session exists, initialize with the user data
-          dispatch({
-            type: 'INITIALIZE',
-            payload: {
-              isAuthenticated: true,
-              user: session.user,
-            },
-          });
-        } else {
-          // If no session, initialize as unauthenticated
-          dispatch({
-            type: 'INITIALIZE',
-            payload: {
-              isAuthenticated: false,
-              user: null,
-            },
-          });
-        }
-      } catch (err) {
-        console.error('Auth initialization failed:', err);
-        dispatch({
-          type: 'INITIALIZE',
-          payload: {
-            isAuthenticated: false,
-            user: null,
-          },
-        });
-      }
-    };
- 
-    initializeAuth();
- 
-    // 3. Listen for real-time changes (e.g., manual logout in another tab)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-        (event, session) => {
-            if (event === 'SIGNED_OUT') {
-                dispatch({ type: 'LOGOUT' });
-            } else if (event === 'SIGNED_IN' && session) {
-                dispatch({ type: 'LOGIN', payload: { user: session.user } });
-            }
-        }
-    );
- 
-    return () => {
-        // Clean up subscription on unmount
-        subscription?.unsubscribe();
-    };
-  }, [supabase.auth]);*/
-
-
-
   // The value provided to all consumers
   const contextValue: AuthContextType = {
     ...state,

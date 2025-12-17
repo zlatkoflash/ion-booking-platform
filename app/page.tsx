@@ -9,91 +9,12 @@ import Link from "next/link";
 
 export default async function HomeContent() {
 
-  /*const featuredTours: Partial<(
-    IExperience
-    &
-    {
-      name: string,
-      duration: string,
-      rating: number,
-      image: string,
-      participants: number
-  })>[] = [*/
 
-
-  /*const toursBokun = await fetch(`${zconfig.supabase.api_link}`, {
-    method: "POST",
-  });*/
   console.log("Before bokun:");
   // const toursBokun = await SupabaseEdgeFetchPost("/bokun/search", {});
   const toursBokun = await BokunSearch({});
   console.log("toursBokun:", toursBokun);
 
-
-  /*const featuredTours: IGridHomeToursItem[] = [
-
-
-    {
-      tour: {
-        id: "1",
-        name: "Explore Ancient Rome",
-        location: "Rome, Italy",
-        duration: "7 days",
-        price: 1299,
-        rating: 4.8,
-        image: "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg?auto=compress&cs=tinysrgb&w=800",
-        participants: 12
-      }
-    },
-    {
-      tour: {
-        id: "2",
-        name: "Explore Ancient Rome",
-        location: "Rome, Italy",
-        duration: "7 days",
-        price: 1299,
-        rating: 4.8,
-        image: "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg?auto=compress&cs=tinysrgb&w=800",
-        participants: 12
-      }
-    },
-    {
-      tour: {
-        id: "3",
-        name: "Explore Ancient Rome",
-        location: "Rome, Italy",
-        duration: "7 days",
-        price: 1299,
-        rating: 4.8,
-        image: "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg?auto=compress&cs=tinysrgb&w=800",
-        participants: 12
-      }
-    },
-    {
-      tour: {
-        id: "4",
-        name: "Explore Ancient Rome",
-        location: "Rome, Italy",
-        duration: "7 days",
-        price: 1299,
-        rating: 4.8,
-        image: "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg?auto=compress&cs=tinysrgb&w=800",
-        participants: 12
-      }
-    },
-    {
-      tour: {
-        id: "5",
-        name: "Explore Ancient Rome",
-        location: "Rome, Italy",
-        duration: "7 days",
-        price: 1299,
-        rating: 4.8,
-        image: "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg?auto=compress&cs=tinysrgb&w=800",
-        participants: 12
-      }
-    },
-  ];*/
 
 
   return (
