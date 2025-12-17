@@ -230,7 +230,7 @@ export async function GET(request: NextRequest) {
         deviceScaleFactor: 1,
       },
       executablePath: isProduction
-        ? await chromium.executablePath('https://github.com/Sparticuz/chromium/releases/download/v131.0.1/chromium-v131.0.1-pack.tar')
+        ? await chromium.executablePath('https://github.com/Sparticuz/chromium/releases/download/v143.0.0/chromium-v143.0.0-pack.x64.tar')
         : 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', // Change this path if you are on Mac
       headless: isProduction ? true : true,
     });
