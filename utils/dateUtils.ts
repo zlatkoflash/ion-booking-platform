@@ -32,6 +32,13 @@ export const formatDateString = (date: Date) => {
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 };
+export const formatDateStringWithoutDashes = (date: Date) => {
+  // Use local date components to avoid timezone shifts
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}${month}${day}`;
+};
 
 export const formatDate = (dateString: string) => {
   // Parse as UTC to avoid timezone shifts
@@ -41,6 +48,27 @@ export const formatDate = (dateString: string) => {
     month: date.toLocaleDateString('en', { month: 'short' }),
     weekday: date.toLocaleDateString('en', { weekday: 'short' })
   };
+};
+
+
+export const AbbreviatedMonthDate = (dateString: string) => {
+  if (!dateString) return "—";
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: '2-digit',
+    year: 'numeric'
+  });
+};
+
+export const FormatTimeFromDate = (dateString: string) => {
+  if (!dateString) return "—";
+  const date = new Date(dateString);
+  return date.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true // This ensures AM/PM instead of 24-hour time
+  });
 };
 
 
@@ -80,3 +108,16 @@ export const getMonthBoundaries = (selectedMonth: Date): { firstDate: string, la
     lastDate: formatToYYYYMMDD(lastDay),
   };
 }
+
+
+export const isWithinPast24Hours = (createdAt: string) => {
+  if (!createdAt) return false;
+
+  const createdDate = new Date(createdAt).getTime(); // Convert to milliseconds
+  const now = new Date().getTime(); // Current time in milliseconds
+  const twentyFourHoursInMs = 24 * 60 * 60 * 1000;
+
+  // Check if the difference is less than 24 hours 
+  // AND ensure the date isn't somehow in the future
+  return (now - createdDate) < twentyFourHoursInMs && (now - createdDate) >= 0;
+};

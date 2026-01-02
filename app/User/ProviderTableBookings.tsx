@@ -20,6 +20,7 @@ export interface BookingRowDB {
   payment_amount_cents: number | null;
   payment_status: string | null;
   total_refunded_cents: number;
+  bokun_confirmation_code: string | null;
 }
 
 // Define the pagination state
@@ -46,8 +47,12 @@ export interface TableBookingsContextType {
   rows: BookingRowDB[];
   setRows: (rows: BookingRowDB[]) => void
   totalCount: number;
+  fetchTheBookings: () => void;
   // isLoading: boolean;
   // error: string | null;
+
+  selectedRow: BookingRowDB | null;
+  setSelectedRow: (row: BookingRowDB | null) => void;
 
   // Filters and Pagination State (Managed Internally)
   searchText: string;
@@ -118,7 +123,9 @@ export const TableBookingsProvider = ({ children, bookings_owner = "all" }: { ch
 
 
   const [rows, setRows] = useState<BookingRowDB[]>([]);
+  const [selectedRow, setSelectedRow] = useState<BookingRowDB | null>(null);
   const [maxPages, setMaxPages] = useState(1);
+
 
 
   const NavigateNext = () => {
@@ -174,6 +181,37 @@ export const TableBookingsProvider = ({ children, bookings_owner = "all" }: { ch
     p_to_date: null,
   }), [maxCountPerPage, offset, searchText]);
 
+
+  const fetchTheBookings = async () => {
+    const bookings = await GetBookingsFromDB({
+      p_limit: maxCountPerPage,
+      p_offset: offset,
+      p_user_email: null,
+      p_user_name: null,
+
+      // Merge in external constraints
+      p_user_id: bookings_owner === "logged-client" ? user?.id.toString() as string : null,
+      p_tour_id: null,
+      p_from_date: null,
+      p_to_date: null,
+
+      p_global_search: searchText || null,
+    });
+
+    if (bookings.data !== undefined && bookings.data !== null) {
+      setRows(bookings.data.bookings);
+      if (bookings.data.bookings.length > 0) {
+        setTotalCount(bookings.data.bookings[0].total_rows);
+        setMaxPages(Math.ceil(bookings.data.bookings[0].total_rows / maxCountPerPage));
+      }
+    }
+
+    console.log("bookings:", bookings);
+
+  }
+
+
+
   // Memoize the context value
   const contextValue = useMemo<TableBookingsContextType>(() => ({
     // Data injected from props
@@ -204,6 +242,12 @@ export const TableBookingsProvider = ({ children, bookings_owner = "all" }: { ch
     setPage,
     setCountPerPage,
     refreshData,
+
+    selectedRow,
+    setSelectedRow,
+
+    fetchTheBookings
+
   }), [
     rows, totalCount,
     // isLoading, error,
@@ -212,36 +256,11 @@ export const TableBookingsProvider = ({ children, bookings_owner = "all" }: { ch
     // maxPages, // Include new derived values
     fetcherArgs,
     setSearchText, setPage, setCountPerPage,
-    refreshData
+    refreshData,
+    selectedRow,
+    setSelectedRow,
+    fetchTheBookings
   ]);
-
-  const fetchTheBookings = async () => {
-    const bookings = await GetBookingsFromDB({
-      p_limit: maxCountPerPage,
-      p_offset: offset,
-      p_user_email: null,
-      p_user_name: null,
-
-      // Merge in external constraints
-      p_user_id: bookings_owner === "logged-client" ? user?.id.toString() as string : null,
-      p_tour_id: null,
-      p_from_date: null,
-      p_to_date: null,
-
-      p_global_search: searchText || null,
-    });
-
-    if (bookings.data !== undefined && bookings.data !== null) {
-      setRows(bookings.data.bookings);
-      if (bookings.data.bookings.length > 0) {
-        setTotalCount(bookings.data.bookings[0].total_rows);
-        setMaxPages(Math.ceil(bookings.data.bookings[0].total_rows / maxCountPerPage));
-      }
-    }
-
-    console.log("bookings:", bookings);
-
-  }
 
   useEffect(() => {
     fetchTheBookings();

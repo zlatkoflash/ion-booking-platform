@@ -36,7 +36,8 @@ export default function ZCalendarWidget(
 
   const {
     calendarActiveMonth,
-    set_calendarActiveMonth
+    set_calendarActiveMonth,
+    availiabilityCount
   } = useBookingSidebar();
 
   // const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -181,7 +182,10 @@ export default function ZCalendarWidget(
           // const availability = getAvailabilitiesForDate(date);
           const availabilitiesForDate = getAvailabilitiesForDate(date);
           // console.log("availability", availability);
-          const hasAvailability = availabilitiesForDate.length > 0 && availabilitiesForDate.some(slot => slot.availabilityCount > 0);
+          const hasAvailability = availabilitiesForDate.length > 0 && availabilitiesForDate.some(
+            // slot => slot.availabilityCount > 0
+            slot => availiabilityCount(slot) > 0
+          );
           // const hasAvailability = true;
           const isSelected = selectedDate === dateString;
           const isToday = dateString === new Date().toISOString().split('T')[0];

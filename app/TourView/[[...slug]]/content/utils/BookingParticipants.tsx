@@ -17,7 +17,8 @@ export default function BookingParticipants() {
     selectedAvailability,
     dataForExperience,
     priceEngine,
-    set_priceEngine
+    set_priceEngine,
+    availiabilityCount
   } = useBookingSidebar();
 
   /**
@@ -32,7 +33,9 @@ export default function BookingParticipants() {
 
   // this is not good
   // const maxAvailabilityCount = BokunAbsAvailablePlaces(selectedAvailability);
-  const maxAvailabilityCount = selectedAvailability.availabilityCount
+  // const maxAvailabilityCount = selectedAvailability.availabilityCount;
+  const maxAvailabilityCount = availiabilityCount(selectedAvailability);
+  // availiabilityCount
 
   return <div>
     <h3 className="text-lg font-semibold text-gray-800 mb-4">Select Participants</h3>
@@ -93,6 +96,7 @@ export default function BookingParticipants() {
                   priceEngine,
                   priceCategoryId
                 );
+                console.log("priceEngineAAA:", priceEngine);
 
                 return <div key={`catId-${rate.id}-${rateIndex}-${priceCategoryId}`
                 }>
@@ -118,6 +122,8 @@ export default function BookingParticipants() {
                           /*console.log("rate:", rate);
                           console.log('dataForExperience', dataForExperience);
                           console.log("selectedAvailability:", selectedAvailability);*/
+
+                          console.log("-");
 
                           FPriceEngine(
                             "-",

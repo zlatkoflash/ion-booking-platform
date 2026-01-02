@@ -5,13 +5,14 @@ import {
   Calendar, Clock, Users, Euro, AlertCircle, Loader2,
   // ChevronLeft, ChevronRight
 } from 'lucide-react';
-import { formatDate, formatDateString, getMonthBoundaries, normalizeDateToYYYYMMDD } from '../../utils/dateUtils';
+import { formatDate, formatDateString, formatDateStringWithoutDashes, getMonthBoundaries, normalizeDateToYYYYMMDD } from '../../utils/dateUtils';
 import ZCalendarWidget from './ZCalendarWidget';
 // import { IBokunSlot } from '@/app/interface/interface';
 import { BokunGetAvailabilitiesForExperience } from '@/utils/bokun';
 import { IBokunAvailability } from '@/interface/Interface';
 import AvailableTimes from './AvailableTimes';
 import { useBookingSidebar } from '@/app/TourView/[[...slug]]/content/BookingSidebarProvider';
+import { useBookingEditor } from '@/app/TourView/[[...slug]]/BookingEditorProvider';
 
 /*export interface IBokunSlot {
   startTimeId: number;
@@ -45,11 +46,21 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
 }) => {
 
   const {
+    clientType,
+    bokunBookingForediting
+  } = useBookingEditor();
+
+  const {
     availablilitesForDateRange,
     setAvailablilitesForDateRange,
     selectedDate,
     setSelectedDate,
+
+    selectedAvailability,
     setSelectedAvailability,
+    setSelectedAvailabilityAndTheRate,
+    availiabilityCount,
+
     calendarActiveMonth,
     set_calendarActiveMonth,
   } = useBookingSidebar();
@@ -90,6 +101,33 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
       console.log("avaialbilitesData:", avaialbilitesData);
       // setSlots(avaialbilitesData.availabilities);
       setAvailablilitesForDateRange(avaialbilitesData.availabilities);
+      if (clientType === "booking-editor") {
+        // we need to check activity with this type of id: 4541791_20260126
+        // 4541791 is the time id, 20260126 is the date
+        const idForEditorAvailability = `${bokunBookingForediting?.activityBookings[0]?.startTimeId}_${formatDateStringWithoutDashes(new Date(bokunBookingForediting?.activityBookings[0]?.date as number))}`;
+        console.log("avaialbilitesData.availabilities:", avaialbilitesData.availabilities);
+        console.log("bokunBookingForediting?.activityBookings[0].activity.id:", bokunBookingForediting?.activityBookings[0]);
+
+        console.log("idForEditorAvailability:", idForEditorAvailability);
+
+        if (selectedAvailability.id === undefined) {
+
+          console.log("Editor availability selecting...");
+
+          const selectedAvailablilityFromEditor = avaialbilitesData.availabilities.find((availability) => availability.id === idForEditorAvailability);
+          console.log("selectedAvailablilityFromEditor:", selectedAvailablilityFromEditor);
+          if (selectedAvailablilityFromEditor !== null && selectedAvailablilityFromEditor !== undefined) {
+
+            setSelectedAvailabilityAndTheRate(selectedAvailablilityFromEditor);
+          }
+        }
+        // console.log("availability.id:", availability.id);
+        /*const bookingEditor_selectedAvailability = avaialbilitesData.availabilities.find((availability) => availability.id === bokunBookingForediting?.activityBookings[0].activity.id);
+        if (bookingEditor_selectedAvailability !== null && bookingEditor_selectedAvailability !== undefined) {
+          setSelectedAvailability(bookingEditor_selectedAvailability);
+        }*/
+      }
+
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -99,7 +137,10 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
 
 
   const handleAvailabilityClick = (availability: IBokunAvailability) => {
-    if (availability.availabilityCount <= 0) return;
+    if (
+      // availability.availabilityCount <= 0
+      availiabilityCount(availability) <= 0
+    ) return;
 
     console.log('🎯 Slot selected:', availability);
     setSelectedAvailability(availability);
@@ -109,17 +150,6 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
 
 
 
-  /*if (loading) {
-    return (
-      <div className="bg-white rounded-2xl p-8 shadow-lg">
-        <h3 className="text-2xl font-bold text-gray-800 mb-6">Select Date & Time</h3>
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="w-8 h-8 animate-spin text-blue-600 mr-3" />
-          <span className="text-gray-600">Loading live availability from Bokun...</span>
-        </div>
-      </div>
-    );
-  }*/
 
   return (
     <div className="bg-white rounded-2xl p-8 shadow-lg relative">
@@ -141,6 +171,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
 
 
       <ZCalendarWidget
+
         // slots={slots}
         // calendarActiveMonth={calendarActiveMonth}
         // set_calendarActiveMonth={set_calendarActiveMonth}
@@ -150,6 +181,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
           /**
            * the availability is the first 
            */
+          console.log("dateString:", dateString);
           setSelectedSlot(firstSlotOfTheDay);
           setSelectedDate(dateString);
           // setSelectedMonth(new Date(dateString));
@@ -203,7 +235,10 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
                 Time: {selectedSlot.startTime}
               </div>
               <div className="text-sm text-blue-700">
-                {selectedSlot.availabilityCount} spots available
+                {
+                  // selectedSlot.availabilityCount
+                  availiabilityCount(selectedSlot)
+                } spots available
               </div>
             </div>
           </div>

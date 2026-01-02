@@ -118,9 +118,14 @@ export default async function HomeContent() {
           <p className="text-xl mb-8">
             Join thousands of satisfied travelers who have discovered the world with WIT-3.0
           </p>
-          <button className="bg-white text-blue-600 hover:bg-gray-100 font-semibold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl cursor-pointer">
+          <Link href="/Tours" className="bg-white text-blue-600 hover:bg-gray-100 font-semibold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl cursor-pointer">
             Browse All Tours
-          </button>
+          </Link>
+          {
+            /*<button className="bg-white text-blue-600 hover:bg-gray-100 font-semibold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl cursor-pointer">
+            Browse All Tours
+          </button>*/
+          }
         </div>
       </section>
     </div>

@@ -175,7 +175,12 @@ export default function TableWithBookings() {
               {rows.map(row => (
                 <tr key={row.booking_id} className="border-t">
                   <td className="px-4 py-3">
-                    <div className="font-medium">{row.booking_id.slice(0, 8)}…</div>
+                    <div className="font-medium">
+                      {
+                        // row.booking_id.slice(0, 8)
+                        row.bokun_confirmation_code
+                      }
+                    </div>
                     <div className="text-xs text-gray-500">{row.booking_created_at?.replace('T', ' ').slice(0, 16)}</div>
                   </td>
                   {
@@ -214,7 +219,7 @@ export default function TableWithBookings() {
                     >
                       View
                     </button>*/}
-                    <Link target="_blank" href={`/User/ManageMyBooking/ViewBooking/${row.booking_id}`} className="cursor-pointer hover:opacity-70 px-3 py-1.5 rounded-lg bg-blue-600 text-white mr-2 ">
+                    <Link href={`/User/ManageMyBooking/ViewBooking/${row.booking_id}`} className="cursor-pointer hover:opacity-70 px-3 py-1.5 rounded-lg bg-blue-600 text-white mr-2 ">
                       View
                     </Link>
                     <button

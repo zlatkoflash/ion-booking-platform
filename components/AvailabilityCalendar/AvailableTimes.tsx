@@ -24,7 +24,9 @@ export default function AvailableTimes(
     selectedDate,
     selectedAvailability,
     setSelectedAvailability,
-    setSelectedRate
+    setSelectedRate,
+    setSelectedAvailabilityAndTheRate,
+    availiabilityCount,
   } = useBookingSidebar();
 
   return <div className="space-y-3">
@@ -36,8 +38,10 @@ export default function AvailableTimes(
           .filter(availablility => normalizeDateToYYYYMMDD(availablility.date) === selectedDate)
           .map((availablility, index) => {
             const isSelected = selectedAvailability?.startTimeId === availablility.startTimeId;
-            const isAvailable = availablility.availabilityCount > 0;
-            console.log("slot:", availablility, availablility.pricesByRate);
+            // const isAvailable = availablility.availabilityCount > 0;
+            const isAvailable = availiabilityCount(availablility) > 0;
+
+            // console.log("slot:", availablility, availablility.pricesByRate);
             const displayPrice = availablility.pricesByRate?.[0]?.pricePerCategoryUnit?.[0]?.amount?.amount || 0;
 
             return (
@@ -45,10 +49,12 @@ export default function AvailableTimes(
                 key={`${availablility.date}-${availablility.startTimeId}-${index}`}
                 onClick={() => {
                   // handleSlotClick(availablility)
-                  setSelectedAvailability(availablility);
+                  /*setSelectedAvailability(availablility);
                   const defaultRate = availablility.rates.find(r => { return r.id === availablility.defaultRateId });
                   console.log("defaultRate:", defaultRate);
-                  setSelectedRate(defaultRate as IBokunActivityRate)
+                  setSelectedRate(defaultRate as IBokunActivityRate);
+                  console.log("availablility:", availablility);*/
+                  setSelectedAvailabilityAndTheRate(availablility)
                 }}
                 className={`
                       border-2 rounded-xl p-4 cursor-pointer transition-all duration-300 flex items-center justify-between
@@ -77,7 +83,10 @@ export default function AvailableTimes(
 
                       <div className="flex items-center text-orange-600">
                         <Users className="w-4 h-4 mr-1" />
-                        <span className="text-xs">{availablility.availabilityCount} spots</span>
+                        <span className="text-xs">{
+                          // availablility.availabilityCount
+                          availiabilityCount(availablility)
+                        } spots</span>
                       </div>
                     </div>
                   ) : (

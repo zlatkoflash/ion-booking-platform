@@ -66,3 +66,12 @@ export const toCents = (amount: number) => {
 export const fromCents = (cents: number) => {
   return cents / 100;
 };*/
+
+
+export const truncateId = (id: string) => {
+  if (!id) return "";
+  if (id.length <= 10) return id; // Don't truncate if it's already short
+
+  // Takes the first 6 characters and the last 3 characters
+  return `${id.slice(0, 6)}...${id.slice(-3)}`;
+};

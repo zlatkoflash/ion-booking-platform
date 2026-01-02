@@ -524,3 +524,23 @@ export interface IPaymentBookingFeedback {
   giftCardBookings: any[]; // Array of IGiftCardBooking
   bookingFields: any[];
 }
+
+
+export interface IBookingDatabaseNet {
+  total_rows: number;
+  booking_id: string;
+  booking_status: "CONFIRMED" | "CANCELLED" | string;
+  booking_financial_status: "paid_in_full" | "partially_paid" | "pending" | string;
+  booking_created_at: string; // ISO 8601 string
+  bokun_confirmation_code: string;
+  tour_title: string;
+  tour_price: number | null;
+  user_name: string;
+  user_email: string;
+  payment_intent_id: string;
+  payment_amount_cents: number;
+  payment_status: "succeeded" | "failed" | "pending" | string;
+  booking_currency: string;
+  total_refunded_cents: number;
+  total_paid_cents: number;
+}

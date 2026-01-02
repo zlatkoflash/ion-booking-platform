@@ -119,7 +119,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({
         Reserve the booking
       </button>
       <button className="bg-indigo-600 m-1 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out cursor-pointer" onClick={() => {
-        ___ConfirmTheBooking();
+        // ___ConfirmTheBooking();
       }}>
         Confirm the booking
       </button>

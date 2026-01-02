@@ -20,6 +20,8 @@ export default async function CheckoutBookingSuccess(params: { searchParams: Pro
     );
   }
 
+
+
   const { bookingDB, paymentDB, bookingBokun } = bookingDetailsForToken.data;
 
   console.log("bookingBokun:", bookingBokun);
@@ -105,7 +107,7 @@ export default async function CheckoutBookingSuccess(params: { searchParams: Pro
                       <div className="font-semibold text-gray-800">{
                         bookingBokun.activityBookings[0].product.title
                       }</div>
-                      <div className="text-gray-600">{bookingBokun.activityBookings[0].activity.googlePlace.name}</div>
+                      <div className="text-gray-600">{bookingBokun.activityBookings[0].activity.googlePlace?.name}</div>
                     </div>
                   </div>
 

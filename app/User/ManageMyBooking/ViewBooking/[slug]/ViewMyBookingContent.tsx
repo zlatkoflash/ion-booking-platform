@@ -19,8 +19,6 @@ export default function ViewMyBookingContent({ bookingId }: { bookingId: string 
   console.log("user:", user);
 
   return (
-    <BookingSingleItemProvider>
-      <BokunBookingEditor />
-    </BookingSingleItemProvider>
+    <BokunBookingEditor />
   );
 }

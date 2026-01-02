@@ -1,7 +1,12 @@
+"use client";
+
 import { IExperienceCompleteZ } from "@/interface/Interface"
 import { GetBokunConstantsAsGoodText } from "@/utils/formats";
 import { Calendar, Clock, Shield, Users } from "lucide-react"
 import Link from "next/link";
+import { useBookingEditor } from "../BookingEditorProvider";
+import EditorTableRefunds from "./editor/EditorTableRefunds";
+import EditorTablePayments from "./editor/EditorTablePayments";
 
 export interface IExperienceceViewOverview {
   experience: IExperienceCompleteZ
@@ -9,9 +14,20 @@ export interface IExperienceceViewOverview {
 
 export default function TourceViewOverview(data: IExperienceceViewOverview) {
   console.log("TourceViewOverview:", data);
+
+  const {
+    clientType
+  } = useBookingEditor();
+
   return <>
     <div className="bg-white rounded-2xl p-8 shadow-lg">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6">Overview</h2>
+      {
+        clientType === "booking-editor" && <h2 className="text-3xl font-bold text-gray-800 mb-6">WIT-3.0 Booking Editor</h2>
+      }
+      {
+        clientType !== "booking-editor" && <h2 className="text-3xl font-bold text-gray-800 mb-6">Overview</h2>
+      }
+
       <div className="text-gray-600 text-lg leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: `${data.experience.description || data.experience.excerpt || 'Discover this amazing experience'}` }} />
 
       <div className="grid md:grid-cols-3 gap-6 mb-8">
@@ -77,6 +93,17 @@ export default function TourceViewOverview(data: IExperienceceViewOverview) {
           :
           <></>
       }
+
+
+      {
+        clientType === "booking-editor" && (
+          <>
+            <EditorTablePayments />
+            <EditorTableRefunds />
+          </>
+        )
+      }
+
     </div>
   </>
 }

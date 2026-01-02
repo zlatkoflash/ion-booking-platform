@@ -1,3 +1,6 @@
+"use client";
+
+import { IBokunBooking, IBookingDatabase } from '@/utils/bokun';
 import React, { createContext, useReducer, useContext, Dispatch, ReactNode, useState, useEffect } from 'react';
 
 // --- 1. Type and State Definitions ---
@@ -32,6 +35,7 @@ export enum BookingActionType {
   REMOVE_REFUND = 'REMOVE_REFUND',
   UPDATE_REFUND = 'UPDATE_REFUND',
   RESET_STATE = 'RESET_STATE',
+  CANCELL_THE_BOOKING = 'CANCELL_THE_BOOKING'
 }
 
 export type BookingAction =
@@ -40,7 +44,8 @@ export type BookingAction =
   | { type: BookingActionType.ADD_REFUND; payload: BookingItem }
   | { type: BookingActionType.REMOVE_REFUND; payload: { id: string | number } }
   | { type: BookingActionType.UPDATE_REFUND; payload: BookingItem }
-  | { type: BookingActionType.RESET_STATE };
+  | { type: BookingActionType.RESET_STATE }
+  | { type: BookingActionType.CANCELL_THE_BOOKING; payload: BookingItem };
 
 
 // --- 3. The Reducer Function ---
@@ -73,6 +78,10 @@ function bookingReducer(state: BookingState, action: BookingAction): BookingStat
         ),
       };
 
+    case BookingActionType.CANCELL_THE_BOOKING:
+
+      return { ...state, bookingItem: action.payload };
+
     case BookingActionType.RESET_STATE:
       return initialBookingState;
 
@@ -92,6 +101,8 @@ interface BookingContextValue {
   setBookingItem: (item: BookingItem) => void;
   addRefund: (item: BookingItem) => void;
   reset: () => void;
+  bokunBooking: IBokunBooking;
+  bookingDB: IBookingDatabase;
 }
 
 // Create the Context with a placeholder default value
@@ -100,9 +111,10 @@ export const BookingSingleItemContext = createContext<BookingContextValue | unde
 /**
  * The Provider component that wraps the application part needing the context.
  */
-export const BookingSingleItemProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const BookingSingleItemProvider: React.FC<{ children: ReactNode, bokunBooking: IBokunBooking, bookingDB: IBookingDatabase }> = ({ children, bokunBooking, bookingDB }) => {
   const [state, dispatch] = useReducer(bookingReducer, initialBookingState);
 
+  const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
   // Helper functions to simplify common dispatch calls
   const setBookingItem = (item: BookingItem) => {
     dispatch({ type: BookingActionType.SET_BOOKING_ITEM, payload: item });
@@ -122,6 +134,8 @@ export const BookingSingleItemProvider: React.FC<{ children: ReactNode }> = ({ c
     setBookingItem,
     addRefund,
     reset,
+    bokunBooking,
+    bookingDB,
   };
 
   useEffect(() => {

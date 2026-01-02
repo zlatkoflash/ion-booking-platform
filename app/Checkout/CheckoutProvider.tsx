@@ -47,7 +47,7 @@ interface BookingCheckoutContextState {
   set_confirmed_booking: (booking: IBokunBooking) => void,
 
   ___ReserveTheBooking: (user: { id: string, email: string }) => Promise<{ ok: boolean, bookingHash: string, booking: IBokunBooking, bookingDB: any }>,
-  ___ConfirmTheBooking: (confirmationCode?: string, transactionDetails?: ITransactionDetails, bookingToken?: string) => Promise<{ ok: boolean, bookingHash: string, booking: IBokunBooking, bookingToken: string }>,
+  ___ConfirmTheBooking: (paymentMethodId: string, confirmationCode?: string, transactionDetails?: ITransactionDetails, bookingToken?: string) => Promise<{ ok: boolean, bookingHash: string, booking: IBokunBooking, bookingToken: string }>,
 
   contactDetails: IContactDetails,
   setContactDetails: (contactDetails: IContactDetails) => void,
@@ -93,7 +93,7 @@ const BookingCheckoutContext = createContext<BookingCheckoutContextState>({
   set_confirmed_booking: () => { },
 
   ___ReserveTheBooking: async (): Promise<{ ok: boolean, bookingHash: string, booking: IBokunBooking, bookingDB: any }> => { return { ok: true, bookingHash: "", booking: {} as IBokunBooking, bookingDB: {} } },
-  ___ConfirmTheBooking: async (confirmationCode?: string, transactionDetails?: ITransactionDetails): Promise<{ ok: boolean, bookingHash: string, booking: IBokunBooking, bookingToken: string }> => { return { ok: true, bookingHash: "", booking: {} as IBokunBooking, bookingToken: "" } },
+  ___ConfirmTheBooking: async (paymentMethodId: string, confirmationCode?: string, transactionDetails?: ITransactionDetails): Promise<{ ok: boolean, bookingHash: string, booking: IBokunBooking, bookingToken: string }> => { return { ok: true, bookingHash: "", booking: {} as IBokunBooking, bookingToken: "" } },
 
   contactDetails: {} as IContactDetails,
   setContactDetails: () => { },
@@ -244,6 +244,7 @@ export const BookingCheckoutProvider: React.FC<BookingCheckoutProviderProps> = (
 
 
   const ___ConfirmTheBooking = async (
+    paymentMethodId: string,
     confirmationCode?: string,
     transactionDetails?: ITransactionDetails
   ): Promise<{ ok: boolean, bookingHash: string, booking: IBokunBooking, bookingToken: string }> => {
@@ -265,13 +266,15 @@ export const BookingCheckoutProvider: React.FC<BookingCheckoutProviderProps> = (
           "transactionDate": "2025-12-9",
           "transactionId": "trans-id",
           "cardBrand": "VISA",
-          "last4": "0004"
+          "last4": "0004",
+          // "paymentMethodId": "payment-method-not-defined"
         },
       "amount": totalPrice,
       "currency": "string"
     }
     const resultsAfterConfirmation = await BokunConfirmTheBooking(
       // reservation_bookingHash,
+      paymentMethodId,
       confirmationCode !== "" && confirmationCode !== undefined
         ?
         confirmationCode

@@ -1,6 +1,8 @@
 import { GetBookingsFromDB } from "@/utils/bokunAdminClient";
 import { useEffect, useState } from "react";
 import { useTableBookings } from "../ProviderTableBookings";
+import ModalRefundBookingAdmin from "./ModalRefundBookingAdmin";
+import { AlertInfoMessage } from "@/components/AlertMessages/InfoMessage";
 
 export default function TableWithBookingsAdmin() {
 
@@ -13,8 +15,14 @@ export default function TableWithBookingsAdmin() {
     pageIndex,
     maxPages,
     NavigateNext,
-    NavigatePrev
+    NavigatePrev,
+    selectedRow,
+    setSelectedRow
   } = useTableBookings();
+
+  useEffect(() => {
+    console.log("Effect: selectedRow:", selectedRow);
+  }, [selectedRow]);
 
 
   // const token = 'example token';
@@ -22,73 +30,27 @@ export default function TableWithBookingsAdmin() {
   const loading = false;
 
 
-  /*const items: any[] = [
-    {
-      booking_id: "booking id 1",
-      customer_name: "Name Last Name 1",
-      customer_email: "email@gmail.com1",
-      supplier_status: "supplier-status-1",
-      financial_status: "financial-status-1",
-      currency: 'USD',
-      paid_total_cents: 4000,
-      refunded_total_cents: 200,
-      net_cents: 3800,
-      last_money_event_at: "last_money_event_at",
-      latest_payment_id: 1233332,
-      latest_payment_intent_id: "latest_payment_intent_id",
-      remaining_cents: 5000
-    },
-    {
-      booking_id: "booking id 2",
-      customer_name: "Name Last Name 1",
-      customer_email: "email@gmail.com1",
-      supplier_status: "supplier-status-1",
-      financial_status: "financial-status-1",
-      currency: 'USD',
-      paid_total_cents: 4000,
-      refunded_total_cents: 200,
-      net_cents: 3800,
-      last_money_event_at: "last_money_event_at",
-      latest_payment_id: 1233332,
-      latest_payment_intent_id: "latest_payment_intent_id",
-      remaining_cents: 5000
-    },
-    {
-      booking_id: "booking id 3",
-      customer_name: "Name Last Name 1",
-      customer_email: "email@gmail.com1",
-      supplier_status: "supplier-status-1",
-      financial_status: "financial-status-1",
-      currency: 'USD',
-      paid_total_cents: 4000,
-      refunded_total_cents: 200,
-      net_cents: 3800,
-      last_money_event_at: "last_money_event_at",
-      latest_payment_id: 1233332,
-      latest_payment_intent_id: "latest_payment_intent_id",
-      remaining_cents: 5000
-    }
-  ];*/
-
   const currencyFmt = (cents: number, currency = "EUR") => {
     return (new Intl.NumberFormat('en-US', { style: "currency", currency })).format((cents || 0) / 100);
   }
 
   const canRefund = (row: any) => row.total_refunded_cents < row.payment_amount_cents && !!row.payment_intent_id;
 
-  function openRefund(row: any) {
+  const openRefund = (row: any) => {
     /*setModalRow(row);
     setAmount(String(row.remaining_cents / 100)); // default = remaining
     setReason("SUPPLIER_CANCELLED");
     setNote("");
     setShowModal(true);*/
-    setModalRow(row);
-    setShowModal(true);
-    console.log("openRefund(row: IAdminItem)");
+    // setModalRow(row);
+    // setShowModal(true);
+    setSelectedRow(row)
+    console.log("openRefund(row: IAdminItem):", row);
   }
 
-  const [modalRow, setModalRow] = useState<any>(null);
-  const [showModal, setShowModal] = useState(false);
+  // const [modalRow, setModalRow] = useState<any>(null);
+  // const [showModal, setShowModal] = useState(false);
+
 
   const page = 1;
   const pages = 10;
@@ -171,7 +133,14 @@ export default function TableWithBookingsAdmin() {
               {rows.map(row => (
                 <tr key={row.booking_id} className="border-t">
                   <td className="px-4 py-3">
-                    <div className="font-medium">{row.booking_id.slice(0, 8)}…</div>
+                    <div className="font-medium">{
+                      // row.booking_id.slice(0, 8)
+                    }
+                      {
+                        // …
+                        row.bokun_confirmation_code
+                      }
+                    </div>
                     <div className="text-xs text-gray-500">{row.booking_created_at?.replace('T', ' ').slice(0, 16)}</div>
                   </td>
                   <td className="px-4 py-3">
@@ -202,7 +171,10 @@ export default function TableWithBookingsAdmin() {
                     <button
                       className={`cursor-pointer hover:opacity-70 px-3 py-1.5 rounded-lg ${canRefund(row) ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-600 cursor-not-allowed'}`}
                       disabled={!canRefund(row)}
-                      onClick={() => openRefund(row)}
+                      type="button"
+                      onClick={() => {
+                        openRefund(row)
+                      }}
                     >
                       Refund
                     </button>
@@ -232,64 +204,11 @@ export default function TableWithBookingsAdmin() {
       </div>
 
       {/* Refund Modal */}
-      {showModal && modalRow && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-100">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-md">
-            <div className="p-4 border-b">
-              <h2 className="text-lg font-semibold">Refund booking {modalRow.booking_id.slice(0, 8)}…</h2>
-            </div>
-            <div className="p-4 space-y-3">
-              <div className="text-sm text-gray-600">
-                Remaining: <b>{currencyFmt(modalRow.remaining_cents, modalRow.currency)}</b>
-              </div>
-              <label className="block">
-                <span className="text-sm">Amount ({modalRow.booking_currency})</span>
-                <input
-                  className="mt-1 w-full border rounded-lg px-3 py-2"
-                  type="number" min="0" step="0.01"
-                  value={amount} onChange={e => {
-                    console.log("setAmount(e.target.value)");
-                  }}
-                />
-              </label>
-              <label className="block">
-                <span className="text-sm">Reason</span>
-                <select className="mt-1 w-full border rounded-lg px-3 py-2" value={reason} onChange={e => {
-                  console.log("setReason(e.target.value):");
-                }}>
-                  <option value="SUPPLIER_CANCELLED">SUPPLIER_CANCELLED</option>
-                  <option value="CUSTOMER_CANCELLED">CUSTOMER_CANCELLED</option>
-                  <option value="OVERBOOKING">OVERBOOKING</option>
-                  <option value="PARTIAL_SERVICE">PARTIAL_SERVICE</option>
-                  <option value="OTHER">OTHER</option>
-                </select>
-              </label>
-              <label className="block">
-                <span className="text-sm">Note (optional)</span>
-                <textarea className="mt-1 w-full border rounded-lg px-3 py-2" rows={3}
-                  value={note} onChange={e => {
-                    console.log("setNote(e.target.value)");
-                  }} />
-              </label>
-            </div>
-            <div className="p-4 border-t flex justify-end gap-2">
-              <button className="px-4 py-2 rounded border cursor-pointer" onClick={() => {
-                console.log("setShowModal(false)");
-                setShowModal(false)
-              }} disabled={refunding}>Cancel</button>
-              <button
-                className="px-4 py-2 rounded bg-black text-white disabled:bg-gray-400 cursor-pointer"
-                onClick={() => {
-                  console.log("onclick submitRefund");
-                }}
-                disabled={refunding}
-              >
-                {refunding ? "Processing..." : "Confirm refund"}
-              </button>
-            </div>
-          </div>
-        </div>
+      {selectedRow !== null && (
+        <ModalRefundBookingAdmin />
       )}
+
+
     </div>
 
   );

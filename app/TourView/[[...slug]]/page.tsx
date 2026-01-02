@@ -19,6 +19,8 @@ import TourceViewOverview from './content/TourceViewOverview';
 import TourViewGallery from './content/TourViewGallery';
 import BookingSidebar from './content/BookingSidebar';
 import { BookingSidebarProvider } from './content/BookingSidebarProvider';
+import BookingActivitySelector from './BookingActivitySelector';
+import { BookingEditorProvider } from './BookingEditorProvider';
 
 
 export default async function TourViewPage({ params }: { params: { slug: string[] } }) {
@@ -55,48 +57,14 @@ export default async function TourViewPage({ params }: { params: { slug: string[
       experience={dataForExperience.experience as IExperienceCompleteZ}
     />
 
-    <div className="max-w-7xl mx-auto px-6 py-12">
-      <div className="grid lg:grid-cols-3 gap-12">
-        {/* Main Content */}
-        <div className="lg:col-span-2 space-y-8">
-          {/* Error Message */}
-          {/*error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-              <div className="flex items-start">
-                <AlertCircle className="w-5 h-5 text-red-600 mr-3" />
-                <div>
-                  <div className="font-semibold text-red-800">Bokun API Error</div>
-                  <div className="text-sm text-red-700">
-                    {error}
-                  </div>
-                  <div className="text-xs text-red-600 mt-1">
-                    Showing demo data. To fix: Deploy the bokun-availabilities Edge Function.
-                  </div>
-                </div>
-              </div>
-            </div>
-          )*/}
-
-          {/* Overview */}
-          <TourceViewOverview experience={dataForExperience.experience as IExperienceCompleteZ} />
-
-          {/* Photo Gallery */}
-          <TourViewGallery experience={dataForExperience.experience as IExperienceCompleteZ} />
-        </div>
-
-        {/* Booking Sidebar */}
-        <BookingSidebarProvider dataForExperience={dataForExperience}>
-          <BookingSidebar />
-        </BookingSidebarProvider>
-        {
-          // booking sidebar end
-        }
+    <BookingEditorProvider clientType='booking'>
+      <BookingActivitySelector
+        dataForExperience={dataForExperience}
+      />
+    </BookingEditorProvider>
 
 
 
 
-
-      </div>
-    </div>
   </div>;
 }

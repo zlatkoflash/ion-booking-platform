@@ -154,7 +154,7 @@ const getBookingConfirmationHtml = (
                 <div class="detail-row">
                   <div class="detail-icon">📍</div>
                   <div class="detail-content">
-                    ${bookingBokun.activityBookings[0].activity.googlePlace.name}
+                    ${bookingBokun.activityBookings[0].activity.googlePlace?.name}
                   </div>
                 </div>
                 

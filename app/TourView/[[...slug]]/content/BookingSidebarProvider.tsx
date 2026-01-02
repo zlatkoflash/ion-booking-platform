@@ -4,7 +4,9 @@
 import { IBokunActivityRate, IBokunAvailability, IExperienceCompleteZ } from '@/interface/Interface';
 import { IBokunGetExperienceById } from '@/utils/bokun';
 import { BokunAvailabilityRateTotalPrice, FTotalCountPerRate } from '@/utils/FPriceEngine';
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect, useEffectEvent } from 'react';
+import { useBookingEditor } from '../BookingEditorProvider';
+import { formatDateString } from '@/utils/dateUtils';
 
 export interface IBookPriceEngineCount {
   availabilityId: string,
@@ -46,6 +48,8 @@ interface BookingSidebarContextType {
   // setSelectedSlot: (slot: IBokunAvailability) => void,
   selectedAvailability: IBokunAvailability,
   setSelectedAvailability: (availability: IBokunAvailability) => void,
+  setSelectedAvailabilityAndTheRate: (availability: IBokunAvailability) => void,
+  availiabilityCount: (availability: IBokunAvailability) => number,
 
   selectedRate: IBokunActivityRate,
   setSelectedRate: (selectedRate: IBokunActivityRate) => void,
@@ -71,7 +75,8 @@ interface BookingSidebarContextType {
 
 
   selectedRate_countParticipants: () => number,
-  selectedRate_totalSum: () => number
+  selectedRate_totalSum: () => number,
+  bookedTotalSum: () => number
 
 }
 
@@ -87,6 +92,10 @@ const BookingSidebarContext = createContext<BookingSidebarContextType>({
   // setSelectedSlot: () => { },
   selectedAvailability: {} as IBokunAvailability,
   setSelectedAvailability: () => { },
+  setSelectedAvailabilityAndTheRate: () => { },
+  availiabilityCount: () => { return 0 },
+
+
 
   availablilitesForDateRange: [] as IBokunAvailability[],
   setAvailablilitesForDateRange: () => { },
@@ -107,6 +116,7 @@ const BookingSidebarContext = createContext<BookingSidebarContextType>({
 
   selectedRate_countParticipants: () => { return 0 },
   selectedRate_totalSum: () => { return 0; },
+  bookedTotalSum: () => { return 0; }
 
 
 
@@ -119,6 +129,13 @@ interface BookingSidebarProviderProps {
 }
 
 export function BookingSidebarProvider({ children, dataForExperience }: BookingSidebarProviderProps) {
+
+  const {
+    clientType,
+    bokunBookingForediting,
+    bookingDBNet
+  } = useBookingEditor();
+
   // Example shared states
   const [statusMessage, setStatusMessage] = useState('Awaiting selection...');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -126,7 +143,7 @@ export function BookingSidebarProvider({ children, dataForExperience }: BookingS
   /***
    * When click on the calendar this slot is selected and by it it is showing some other details
    */
-  const [selectedSlot, setSelectedSlot] = useState<IBokunAvailability>({} as IBokunAvailability);
+  // const [selectedSlot, setSelectedSlot] = useState<IBokunAvailability>({} as IBokunAvailability);
 
   const updateStatus = (newMessage: string) => {
     setStatusMessage(newMessage);
@@ -137,9 +154,53 @@ export function BookingSidebarProvider({ children, dataForExperience }: BookingS
   };
 
   const [availablilitesForDateRange, setAvailablilitesForDateRange] = useState<IBokunAvailability[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  if (bokunBookingForediting !== undefined)
+    console.log("new Date(bokunBookingForediting.activityBookings[0].date):", new Date(bokunBookingForediting.activityBookings[0].date));
+  const [selectedDate, setSelectedDate] = useState<string | null>(
+    clientType === "booking-editor" && bokunBookingForediting !== undefined ?
+      formatDateString(new Date(bokunBookingForediting.activityBookings[0].date))
+      :
+      null
+  );
 
-  const [selectedAvailability, setSelectedAvailability] = useState<IBokunAvailability>({} as IBokunAvailability);
+  /**
+   * avaialability is object that hold the startTimeId, that is important
+   */
+  const [selectedAvailability, setSelectedAvailability] = useState<IBokunAvailability>(
+    // continue here: 
+    {} as IBokunAvailability
+  );
+  useEffect(() => {
+    console.log("Latest selected availability:", selectedAvailability);
+  }, [selectedAvailability]);
+  const setSelectedAvailabilityAndTheRate = (availability: IBokunAvailability) => {
+    setSelectedAvailability(availability);
+    const defaultRate = availability.rates.find(r => { return r.id === availability.defaultRateId });
+    console.log("defaultRate:", defaultRate);
+    setSelectedRate(defaultRate as IBokunActivityRate);
+    console.log("availablility:", availability);
+  }
+  /**
+   * 
+   * @returns availiabilityCount will show the count for availiability, someitmes it must be included the availability from the booked booking for editing
+   */
+  const availiabilityCount = (availability: IBokunAvailability): number => {
+    let count_availablitiy = availability.availabilityCount;
+    if (clientType === "booking-editor") {
+      const availibailityFromBooking = bokunBookingForediting?.activityBookings[0];
+
+
+      // console.log("availability.startTimeId === availibailityFromBooking?.startTimeId:", availability.startTimeId, availibailityFromBooking?.startTimeId);
+
+      if (availability.startTimeId === availibailityFromBooking?.startTimeId) {
+
+        // console.log("availability.startTimeId === availibailityFromBooking?.startTimeId:", availability.startTimeId, availibailityFromBooking?.startTimeId);
+
+        count_availablitiy += bokunBookingForediting?.activityBookings[0].pricingCategoryBookings.length || 0;
+      }
+    }
+    return count_availablitiy;
+  }
 
 
   const [selectedRate, setSelectedRate] = useState<IBokunActivityRate>({} as IBokunActivityRate);
@@ -149,12 +210,24 @@ export function BookingSidebarProvider({ children, dataForExperience }: BookingS
     total: []
   } as IBookPricingEngine);
 
-  const [calendarActiveMonth, set_calendarActiveMonth] = useState<Date>(new Date());
+  const [calendarActiveMonth, set_calendarActiveMonth] = useState<Date>(
+
+    clientType === "booking-editor" ?
+      new Date(
+        bokunBookingForediting?.activityBookings[0].date as number
+      )
+      :
+      new Date()
+
+  );
 
   // selectedRate_countParticipants:()=>{return 0},
   // selectedRate_totalSum:()=>{return 0;}
 
   const selectedRate_countParticipants = (): number => {
+
+    console.log("Returning the count of the participants: selectedRate_countParticipants");
+
     return FTotalCountPerRate(
       selectedAvailability,
       selectedRate,
@@ -167,6 +240,10 @@ export function BookingSidebarProvider({ children, dataForExperience }: BookingS
       selectedRate,
       priceEngine
     )
+  }
+  const bookedTotalSum = (): number => {
+    if (bookingDBNet === undefined) return 0;
+    return (bookingDBNet?.total_paid_cents - bookingDBNet?.total_refunded_cents) / 100;
   }
 
   // The value object holds all shared states and setters/updaters
@@ -182,6 +259,8 @@ export function BookingSidebarProvider({ children, dataForExperience }: BookingS
     // setSelectedSlot,
     selectedAvailability,
     setSelectedAvailability,
+    setSelectedAvailabilityAndTheRate,
+    availiabilityCount,
 
     availablilitesForDateRange,
     setAvailablilitesForDateRange,
@@ -200,9 +279,80 @@ export function BookingSidebarProvider({ children, dataForExperience }: BookingS
 
 
     selectedRate_countParticipants,
-    selectedRate_totalSum
+    selectedRate_totalSum,
+    bookedTotalSum
 
   };
+
+  useEffect(() => {
+    console.log("use Effect: availablilitesForDateRange:", availablilitesForDateRange);
+    // now if is admin editor we must set the availability
+    if (clientType === "booking-editor") {
+      // setSelectedAvailability(availablilitesForDateRange[0]);
+      const startTimeId = bokunBookingForediting?.activityBookings[0].startTimeId;
+      console.log("startTimeId:", startTimeId);
+      const selectedAvailabilityFromTheBooking = availablilitesForDateRange.find(
+        (availability) => availability.startTimeId === startTimeId
+      );
+      console.log("selectedAvailabilityFromTheBooking:", selectedAvailabilityFromTheBooking);
+      if (selectedAvailabilityFromTheBooking) {
+        setSelectedAvailability(selectedAvailabilityFromTheBooking);
+      }
+
+      /**
+       * Those are the bookings 1 count per group type, 
+       * for example if we have 2 children and 3 adults it should show 5 items
+       */
+      const BookedActivity = bokunBookingForediting?.activityBookings[0];
+      const pricingCategoryBookings = BookedActivity?.pricingCategoryBookings;
+      const BookedPriceEngine = {
+        counts: []
+      } as IBookPricingEngine;
+      // BookedPriceEngine.counts.push({})
+      if (pricingCategoryBookings !== undefined) {
+        for (const pricingCategoryBooking of pricingCategoryBookings) {
+          // console.log("pricingCategoryBooking:", pricingCategoryBooking);
+          const CountObject = BookedPriceEngine.counts.find(count =>
+            count.rateId === BookedActivity?.rateId
+            && count.priceCategoryId === pricingCategoryBooking.pricingCategoryId
+            && count.availabilityId === selectedAvailabilityFromTheBooking?.id
+          )
+          // const rateId = BookedActivity?.rateId;
+          if (CountObject === null || CountObject === undefined) {
+
+            BookedPriceEngine.counts.push({
+              availabilityId: selectedAvailabilityFromTheBooking?.id as string,
+              rateId: BookedActivity?.rateId as number,
+              count: 1,
+              priceCategoryId: pricingCategoryBooking.pricingCategoryId
+
+            });
+          }
+          else {
+            CountObject.count++;
+          }
+        }
+      }
+      console.log("BookedPriceEngine:", BookedPriceEngine);
+      set_priceEngine(BookedPriceEngine);
+    }
+  }, [availablilitesForDateRange]);
+  useEffect(() => {
+    console.log("Price engine changed>>>", priceEngine);
+  }, [priceEngine])
+
+
+  /**
+   * When is the editor we must st initial values
+   */
+  /*if (clientType === "booking-editor") {
+    useEffect(() => {
+      // console
+      console.log("bokunBookingForediting:", bokunBookingForediting);
+    }, []);
+  }*/
+  console.log("bokunBookingForediting>>>:", bokunBookingForediting);
+  console.log("bokunBookingForediting?.activityBookings[0].pricingCategoryBookings:", bokunBookingForediting?.activityBookings[0].pricingCategoryBookings);
 
   return (
     <BookingSidebarContext.Provider value={value}>

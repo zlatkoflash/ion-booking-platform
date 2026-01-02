@@ -106,7 +106,11 @@ export const UserLoginForm: React.FC = () => {
       console.log("result.data.token:", result.data.token);
       await saveCustomTokenToCookie(result.data.token);
 
-      dispatch({
+      // router.refresh();
+
+      window.location.reload();
+
+      /*dispatch({
         type: "LOGIN",
         payload: {
           user: {
@@ -120,6 +124,7 @@ export const UserLoginForm: React.FC = () => {
 
       const token = await getAuthToken();
       console.log("token cookie:", token);
+      router.refresh();*/
     }
   }
 

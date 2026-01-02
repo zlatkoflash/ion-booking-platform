@@ -144,6 +144,7 @@ export interface IBokunGetExperienceById {
   error?: any,
   message?: string,
   experience?: IExperienceCompleteZ,
+  json?: any;
   // data: { ok: boolean, experience: IExperienceCompleteZ }
 }
 export const BokunGetExperienceById = async (experienceId: any, experienceSlug?: any): Promise<IBokunGetExperienceById> => {
@@ -185,6 +186,7 @@ export const BokunGetExperienceById = async (experienceId: any, experienceSlug?:
       // experience: 
       // serverData:json,
       experience: json.data?.experience,
+      json: json
     };
   }
   catch (error) {
@@ -403,7 +405,7 @@ export const BokunReserveBooking = async (
 }
 
 
-export const StripePaymentIntentForTheBooking = async (paymentIntent: {
+export const StripePaymentIntentForTheBooking = async (customerId: string, paymentIntent: {
   amount: number,
   currency: string,
   paymentMethodId: string,
@@ -433,6 +435,7 @@ export const StripePaymentIntentForTheBooking = async (paymentIntent: {
 }) => {
   try {
     const result = await SupabaseEdgeFetchPost('/bokun/CreatePaymentIntentForReservedBooking', {
+      customerId: customerId,
       paymentIntent: paymentIntent
     });
     // console.log("StripePaymentIntentForTheBooking result:", result);
@@ -468,6 +471,9 @@ export interface ITransactionDetails {
   cardBrand: string;
   /** The last four digits of the credit card number. */
   last4: string;
+
+  // paymentMethodId: string;
+
 }
 /**
  * Interface for the main Booking Metadata and Payment Summary.
@@ -495,11 +501,13 @@ export interface IBookingMetadata {
 }
 
 export const BokunConfirmTheBooking = async (
+  paymentMethodId: string,
   reservation_bookingHash: string,
   paymentDetails: IBookingMetadata
 ) => {
   try {
     const result = await SupabaseEdgeFetchPost('/bokun/ConfirmTheBooking', {
+      paymentMethodId: paymentMethodId,
       reservation_bookingHash: reservation_bookingHash,
       paymentDetails: paymentDetails
     });
@@ -668,6 +676,7 @@ interface IBokunBookingActivityDetail {
   difficultyLevel: string;
   activityCategories: string[];
   description: string;
+  startTimeId: number;
 
   googlePlace: {
     name: string
@@ -679,15 +688,18 @@ export interface IBokunBookingActivityBooking {
   parentBookingId: number;
   confirmationCode: string;
   productConfirmationCode: string;
+  date: number;
   status: 'RESERVED' | 'CONFIRMED' | string;
   title: string;
   totalPrice: number;
+  rateId: number;
   totalPriceAsText: string;
   startDateTime: number;
   endDateTime: number;
   productCategory: 'ACTIVITIES' | string;
   dateString: string;
   startTime: string;
+  startTimeId: number;
   activity: IBokunBookingActivityDetail; // Full activity details
   invoice: IBokunBookingProductInvoice;
   pricingCategoryBookings: IBokunBookingPricingCategoryBooking[];
@@ -739,6 +751,44 @@ export interface IBokunBooking {
 }
 
 
+export interface IBookingDatabase {
+  // Primary Identifiers
+  id: string; // UUID
+  user_id: string; // UUID (Foreign Key to Auth/Users)
+  tour_id: string; // UUID (Foreign Key to Tours)
+
+  // Status & Codes
+  status: 'CONFIRMED' | 'PENDING' | 'CANCELLED' | 'REJECTED';
+  financial_status: 'paid_in_full' | 'partially_paid' | 'unpaid' | 'refunded';
+  bokun_confirmation_code: string;
+  bookingId: number; // Internal numeric ID
+
+  // Optional / Nullable Fields
+  payment_ref: string | null;
+  cancelled_at: string | null; // ISO Timestamp
+  cancel_reason: string | null;
+  supplier_confirmation_code: string | null;
+  supplier_status: string | null;
+  checkout_session_id: string | null;
+
+  // Customer Details (Allowing null based on your JSON)
+  customer_email: string | null;
+  customer_phone: string | null;
+  customer_name: string | null;
+
+  // Pricing & Currency
+  currency: string;
+  totalPrice: number;
+  totalPaid: number;
+  totalPriceConverted: number;
+  paymentType: string; // e.g., "NOT_PAID" or "FULL"
+
+  // Metadata & Timestamps
+  language: string; // e.g., "en"
+  created_at: string; // ISO 8601 string
+  creationDate: number; // Unix timestamp in ms
+}
+
 
 export const InsertDemoDataInTheCrud = async () => {
   try {
@@ -762,67 +812,6 @@ export const InsertDemoDataInTheCrud = async () => {
 }
 
 
-/*export const PaymentProcess_SaveTheReservedBookingDetails = async (
-  user: { id: string, email: string },
-  booking: IBokunBooking,
-) => {
-  try {
-    const result = await SupabaseEdgeFetchPost('/bokun/PaymentProcess_SaveTheReservedBookingDetails', {
-      user: user,
-      booking: booking,
-      
-      activityBookings: booking.activityBookings,
-    });
-    console.log("PaymentProcess_SaveTheReservedBookingDetails result:", result);
-    const resultText = await result.text();
-    const bookingResevationData = JSON.parse(resultText);
-    return {
-      ok: true,
-      bookingResevationData: bookingResevationData,
-      message: "Payment process save the reserved booking details"
-    }
-  }
-  catch (error) {
-    return {
-      ok: false,
-      error: error,
-      message: 'Payment process save the reserved booking details can\'t be completed.'
-    }
-  }
-}*/
-
-
-/*export const PaymentProcess_SaveThePaymentDetails = async (
-  // user: { id: string, email: string },
-  // booking: IBokunBooking,
-  bookingDBId: string,
-  paymentIntent: IStripePaymentIntent
-) => {
-  try {
-    const result = await SupabaseEdgeFetchPost('/bokun/PaymentProcess_SaveThePaymentDetails', {
-      // user: user,
-      // booking: booking,
-      bookingDBId: bookingDBId,
-      paymentIntent: paymentIntent
-
-    });
-    console.log("PaymentProcess_SaveThePaymentDetails result:", result);
-    const resultText = await result.text();
-    const bookingResevationData = JSON.parse(resultText);
-    return {
-      ok: true,
-      ...bookingResevationData,
-      message: "Payment process save the payment details"
-    }
-  }
-  catch (error) {
-    return {
-      ok: false,
-      error: error,
-      message: 'Payment process save the payment details can\'t be completed.'
-    }
-  }
-}*/
 
 
 
