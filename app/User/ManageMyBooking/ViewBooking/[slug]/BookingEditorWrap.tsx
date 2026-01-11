@@ -14,13 +14,17 @@ export default function BookingEditorWrap({
   dataForExperience,
   bookingDBNet,
   bookingPayments,
-  bookingRefunds
+  bookingRefunds,
+  iCanCancel,
+  BookingDB
 }: {
   bokunBooking: IBokunBooking,
   dataForExperience: IBokunGetExperienceById,
   bookingDBNet: IBookingDatabaseNet,
   bookingPayments: any[],
   bookingRefunds: any[],
+  iCanCancel: boolean,
+  BookingDB: any
 }) {
 
   const {
@@ -52,6 +56,8 @@ export default function BookingEditorWrap({
         bookingDBNet={bookingDBNet}
         bookingPayments={bookingPayments}
         bookingRefunds={bookingRefunds}
+        iCanCancel={iCanCancel}
+        BookingDB={BookingDB}
       >
         <BookingActivitySelector
           dataForExperience={dataForExperience}

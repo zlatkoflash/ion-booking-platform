@@ -222,13 +222,15 @@ export default function TableWithBookings() {
                     <Link href={`/User/ManageMyBooking/ViewBooking/${row.booking_id}`} className="cursor-pointer hover:opacity-70 px-3 py-1.5 rounded-lg bg-blue-600 text-white mr-2 ">
                       View
                     </Link>
-                    <button
+                    {
+                      /*<button
                       className={`cursor-pointer hover:opacity-70 px-3 py-1.5 rounded-lg ${canRefund(row) ? 'bg-red-600 text-white' : 'bg-gray-300 text-gray-600 cursor-not-allowed'}`}
                       disabled={!canRefund(row)}
                     // onClick={() => openRefund(row)}
                     >
                       Cancel
-                    </button>
+                    </button>*/
+                    }
                   </td>
                 </tr>
               ))}

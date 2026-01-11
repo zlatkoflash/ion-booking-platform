@@ -50,7 +50,9 @@ export async function getUserDetailsFromServer(): Promise<{
     name: string,
     role: string,
     id: string,
+    // StripeCustomerId: string,
   }
+  stripeCustomerId: string,
 } | null> {
 
 
@@ -74,7 +76,8 @@ export async function getUserDetailsFromServer(): Promise<{
 
   return {
     token: token,
-    user: detailsJSON.data.user
+    user: detailsJSON.data.user,
+    stripeCustomerId: detailsJSON.data.stripeCustomerId,
   }
 }
 

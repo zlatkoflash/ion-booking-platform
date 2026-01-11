@@ -11,12 +11,20 @@ import BookingActivitySelector from "@/app/TourView/[[...slug]]/BookingActivityS
 import { BookingEditorProvider } from "@/app/TourView/[[...slug]]/BookingEditorProvider";
 import BookingEditorWrap from "./BookingEditorWrap";
 import { IBookingDatabaseNet } from "@/interface/payment.booking";
+import { getUserDetailsFromServer } from "@/app/User/api/add-custom-token";
+import ErrorMessage, { BookingNotFound } from "@/components/ErrorMessages/ErrorMessage";
 
 export default async function ViewMyBooking({ params }: { params: { slug: string } }) {
 
   const paramsFor = await params;
 
   console.log("paramsFor:", paramsFor);
+
+
+  const detailsForUser = await getUserDetailsFromServer();
+  console.log("detailsForUser from view booking / slug / page.tsx:", detailsForUser);
+
+
 
   const BookingId = paramsFor.slug;
   console.log("BookingId:", BookingId);
@@ -27,18 +35,37 @@ export default async function ViewMyBooking({ params }: { params: { slug: string
     bookingNet: IBookingDatabaseNet;
     bookingPayments: any[],
     bookingRefunds: any[],
+    iCanCancel: boolean,
   };
   console.log("BookingDetails:", BookingDetails);
+
+
 
 
   const { BookingDB, bokunBooking, bookingNet, bookingPayments, bookingRefunds } = BookingDetails;
   console.log("BookingDB:", BookingDB);
   console.log("bokunBooking:", bokunBooking);
 
+
+  if (detailsForUser === null || BookingDB.user_id !== detailsForUser?.user.id) {
+    return <UserLoginForm />
+  }
+
+
+  if (!BookingDetails.bokunBooking?.activityBookings) {
+    return <>
+      <UserAdminHeader />
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center max-w-6xl mx-auto">
+        <ErrorMessage error={BookingNotFound} />
+      </div>
+    </>
+  }
+
   const dataForExperience = await BokunGetExperienceByIdOrSlug(
     BookingDetails.bokunBooking?.activityBookings[0].activity.id
   );
   console.log("dataForExperience:", dataForExperience);
+
 
   // const 
 
@@ -52,6 +79,8 @@ export default async function ViewMyBooking({ params }: { params: { slug: string
       bookingDBNet={bookingNet}
       bookingPayments={bookingPayments}
       bookingRefunds={bookingRefunds}
+      iCanCancel={BookingDetails.iCanCancel}
+      BookingDB={BookingDB}
     />
 
   );

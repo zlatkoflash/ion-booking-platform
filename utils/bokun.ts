@@ -419,19 +419,6 @@ export const StripePaymentIntentForTheBooking = async (customerId: string, payme
   // this is the id of the bookings in the database
   bookingDBId: string,
 
-  /*billing_details: {
-    name: string,
-    email: string,
-    phone: string,
-    address: {
-      line1: string,
-      line2?: string,
-      city: string,
-      state?: string,
-      country: string,
-      postal_code?: string
-    }
-  }*/
 }) => {
   try {
     const result = await SupabaseEdgeFetchPost('/bokun/CreatePaymentIntentForReservedBooking', {

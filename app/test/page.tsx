@@ -1,70 +1,41 @@
+"use client";
 
 import PanelTestWithButtons from "@/components/testing/PanelTestWithButtons";
 import { zconfig } from "@/config/config";
+import { Test___SendExampleEmail } from "@/utils/tests";
 
 
-export default async function PageTest() {
+export default function PageTest() {
 
-  /*const data = await fetch(
-    `${zconfig.supabase.api_link}/hello-world`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // for live need "Authorization"
-        // "Authorization": `Bearer sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH`,
-        // for localhost need "apikey"
-        "apikey": "sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH"
-      },
-      body: JSON.stringify({
-        // lang: autoLang,
-        // currency: autoCurrency,
-        pageSize: 50,
-        name: "Zlatko Derkoski"
-      })
-    }
-  );
-  const json = await data.json();*/
-  //console.log("json: ", json);
+  const ___SendExampleEmail = async () => {
+    await Test___SendExampleEmail();
+  }
 
-
-  /*const dataBokunProducts = await fetch(`${zconfig.supabase.api_link}/bokun-products`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // for live need "Authorization"
-        // "Authorization": `Bearer sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH`,
-        // for localhost need "apikey"
-        "apikey": "sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH"
-      },
-      body: JSON.stringify({
-        // lang: autoLang,
-        // currency: autoCurrency,
-        pageSize: 50,
-        name: "Zlatko Derkoski"
-      })
-    });
-  const jsonDataBokunProducts = await dataBokunProducts.json();
-  //console.log("jsonDataBokunProducts:", jsonDataBokunProducts);*/
-
-  /*
-  const vendorBokun = await fetch('https://api.bokuntest.com/restapi/v2.0/marketplace/vendor/self/', {
-    method: "POST",
-    headers: {
-      // "X-Bokun-Date": bokunDate,
-      "X-Bokun-AccessKey": "7c6fe713fa46404487b7dd94080b8599",
-      // "X-Bokun-AccessKey": 'test',
-      // "X-Bokun-Signature": signature,
-      "Content-Type": "application/json",
-    },
-    // body: JSON.stringify(body) 
-  })
-  const vendorBokunjson = await vendorBokun.text();
-  console.log("vendorBokunjson:", vendorBokunjson);*/
 
   return <>
-    Testing...
-    <PanelTestWithButtons />
+    <div className="p-8">
+      {/* grid: establishes the grid container
+        grid-cols-3: creates 3 columns
+        gap-2: adds small spacing between items 
+      */}
+      <div className="grid grid-cols-3 gap-2 max-w-md mx-auto">
+        <button
+          type="button"
+          onClick={() => {
+            ___SendExampleEmail();
+          }}
+          className="bg-indigo-500 text-white p-4 rounded">Send test message to zlatkoflash@gmail.com</button>
+        <button className="bg-indigo-500 text-white p-4 rounded">A2</button>
+        <button className="bg-indigo-500 text-white p-4 rounded">A3</button>
+
+        <button className="bg-indigo-500 text-white p-4 rounded">B1</button>
+        <button className="bg-indigo-500 text-white p-4 rounded">B2</button>
+        <button className="bg-indigo-500 text-white p-4 rounded">B3</button>
+
+        <button className="bg-indigo-500 text-white p-4 rounded">C1</button>
+        <button className="bg-indigo-500 text-white p-4 rounded">C2</button>
+        <button className="bg-indigo-500 text-white p-4 rounded">C3</button>
+      </div>
+    </div>
   </>
 }

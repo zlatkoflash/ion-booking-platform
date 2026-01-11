@@ -26,6 +26,7 @@ export default async function RootLayout({
 }>) {
 
   let logedUser = null;
+  let stripeCustomerId = "";
   const token = await getAuthToken();
   // console.log("token:", token);
 
@@ -35,6 +36,7 @@ export default async function RootLayout({
 
   if (detailsForUser !== null) {
     logedUser = detailsForUser.user;
+    stripeCustomerId = detailsForUser.stripeCustomerId;
   }
   // return null;
 
@@ -43,7 +45,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider token={token} userFromOut={logedUser}>
+        <AuthProvider token={token} userFromOut={logedUser} stripeCustomerId={stripeCustomerId}>
           {children}
         </AuthProvider>
       </body>

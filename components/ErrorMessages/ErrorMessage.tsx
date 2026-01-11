@@ -59,6 +59,16 @@ export const UserSetInSystemFailError: IAppError = {
   errorCode: "ERR_USER_SET_IN_SYSTEM_FAIL",
   userAction: "Please refresh the page and try again later.",
 };
+export const BookingNotFound: IAppError = {
+  userMessage: "Booking not found",
+  errorCode: "ERR_BOOKING_NOT_FOUND",
+  userAction: "Please refresh the page and try again later.",
+}
+export const BookingCancellingError: IAppError = {
+  userMessage: "Booking cancelling error",
+  errorCode: "ERR_BOOKING_CANCELLING_ERROR",
+  userAction: "You can only cancell the booking that is confirmed and active.",
+}
 
 
 export default function ErrorMessage({ error }: { error: IAppError }) {

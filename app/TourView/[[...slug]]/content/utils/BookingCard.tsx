@@ -19,14 +19,17 @@ import { useBookingSidebar } from '../BookingSidebarProvider';
 import BookingParticipants from './BookingParticipants';
 import { normalizeDateToYYYYMMDD } from '@/utils/dateUtils';
 import { useBookingEditor } from '../../BookingEditorProvider';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UpdateBooking } from '@/utils/bokunAdminClient';
 import { useBookingSingleItem } from '@/app/User/ManageMyBooking/ViewBooking/[slug]/BookingProvider';
 import BookingCancelButton from './BookingCancelButton';
+import BookingEditorPriceDifference from './BookingEditorPriceDifference';
+import ChangePaymentMethod from './AdminChangePaymentMethod';
+import AdminChangePaymentMethodWrap from './AdminChangePaymentMethodWrap';
 
 export default function BookingCardForm() {
 
-  const { clientType, bokunBookingForediting, bookingDBNet, isModalSuccessOpen, setIsModalSuccessOpen } = useBookingEditor();
+  const { clientType, bokunBookingForediting, bookingDBNet, isModalSuccessOpen, setIsModalSuccessOpen, iCanCancel } = useBookingEditor();
 
   // const { setIsModalSuccessOpen } = useBookingSingleItem();
 
@@ -38,36 +41,35 @@ export default function BookingCardForm() {
     selectedRate_totalSum,
     bookedTotalSum,
     experience,
-    priceEngine
+    priceEngine,
+
   } = useBookingSidebar();
 
   console.log("selectedAvailability:", selectedAvailability);
   const [updatingBooking, setUpdatingBooking] = useState(false);
-  const [statusUpdatingDateTimeBookingMessage, set_statusUpdatingDateTimeBookingMessage] = useState('');
+  const [statusErrorUpdatingDateTimeBookingMessage, set_statusErrorUpdatingDateTimeBookingMessage] = useState('');
+  const [statusSuccessUpdatingDateTimeBookingMessage, set_statusSuccessUpdatingDateTimeBookingMessage] = useState('');
 
 
 
+  const [isReady, setIsReady] = useState(false);
+  useEffect(() => {
+    if (selectedAvailability) {
+      setIsReady(true);
+    }
+  }, []);
 
 
-  // const processingPayment = false;
 
-  /*const getTotalParticipants = () => {
-    return 0;
-  }*/
-
-  /*
-  json for changing the date time
-  {
-        "type": "ActivityChangeDateAction",
-        "activityBookingId": 117361723, // this is bokun activityBookings[0].bookingId
-        "date": "2026-01-05",
-        "startTimeId": 4541793, // this is bokun acitvityBookings[0].startTimeId
-        // "flexOption": "Afternoon departure"
-      }
-  */
+  if (!isReady) {
+    return null;
+  }
 
   const ___UpdateTheBooking = async () => {
     // console.log("priceEngine:", priceEngine); return;
+
+    set_statusSuccessUpdatingDateTimeBookingMessage('');
+    set_statusErrorUpdatingDateTimeBookingMessage('');
 
     const participantsToBeAdded: { pricingCategoryId: number }[] = [];
     for (const priceEngCounts of priceEngine.counts) {
@@ -96,19 +98,22 @@ export default function BookingCardForm() {
     const resultsAfterUpdating = await UpdateBooking(payload);
     console.log("resultsAfterUpdating:", resultsAfterUpdating);
     if (resultsAfterUpdating.stripeCustomerNotFound === true) {
-      set_statusUpdatingDateTimeBookingMessage("Stripe customer not found!");
+      set_statusErrorUpdatingDateTimeBookingMessage("Stripe customer not found!");
     }
     else if (resultsAfterUpdating.refundingError === true) {
-      set_statusUpdatingDateTimeBookingMessage("Refunding error!");
+      set_statusErrorUpdatingDateTimeBookingMessage("Refunding error!");
+    }
+    else if (resultsAfterUpdating.paymentAdditionalError === true) {
+      set_statusErrorUpdatingDateTimeBookingMessage("Payment additional error!");
     }
     else if (resultsAfterUpdating.updatingDateTime.status === "FINISHED") {
-      set_statusUpdatingDateTimeBookingMessage("Booking Date/Time updated successfully");
+      set_statusSuccessUpdatingDateTimeBookingMessage("Booking Date/Time updated successfully");
       if (setIsModalSuccessOpen) {
         setIsModalSuccessOpen(true);
       }
     }
     else {
-      set_statusUpdatingDateTimeBookingMessage("Booking Date/Time update failed!");
+      set_statusErrorUpdatingDateTimeBookingMessage("Booking Date/Time update failed!");
     }
     setUpdatingBooking(false);
   }
@@ -135,41 +140,52 @@ export default function BookingCardForm() {
 
               )}
 
-            <div className="border-t pt-6">
-              <div className="flex justify-between text-lg font-semibold text-gray-800 mb-2">
-                <span>Total ({
-                  // getTotalParticipants()
-                  selectedRate_countParticipants()
-                } participants)</span>
-                <span>€{
-                  selectedRate_totalSum().toFixed(2)
-                  // computeTotal().toFixed(2)
-                }</span>
-              </div>
+            <div className={`${clientType === "booking" ? "border-t pt-6" : "pt-4"
+              } `}>
+              {
+                clientType === "booking" && (<div className="flex justify-between text-lg font-semibold text-gray-800 mb-2">
+                  <span>Total ({
+                    // getTotalParticipants()
+                    selectedRate_countParticipants()
+                  } participants)</span>
+                  <span>€{
+                    selectedRate_totalSum().toFixed(2)
+                    // computeTotal().toFixed(2)
+                  }</span>
+                </div>)
+              }
 
               {
                 clientType === "booking-editor" && (
                   <>
-                    <hr className="my-2" />
+                    {
+                      // <hr className="my-2" />
+                    }
                     <div className="flex justify-between text-lg font-semibold text-gray-800 mb-2">
                       <span>Last Booked ({
                         // getTotalParticipants()
                         // selectedRate_countParticipants()
                         bokunBookingForediting?.activityBookings[0].pricingCategoryBookings.length
-                      } part...)</span>
+                      } participants)</span>
                       <span>€{
                         bookedTotalSum().toFixed(2)
                         // computeTotal().toFixed(2)
                       }</span>
                     </div>
-                    <hr className="my-2" />
-                    <div className="flex justify-between text-lg font-semibold text-gray-800 mb-4">
+
+                    {
+                      /*
+                      <hr className="my-2" />
+                      <div className="flex justify-between text-lg font-semibold text-gray-800 mb-4">
                       <span>Difference</span>
                       <span>€{
                         (selectedRate_totalSum() - bookedTotalSum()).toFixed(2)
                         // computeTotal().toFixed(2)
                       }</span>
-                    </div>
+                    </div>*/
+                    }
+                    <BookingEditorPriceDifference />
+                    <div className="my-2 mb-6" />
                   </>
                 )
               }
@@ -177,6 +193,12 @@ export default function BookingCardForm() {
               {
                 clientType === "booking-editor" && bookingDBNet?.booking_status !== "CANCELLED" && (
                   <>
+
+                    {
+                      // <ChangePaymentMethod bookingId={bookingDBNet?.booking_id as string} />
+                    }
+                    <AdminChangePaymentMethodWrap bookingId={bookingDBNet?.booking_id as string} />
+
                     <button
                       type='button'
                       disabled={
@@ -197,9 +219,16 @@ export default function BookingCardForm() {
                       }
                     </button>
                     {
-                      statusUpdatingDateTimeBookingMessage !== "" && (
-                        <p className="text-sm text-gray-500 mt-2 text-center">
-                          {statusUpdatingDateTimeBookingMessage}
+                      statusErrorUpdatingDateTimeBookingMessage !== "" && (
+                        <p className="text-sm text-gray-500 mt-2 text-center text-red-500">
+                          {statusErrorUpdatingDateTimeBookingMessage}
+                        </p>
+                      )
+                    }
+                    {
+                      statusSuccessUpdatingDateTimeBookingMessage !== "" && (
+                        <p className="text-sm text-gray-500 mt-2 text-center text-green-500">
+                          {statusSuccessUpdatingDateTimeBookingMessage}
                         </p>
                       )
                     }
@@ -285,7 +314,7 @@ export default function BookingCardForm() {
               }
 
               {
-                clientType === "booking-editor" && (
+                clientType === "booking-editor" && iCanCancel && (
                   <BookingCancelButton />
                 )
               }

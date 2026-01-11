@@ -250,12 +250,14 @@ export const BookingCheckoutProvider: React.FC<BookingCheckoutProviderProps> = (
   ): Promise<{ ok: boolean, bookingHash: string, booking: IBokunBooking, bookingToken: string }> => {
     // console.log("Confirmation the booking for reservation code:", reservation_bookingHash);
     // console.log("Confirmation the booking for transaction details:", transactionDetails);
+
     const paymentDetails: IBookingMetadata = {
       "externalBookingReference": "string",
       "externalBookingEntityName": "string",
       "externalBookingEntityCode": "string",
       "showPricesInNotification": true,
-      "sendNotificationToMainContact": true,
+      // this is sending notification after confirmation, so check it to false so it will not send this email
+      "sendNotificationToMainContact": false,
       "transactionDetails": transactionDetails !== undefined
         ?
         // live purposes

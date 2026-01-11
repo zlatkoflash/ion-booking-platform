@@ -28,6 +28,7 @@ export interface AuthState {
   isInitialized: boolean;
   user: User | null;
   error: string | null;
+  stripeCustomerId: string | null;
 }
 
 // All possible actions that can be dispatched to the reducer
@@ -43,6 +44,7 @@ export const initialState: AuthState = {
   isInitialized: false,
   user: null,
   error: null,
+  stripeCustomerId: null,
 };
 
 // --- REDUCER FUNCTION ---
@@ -100,7 +102,7 @@ interface AuthContextType extends AuthState {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // --- PROVIDER COMPONENT ---
-export function AuthProvider({ children, token, userFromOut }: PropsWithChildren<{ token: string | null, userFromOut: any | null }>) {
+export function AuthProvider({ children, token, userFromOut, stripeCustomerId }: PropsWithChildren<{ token: string | null, userFromOut: any | null, stripeCustomerId: string | null }>) {
 
   console.log("Auth Provider Rendering...");
 
@@ -109,6 +111,7 @@ export function AuthProvider({ children, token, userFromOut }: PropsWithChildren
     user: userFromOut,
     error: null,
     isInitialized: true,
+    stripeCustomerId: stripeCustomerId,
   });
 
   // The value provided to all consumers

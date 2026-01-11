@@ -4,6 +4,7 @@
 import AvailabilityCalendar from "@/components/AvailabilityCalendar/AvailabilityCalendar";
 import { useBookingSidebar } from './BookingSidebarProvider';
 import BookingCardForm from './utils/BookingCard';
+import { useEffect, useState } from "react";
 
 /*export interface IBookingSidebar {
   // showContactForm: boolean;,
@@ -26,39 +27,28 @@ export default function BookingSidebar() {
     setSelectedAvailability
   } = useBookingSidebar();
 
-  /*const showContactForm = false;
-
-  const contactDetails: IContactDetails = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: ''
-  };
-  const contactErrors: Partial<IContactDetails> = {};
-
-  const quantities: Record<number, number> = {};*/
-  // Pricing category mapping (you can expand this based on your needs)
+  const [isReady, setIsReady] = useState(false);
 
 
-  /*let selectedSlot: Partial<IBokunSlot & { isSet: boolean }> = {
-    isSet: false
-  };*/
   console.log("Check when selectedSlot have data how the html react");
 
+  useEffect(() => {
+    if (selectedAvailability) {
+      setIsReady(true);
+    }
+  }, []);
+
+
+  if (!isReady) {
+    return null;
+  }
 
   return (
     <div className="lg:col-span-1 space-y-8">
       {/* Availability Calendar */}
       <AvailabilityCalendar
         activityId={dataForExperience.experience?.id as string}
-      /*onSlotSelect={(availability) => {
-        console.log("last selected slot(availablility):", availability);
-        setSelectedAvailability(availability)
-      }}*/
-      // onSlotSelect={(slot) => {}} // it is server component
-      // onSlotSelect={() => {
-      // console.log("This will be handleSlotSelect function, see in the old code.");
-      // }}
+
       />
 
       <BookingCardForm />

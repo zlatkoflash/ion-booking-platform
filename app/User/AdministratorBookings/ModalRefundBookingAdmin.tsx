@@ -37,6 +37,7 @@ export default function ModalRefundBookingAdmin() {
       note: note
     })
     console.log("resultAfterRefund:", resultAfterRefund);
+    console.log("refundsData:", resultAfterRefund.refundsData);
     setRefunding(false);
     if (resultAfterRefund.ok === true) {
       let successMessageParts = "Refund successful";
@@ -65,7 +66,7 @@ export default function ModalRefundBookingAdmin() {
           Remaining: <b>{useCurrencyFormatter(
             remainingAmount,
             {
-              currency: "USD",
+              currency: "EUR",
               locale: "en-US",
               minimumFractionDigits: 2,
               maximumFractionDigits: 2
@@ -73,7 +74,7 @@ export default function ModalRefundBookingAdmin() {
           )}</b>
         </div>
         <label className="block">
-          <span className="text-sm">Amount (USD)</span>
+          <span className="text-sm">Amount (EUR)</span>
           <input
             className="mt-1 w-full border rounded-lg px-3 py-2"
             type="number" min="0" step="0.01"

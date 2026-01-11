@@ -1,3 +1,4 @@
+
 /*import { loadStripe } from '@stripe/stripe-js';
 
 // Initialize Stripe
@@ -66,6 +67,7 @@ export const toCents = (amount: number) => {
 export const fromCents = (cents: number) => {
   return cents / 100;
 };*/
+
 
 
 export const truncateId = (id: string) => {

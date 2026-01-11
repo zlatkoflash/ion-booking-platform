@@ -7,6 +7,7 @@ export const zconfig: {
   },
   stripe: {
     pk: string,
+    // sk?: string,
   }
 } = {
   supabase: {
@@ -16,6 +17,7 @@ export const zconfig: {
     api_key: process.env.NEXT_PUBLIC_SUPABASE_API_KEY as string
   },
   stripe: {
-    pk: process.env.NEXT_PUBLIC_STRIPE_PK as string
+    pk: process.env.NEXT_PUBLIC_STRIPE_PK as string,
+    // sk: process.env.STRIPE_SK as string
   }
 };

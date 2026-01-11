@@ -14,7 +14,9 @@ interface BookingEditorContextType {
   bookingPayments?: any[],
   bookingRefunds?: any[],
   isModalSuccessOpen?: boolean,
-  setIsModalSuccessOpen?: (isOpen: boolean) => void
+  setIsModalSuccessOpen?: (isOpen: boolean) => void,
+  iCanCancel?: boolean,
+  BookingDB: any,
   // setClientType: (type: ClientMode) => void;
 }
 
@@ -23,7 +25,7 @@ interface BookingEditorContextType {
 const BookingEditorContext = createContext<BookingEditorContextType | undefined>(undefined);
 
 // 4. Create the Provider component
-export const BookingEditorProvider = ({ children, clientType, bokunBookingForediting, bookingDBNet, bookingPayments, bookingRefunds }: { children: ReactNode, clientType?: ClientMode, bokunBookingForediting?: IBokunBooking, bookingDBNet?: IBookingDatabaseNet, bookingPayments?: any[], bookingRefunds?: any[] }) => {
+export const BookingEditorProvider = ({ children, clientType, bokunBookingForediting, bookingDBNet, bookingPayments, bookingRefunds, iCanCancel, BookingDB }: { children: ReactNode, clientType?: ClientMode, bokunBookingForediting?: IBokunBooking, bookingDBNet?: IBookingDatabaseNet, bookingPayments?: any[], bookingRefunds?: any[], iCanCancel?: boolean, BookingDB?: any }) => {
   // const [clientType, setClientType] = useState<ClientMode>("booking");
 
   const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
@@ -36,7 +38,9 @@ export const BookingEditorProvider = ({ children, clientType, bokunBookingForedi
       bookingPayments,
       bookingRefunds,
       isModalSuccessOpen,
-      setIsModalSuccessOpen
+      setIsModalSuccessOpen,
+      iCanCancel,
+      BookingDB
     }}>
       {children}
     </BookingEditorContext.Provider>

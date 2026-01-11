@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ChevronDown, LogOut } from 'lucide-react'; // Using lucide-react for icons
 import { handleLogout } from '../api/add-custom-token';
 import { useAuth } from '../AuthProvider';
+import Link from 'next/link';
 
 
 const UserAdminHeader = () => {
@@ -34,9 +35,13 @@ const UserAdminHeader = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
 
         {/* Left Section: Logo Text */}
-        <div className="text-2xl font-extrabold text-gray-900 tracking-tight">
+        <Link
+          href={
+            user?.role === "administrator" ? "/User/AdministratorBookings" : "/User/ManageMyBooking"
+          }
+          className="text-2xl font-extrabold text-gray-900 tracking-tight">
           WIT-3.0
-        </div>
+        </Link>
 
         {/* Right Section: User Dropdown */}
         <div className="relative">
