@@ -5,12 +5,14 @@ import { useRouter } from 'next/navigation';
 import { Send2HoursTokenForSignInWithEmail, SendTestEmail, TryToLoginWithTheCode } from '@/utils/bokun';
 import { getAuthToken, saveCustomTokenToCookie } from '../api/add-custom-token';
 import { useAuth } from '../AuthProvider';
+import { createClient } from '@/utils/supabaseClient';
+import { ISupabaseUser } from '@/utils/interface/auth';
 // Assuming your Supabase client is initialized and imported here
 // import { supabase } from '@/lib/supabaseClient'; 
 
 
 // NOTE: Replace this placeholder with your actual Supabase client setup
-const supabase = {
+/*const supabase = {
   auth: {
     signInWithPassword: async (credentials: { email: string, password: string }) => {
       // Simulate API call delay
@@ -25,7 +27,7 @@ const supabase = {
       return { data: { session: null, user: null }, error: { message: 'Invalid credentials or user is inactive.' } };
     }
   }
-}
+}*/
 
 
 export const UserLoginForm: React.FC = () => {
@@ -38,48 +40,15 @@ export const UserLoginForm: React.FC = () => {
 
   const [enteringCodeState, set_enteringCodeState] = useState(false);
 
-  /*const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setIsLoading(true);
+  const clientSupabase = createClient();
 
-    if (!email || !password) {
-      setError('Please fill in both the email and password fields.');
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      // 1. Call the Supabase sign-in method
-      const { error: authError } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
-
-      if (authError) {
-        // Handle Supabase-specific errors (e.g., rate limits, invalid user)
-        setError(authError.message);
-      } else {
-        // 2. Success: Redirect the user to the dashboard or profile page
-        router.push('/dashboard');
-      }
-
-    } catch (err) {
-      // Handle unexpected network errors
-      console.error(err);
-      setError('An unexpected error occurred. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };*/
-
-  const {
+  /*const {
     dispatch,
     user,
     isAuthenticated,
     // error,
     isInitialized,
-  } = useAuth();
+  } = useAuth();*/
 
 
 
@@ -99,32 +68,44 @@ export const UserLoginForm: React.FC = () => {
     const result = await TryToLoginWithTheCode(email, loginCode);
     console.log("TryToLoginWithTheCode result: ", result);
     setIsLoading(false)
-    if (result.data === undefined || result.data === null || result.data.token === undefined || result.data.token === "") {
+    // if (result.data === undefined || result.data === null || result.data.token === undefined || result.data.token === "") {
+    if (result.data === null || result.data.session === undefined || result.data.session === null) {
       setError("Invalid code, Please Try Again");
     } else {
       // here we set the token in the server cookies
-      console.log("result.data.token:", result.data.token);
+      /*console.log("result.data.token:", result.data.token);
       await saveCustomTokenToCookie(result.data.token);
-
       // router.refresh();
+      window.location.reload();*/
 
-      window.location.reload();
-
-      /*dispatch({
-        type: "LOGIN",
-        payload: {
-          user: {
-            id: result.data.user.id,
-            email: result.data.user.email,
-            name: result.data.user.name,
-            role: result.data.user.role
-          }
-        }
-      });
-
-      const token = await getAuthToken();
-      console.log("token cookie:", token);
+      console.log("result.data.session:", result.data.session);
+      const userAuth = result.data.session.user as ISupabaseUser;
+      const { data, error } = await clientSupabase.auth.setSession({
+        access_token: result.data.session.access_token,
+        refresh_token: result.data.session.refresh_token,
+      })
+      console.log("After trying to login:");
+      console.log("data:", data);
+      console.log("error:", error);
+      /*if (userAuth.user_metadata.role === 'administrator') {
+        router.push('/User/AdministratorBookings');
+      }
+      else if (userAuth.user_metadata.role === "client") {
+        router.push('/User/ManageMyBooking');
+      }
       router.refresh();*/
+      if (userAuth.user_metadata.role === 'administrator') {
+        // Hard redirect to Admin area
+        window.location.href = '/User/AdministratorBookings';
+      }
+      else if (userAuth.user_metadata.role === 'client') {
+        // Hard redirect to Client area
+        window.location.href = '/User/ManageMyBooking';
+      }
+      else {
+        // Fallback if role is missing (optional but recommended)
+        // window.location.href = '/User/Login';
+      }
     }
   }
 

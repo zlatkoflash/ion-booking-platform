@@ -107,7 +107,7 @@ export const useTableBookings = () => {
 // --- 4. THE PROVIDER COMPONENT ---
 
 // export const TableBookingsProvider: React.FC<TableBookingsProviderProps> = (props) => {
-export const TableBookingsProvider = ({ children, bookings_owner = "all" }: { children: React.ReactNode, bookings_owner?: "all" | "logged-client" }) => {
+export const TableBookingsProvider = ({ children }: { children: React.ReactNode }) => {
 
 
   const {
@@ -183,20 +183,29 @@ export const TableBookingsProvider = ({ children, bookings_owner = "all" }: { ch
 
 
   const fetchTheBookings = async () => {
-    const bookings = await GetBookingsFromDB({
-      p_limit: maxCountPerPage,
-      p_offset: offset,
-      p_user_email: null,
-      p_user_name: null,
 
-      // Merge in external constraints
-      p_user_id: bookings_owner === "logged-client" ? user?.id.toString() as string : null,
-      p_tour_id: null,
-      p_from_date: null,
-      p_to_date: null,
+    console.log("fetchTheBookings user:", user);
+    if (user === null) {
+      return;
+    }
 
-      p_global_search: searchText || null,
-    });
+    const bookings = await GetBookingsFromDB(
+      user,
+      {
+        p_limit: maxCountPerPage,
+        p_offset: offset,
+        p_user_email: null,
+        p_user_name: null,
+
+        // Merge in external constraints
+        // p_user_id: bookings_owner === "logged-client" ? user?.id.toString() as string : null,
+        p_user_id: user?.id.toString() as string,
+        p_tour_id: null,
+        p_from_date: null,
+        p_to_date: null,
+
+        p_global_search: searchText || null,
+      });
 
     if (bookings.data !== undefined && bookings.data !== null) {
       setRows(bookings.data.bookings);
@@ -206,7 +215,7 @@ export const TableBookingsProvider = ({ children, bookings_owner = "all" }: { ch
       }
     }
 
-    console.log("bookings:", bookings);
+    console.log("bookings for administrator / client:", bookings);
 
   }
 
@@ -265,7 +274,7 @@ export const TableBookingsProvider = ({ children, bookings_owner = "all" }: { ch
   useEffect(() => {
     fetchTheBookings();
   }, [
-    searchText, pageNumber, pageIndex
+    searchText, pageNumber, pageIndex, user
   ]);
   useEffect(() => {
     setPageIndex(1);

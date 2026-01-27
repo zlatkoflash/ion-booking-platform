@@ -52,7 +52,7 @@ export default function TableWithBookingsAdmin() {
   // const [showModal, setShowModal] = useState(false);
 
 
-  const page = 1;
+  /*const page = 1;
   const pages = 10;
   const total = 300;
 
@@ -64,7 +64,7 @@ export default function TableWithBookingsAdmin() {
 
   const note = "This wil be a note";
 
-  const refunding = false;
+  const refunding = false;*/
 
   /*if (!token) {
     return (
@@ -141,7 +141,10 @@ export default function TableWithBookingsAdmin() {
                         row.bokun_confirmation_code
                       }
                     </div>
-                    <div className="text-xs text-gray-500">{row.booking_created_at?.replace('T', ' ').slice(0, 16)}</div>
+                    <div className="text-xs text-gray-500">{
+                      // row.booking_created_at?.replace('T', ' ').slice(0, 16)
+                      (new Date(row.booking_created_at)).toLocaleString()
+                    }</div>
                   </td>
                   <td className="px-4 py-3">
                     <div className="font-medium">{row.user_name || "—"}</div>

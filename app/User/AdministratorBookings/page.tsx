@@ -8,9 +8,9 @@ export default async function ManageMyBookingAdmin(params: { searchParams: Promi
   const detailsForUser = await getUserDetailsFromServer();
   console.log("detailsForUser from page.tsx:", detailsForUser);
 
-  if (detailsForUser?.user.role !== "administrator") {
-    return <UserLoginForm />
-  }
+  /*if (detailsForUser?.user.role !== "administrator") {
+    // return <UserLoginForm />
+  }*/
 
 
   return <ManageMyBookingContentWrapPageAdmin />

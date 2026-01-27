@@ -71,14 +71,14 @@ export const BookingCancellingError: IAppError = {
 }
 
 
-export default function ErrorMessage({ error }: { error: IAppError }) {
+export default function ErrorMessage({ error, customErrorMessage }: { error: IAppError, customErrorMessage?: string }) {
   return <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6 mt-5">
     <div className="flex items-start">
       <AlertCircle className="w-5 h-5 text-red-600 mr-3" />
       <div>
         <div className="font-semibold text-red-800">{formatErrorCodeLocal(error.errorCode)}</div>
         <div className="text-sm text-red-700">
-          {error.userMessage}
+          {customErrorMessage !== undefined && customErrorMessage !== "" ? customErrorMessage : error.userMessage}
         </div>
         <div className="text-xs text-red-600 mt-1">
           {error.userAction}

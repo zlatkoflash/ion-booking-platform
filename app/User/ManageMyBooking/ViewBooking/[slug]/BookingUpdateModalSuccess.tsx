@@ -1,12 +1,17 @@
 import { useBookingEditor } from '@/app/TourView/[[...slug]]/BookingEditorProvider';
+import { RootState } from '@/libs/store';
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const BookingUpdateModalSuccess = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const [countdown, setCountdown] = useState(5);
 
-  const {
+  /*const {
     isModalSuccessOpen
-  } = useBookingEditor();
+  } = useBookingEditor();*/
+
+  const bookingCalendarState = useSelector((state: RootState) => state.bookingCalendar);
+  const isModalSuccessOpen = bookingCalendarState.editor.isModalSuccessOpen;
 
   useEffect(() => {
     if (!isModalSuccessOpen) return;

@@ -5,8 +5,9 @@ import { IBokunBooking } from "./bokun";
 import { SupabaseEdgeFetchPost } from "./supabase"
 import { getStripeServer } from "./stripe-server";
 import Stripe from "stripe";
+import { ISupabaseUser } from "./interface/auth";
 
-export const GetBookingsFromDB = async (payload: {
+export const GetBookingsFromDB = async (user: ISupabaseUser, payload: {
   p_user_id: string | null,
   p_tour_id: string | null,
   p_user_email: string | null,
@@ -18,11 +19,15 @@ export const GetBookingsFromDB = async (payload: {
   p_global_search: string | null
 }) => {
 
-  const result = await SupabaseEdgeFetchPost("/bokun-admin-client/GetBookingsFromDB", payload, true);
-  const resultText = await result.text();
-  const resultJSON = JSON.parse(resultText);
+  console.log("GetBookingsFromDB init... user:", user);
 
-  return resultJSON;
+  const result = await SupabaseEdgeFetchPost(
+    user.user_metadata.role === "administrator" ? "/bokun-administrator/GetBookingsFromDB" : "/bokun-admin-client/GetBookingsFromDB",
+    payload, true);
+  // const resultText = await result.text();
+  // const resultJSON = JSON.parse(resultText);
+
+  return result;
 
 }
 
@@ -32,13 +37,13 @@ export const GetBookingDetailsByBookingId = async (payload: {
 }) => {
 
   const result = await SupabaseEdgeFetchPost("/bokun-admin-client/get-booking-details-for-client-by-id", payload, true);
-  const resultText = await result.text();
+  // const resultText = await result.text();
 
-  const resultJSON = JSON.parse(resultText);
+  // const resultJSON = JSON.parse(resultText);
 
 
 
-  return resultJSON;
+  return result;
 }
 
 export const CancelBooking = async (payload: {
@@ -46,13 +51,13 @@ export const CancelBooking = async (payload: {
 }) => {
 
   const result = await SupabaseEdgeFetchPost("/bokun-admin-client/cancel-booking", payload, true);
-  const resultText = await result.text();
+  // const resultText = await result.text();
 
-  const resultJSON = JSON.parse(resultText);
+  // const resultJSON = JSON.parse(resultText);
 
 
 
-  return resultJSON;
+  return result;
 }
 
 export const UpdateBooking = async (payload: {
@@ -72,13 +77,13 @@ export const UpdateBooking = async (payload: {
 }) => {
 
   const result = await SupabaseEdgeFetchPost("/bokun-admin-client/update-booking", payload, true);
-  const resultText = await result.text();
+  // const resultText = await result.text();
 
-  const resultJSON = JSON.parse(resultText);
+  // const resultJSON = JSON.parse(resultText);
 
 
 
-  return resultJSON;
+  return result;
 }
 
 
@@ -89,14 +94,14 @@ export const RefundPartialForBooking = async (payload: {
   note: string
 }) => {
 
-  const result = await SupabaseEdgeFetchPost("/bokun-admin-client/refund-partial-for-booking", payload, true);
-  const resultText = await result.text();
+  const result = await SupabaseEdgeFetchPost("/bokun-administrator/refund-partial-for-booking", payload, true);
+  // const resultText = await result.text();
 
-  const resultJSON = JSON.parse(resultText);
+  // const resultJSON = JSON.parse(resultText);
 
 
 
-  return resultJSON;
+  return result;
 }
 
 
@@ -105,13 +110,13 @@ export const GetStripeClientSecret = async (payload?: {
 }) => {
 
   const result = await SupabaseEdgeFetchPost("/bokun-admin-client/get-stripe-client-secret", payload, true);
-  const resultText = await result.text();
+  // const resultText = await result.text();
 
-  const resultJSON = JSON.parse(resultText);
+  // const resultJSON = JSON.parse(resultText);
 
 
 
-  return resultJSON;
+  return result;
 }
 export async function createSetupIntentAction(customerId: string) {
   try {
@@ -147,12 +152,12 @@ export const AttachThePaymentMethodToTheCustomerDefault = async (customerId: str
     }, true);
     console.log("attachPaymentMethod:", attachPaymentMethod);
     // return {};
-    const resultText = await attachPaymentMethod.text();
+    // const resultText = await attachPaymentMethod.text();
 
-    const resultJSON = JSON.parse(resultText);
+    // const resultJSON = JSON.parse(resultText);
 
     return {
-      success: true, attachPaymentMethod: resultJSON
+      success: true, attachPaymentMethod: attachPaymentMethod
     };
   } catch (error: any) {
     return { success: false, error: error.message };

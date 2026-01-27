@@ -69,10 +69,12 @@ export interface IBokunItem extends IExperienceBokunTourSharedInterface {
 export const BokunSearch = async (data: any) => {
 
 
-  let resultText = "";
+  let result = null;
+
+  // let resultText = "";
   try {
-    const result = await SupabaseEdgeFetchPost("/bokun/search", data);
-    resultText = await result.text();
+    result = await SupabaseEdgeFetchPost("/bokun/search", data);
+    // resultText = await result.text();
   }
   catch (error) {
     return {
@@ -84,13 +86,13 @@ export const BokunSearch = async (data: any) => {
   }
 
   try {
-    const json = JSON.parse(resultText);
-    console.log("Bokun search data:", json);
+    // const json = JSON.parse(resultText);
+    // console.log("Bokun search data:", json);
 
-    const bokunItems: IBokunItem[] = json.bokun.items;
+    const bokunItems: IBokunItem[] = result.bokun.items;
     const dataForReturn: any = {
       ok: true,
-      bokunOriginalData: json,
+      bokunOriginalData: result,
       items: []
     };
 
@@ -149,52 +151,57 @@ export interface IBokunGetExperienceById {
 }
 export const BokunGetExperienceById = async (experienceId: any, experienceSlug?: any): Promise<IBokunGetExperienceById> => {
 
-  let resultText = "";
+  // return { ok: false, error: null, message: "" };
+
+  // let resultText = "";
 
   console.log("BokunGetExperienceById init...");
 
+  let result = null;
+
   try {
-    console.log("resultText Before:", resultText);
-    const result = await SupabaseEdgeFetchPost(
+    // console.log("resultText Before:", resultText);
+    result = await SupabaseEdgeFetchPost(
       '/bokun/GetExperienceById',
       {
         experienceId: experienceId,
         experienceSlug: experienceSlug !== undefined ? experienceSlug : "",
       }
     );
-    resultText = await result.text();
+    // resultText = await result.text();
+    //console.log("resultText After:", resultText);
     // console.log("resultText:", resultText);
   }
-  catch (error) {
+  catch (error: any) {
     console.log("Fetching experience by id error:", error);
     return {
       ok: false,
-      error: error,
+      error: error.message,
       message: "fetching supabase bokun/GetExperienceById have errors",
-      experience: undefined
+      // experience: undefined
     };
   }
 
   console.log("Trying to get the data");
 
   try {
-    const json = JSON.parse(resultText);
-    console.log("json:", json);
+    // const json = JSON.parse(resultText);
+    // console.log("json:", json);
     return {
       ok: true,
       message: "Getting the data for experience",
       // experience: 
       // serverData:json,
-      experience: json.data?.experience,
-      json: json
+      experience: result.data?.experience,
+      json: result
     };
   }
-  catch (error) {
+  catch (error: any) {
     return {
       ok: false,
-      error: error,
+      error: error.message,
       message: "converting text result to json while bokun/GetExperienceById have errors",
-      experience: undefined
+      // experience: undefined
     };
   }
 
@@ -226,10 +233,11 @@ export const BokunGetAvailabilitiesForExperience = async (experienceId: any, dat
   availabilities: IBokunAvailability[]
 }> => {
 
-  let resultText = "";
+  // let resultText = "";
 
+  let result: any = {};
   try {
-    const result = await SupabaseEdgeFetchPost(
+    result = await SupabaseEdgeFetchPost(
       '/bokun/GetAvailabilitiesForExperience',
       {
         experienceId: experienceId,
@@ -240,7 +248,7 @@ export const BokunGetAvailabilitiesForExperience = async (experienceId: any, dat
       }
     );
     // console.log(result);
-    resultText = await result.text();
+    // resultText = await result.text();
     // console.log("BokunGetAvailabilitiesForExperience resultText:", resultText);
     /*const resultText = await result.text();
     const json = JSON.parse(resultText);
@@ -262,15 +270,15 @@ export const BokunGetAvailabilitiesForExperience = async (experienceId: any, dat
 
 
   try {
-    const json = JSON.parse(resultText);
-    console.log("json:", json);
+    // const json = JSON.parse(resultText);
+    // console.log("json:", json);
     return {
       ok: true,
       message: "Getting the data for experience",
       // experience: 
       // experience: json,
-      serverData: json,
-      ...json.data,
+      serverData: result,
+      ...result.data,
     };
   }
   catch (error) {
@@ -288,12 +296,12 @@ export const GetDetailsForBooking = async (details: any) => {
   try {
     const result = await SupabaseEdgeFetchPost('/bokun/GetDetailsForBooking', details);
     console.log("GetDetailsForBooking result:", result);
-    const resultText = await result.text();
-    const jsonResult = JSON.parse(resultText);
+    // const resultText = await result.text();
+    // const jsonResult = JSON.parse(resultText);
     return {
       ok: true,
       // dataForBooking: jsonResult
-      ...jsonResult
+      ...result
     }
   }
   catch (error) {
@@ -387,11 +395,11 @@ export const BokunReserveBooking = async (
 
     const result = await SupabaseEdgeFetchPost('/bokun/ReserveBooking', bookingReservationPayload);
     console.log("GetDetailsForBooking result:", result);
-    const resultText = await result.text();
-    const bookingResevationData = JSON.parse(resultText);
+    // const resultText = await result.text();
+    // const bookingResevationData = JSON.parse(resultText);
     return {
       ok: true,
-      bookingResevationData: bookingResevationData,
+      bookingResevationData: result,
       message: "Booking reservation feedback"
     }
   }
@@ -426,12 +434,12 @@ export const StripePaymentIntentForTheBooking = async (customerId: string, payme
       paymentIntent: paymentIntent
     });
     // console.log("StripePaymentIntentForTheBooking result:", result);
-    const resultText = await result.text();
-    const bookingIntentData = JSON.parse(resultText);
+    // const resultText = await result.text();
+    // const bookingIntentData = JSON.parse(resultText);
     return {
       ok: true,
       // bookingIntentData: bookingIntentData,
-      ...bookingIntentData,
+      ...result,
       message: "Payment intent for the booking"
     }
   }
@@ -499,11 +507,11 @@ export const BokunConfirmTheBooking = async (
       paymentDetails: paymentDetails
     });
     // console.log("BokunConfirmTheBooking result:", result);
-    const resultText = await result.text();
-    const bookingConfirmData = JSON.parse(resultText);
+    // const resultText = await result.text();
+    // const bookingConfirmData = JSON.parse(resultText);
     return {
       ok: true,
-      bookingConfirmData: bookingConfirmData,
+      bookingConfirmData: result,
       message: "Booking confirm reserveation feedback"
     }
   }
@@ -781,11 +789,11 @@ export const InsertDemoDataInTheCrud = async () => {
   try {
     const result = await SupabaseEdgeFetchPost('/bokun/InsertDemoDataInTheCrud', {});
     console.log("InsertDemoDataInTheCrud result:", result);
-    const resultText = await result.text();
-    const bookingResevationData = JSON.parse(resultText);
+    // const resultText = await result.text();
+    // const bookingResevationData = JSON.parse(resultText);
     return {
       ok: true,
-      bookingResevationData: bookingResevationData,
+      bookingResevationData: result,
       message: "Insert demo data in the crud"
     }
   }
@@ -880,11 +888,11 @@ export const __DELETE__SaveTheBookingData = async (
       payment: paymentDetails
     });
     console.log("SaveTheBookingData result:", result);
-    const resultText = await result.text();
-    const bookingResevationData = JSON.parse(resultText);
+    // const resultText = await result.text();
+    // const bookingResevationData = JSON.parse(resultText);
     return {
       ok: true,
-      bookingResevationData: bookingResevationData,
+      bookingResevationData: result,
       message: "Boooking save the data"
     }
   }
@@ -909,9 +917,9 @@ export const GetBookingDetailsByToken = async (token: string): Promise<{
   try {
     const details = await SupabaseEdgeFetchPost('/bokun/GetBookingDetailsByToken', { token: token });
     try {
-      const detailsText = await details.text();
-      const detailsJSON = JSON.parse(detailsText);
-      return detailsJSON;
+      // const detailsText = await details.text();
+      // const detailsJSON = JSON.parse(detailsText);
+      return details;
     }
     catch (error) {
       return null;
@@ -926,9 +934,9 @@ export const SendTestEmail = async () => {
   try {
     const details = await SupabaseEdgeFetchPost('/bokun/SendTestEmail', {});
     try {
-      const detailsText = await details.text();
-      const detailsJSON = JSON.parse(detailsText);
-      return detailsJSON;
+      // const detailsText = await details.text();
+      // const detailsJSON = JSON.parse(detailsText);
+      return details;
     }
     catch (error) {
       return null;
@@ -941,19 +949,22 @@ export const SendTestEmail = async () => {
 
 
 export const Send2HoursTokenForSignInWithEmail = async (email: string) => {
+  // return { ok: false, error: null, message: "" };
   try {
     const details = await SupabaseEdgeFetchPost('/bokun/Send2HoursTokenForSignInWithEmail', { email: email });
     try {
-      const detailsText = await details.text();
-      const detailsJSON = JSON.parse(detailsText);
-      return detailsJSON;
+      // const detailsText = await details.text();
+      // const detailsJSON = JSON.parse(detailsText);
+      return details;
     }
-    catch (error) {
-      return null;
+    catch (error: any) {
+      console.log("Error Send2HoursTokenForSignInWithEmail:", error.message);
+      return { ok: false, error: error, message: error.message };
     }
   }
-  catch (error) {
-    return null;
+  catch (error: any) {
+    console.log("Error Send2HoursTokenForSignInWithEmail:", error.message);
+    return { ok: false, error: error, message: error.message };
   }
 }
 
@@ -961,9 +972,9 @@ export const TryToLoginWithTheCode = async (email: string, code: string) => {
   try {
     const details = await SupabaseEdgeFetchPost('/bokun/TryToLoginWithTheCode', { email: email, code: code });
     try {
-      const detailsText = await details.text();
-      const detailsJSON = JSON.parse(detailsText);
-      return detailsJSON;
+      // const detailsText = await details.text();
+      // const detailsJSON = JSON.parse(detailsText);
+      return details;
     }
     catch (error) {
       return null;

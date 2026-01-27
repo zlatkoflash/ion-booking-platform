@@ -13,6 +13,7 @@ import BookingEditorWrap from "./BookingEditorWrap";
 import { IBookingDatabaseNet } from "@/interface/payment.booking";
 import { getUserDetailsFromServer } from "@/app/User/api/add-custom-token";
 import ErrorMessage, { BookingNotFound } from "@/components/ErrorMessages/ErrorMessage";
+import HydrateMyBooking from "./HydrateMyBooking";
 
 export default async function ViewMyBooking({ params }: { params: { slug: string } }) {
 
@@ -47,9 +48,11 @@ export default async function ViewMyBooking({ params }: { params: { slug: string
   console.log("bokunBooking:", bokunBooking);
 
 
+  /*
   if (detailsForUser === null || BookingDB.user_id !== detailsForUser?.user.id) {
-    return <UserLoginForm />
+    //return <UserLoginForm />
   }
+  */
 
 
   if (!BookingDetails.bokunBooking?.activityBookings) {
@@ -73,15 +76,22 @@ export default async function ViewMyBooking({ params }: { params: { slug: string
 
   return (
 
-    <BookingEditorWrap
-      bokunBooking={bokunBooking}
-      dataForExperience={dataForExperience}
-      bookingDBNet={bookingNet}
-      bookingPayments={bookingPayments}
-      bookingRefunds={bookingRefunds}
-      iCanCancel={BookingDetails.iCanCancel}
-      BookingDB={BookingDB}
-    />
+    <>
+      <HydrateMyBooking
+        dataForExperience={dataForExperience}
+        bokunBooking={bokunBooking}
+      />
+
+      <BookingEditorWrap
+        bokunBooking={bokunBooking}
+        dataForExperience={dataForExperience}
+        bookingDBNet={bookingNet}
+        bookingPayments={bookingPayments}
+        bookingRefunds={bookingRefunds}
+        iCanCancel={BookingDetails.iCanCancel}
+        BookingDB={BookingDB}
+      />
+    </>
 
   );
 }

@@ -5,6 +5,8 @@ import { useBookingEditor } from "../../BookingEditorProvider";
 import { AbbreviatedMonthDate, FormatTimeFromDate } from "@/utils/dateUtils";
 import { truncateId } from "@/utils/stripe";
 import { useCurrencyFormatter } from "@/utils/formats";
+import { useSelector } from "react-redux";
+import { RootState } from "@/libs/store";
 
 interface IStripeRefundMetadata {
   id: string;
@@ -33,7 +35,8 @@ export interface IRefund {
 
 export default function EditorTableRefunds() {
 
-  const { bookingRefunds } = useBookingEditor()
+  /*const { bookingRefunds } = useBookingEditor()*/
+  const bookingRefunds = useSelector((state: RootState) => state.bookingCalendar.editor.bookingRefunds);
 
   const ___LoadTheRefunds = async () => {
 

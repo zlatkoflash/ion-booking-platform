@@ -4,20 +4,35 @@ import { useBookingSingleItem } from "@/app/User/ManageMyBooking/ViewBooking/[sl
 import { CancelBooking } from "@/utils/bokunAdminClient";
 import { useState } from "react";
 import { useBookingEditor } from "../../BookingEditorProvider";
-import { isWithinPast24Hours } from "@/utils/dateUtils";
+import { getTimeDifference, isWithinPast24Hours } from "@/utils/dateUtils";
 import ErrorMessage, { BookingCancellingError } from "@/components/ErrorMessages/ErrorMessage";
 import { ModalCancelApprove } from "@/components/Modals/ModalCancelApprove";
+import { useSelector } from "react-redux";
+import { RootState } from "@/libs/store";
 
 export default function BookingCancelButton() {
   // isWithinPast24Hours
-  const {
+  /*const {
     bookingDBNet,
 
-  } = useBookingEditor()
+  } = useBookingEditor()*/
+  const bookingState = useSelector((state: RootState) => state.bookingCalendar);
+  const bookingDBNet = bookingState.editor.bookingDBNet;
+  const bookingForEditing = bookingState.editor.bokunBookingForediting;
   // bookingDBNet.
 
   const [cancelling, setCancelling] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const timeDifference = getTimeDifference(
+    new Date().getTime(),
+    bookingForEditing?.activityBookings[0].date as number,
+  );
+
+  const hoursRemaining = timeDifference.totalHours;
+  const isEligible = hoursRemaining >= 24 && bookingDBNet?.booking_status === "CONFIRMED";
+
 
   const ___CancelTheBooking = async () => {
 
@@ -34,6 +49,7 @@ export default function BookingCancelButton() {
     });
     if (result.ok === false) {
       setError(true);
+      setErrorMessage(result.error as string);
     }
     else {
 
@@ -46,15 +62,20 @@ export default function BookingCancelButton() {
   }
 
 
-  if (bookingDBNet?.booking_status === "CANCELLED") {
+  /*if (bookingDBNet?.booking_status === "CANCELLED") {
     return <p className="text-red-600 text-center">The booking is cancelled</p>
-  }
+  }*/
 
-  if (!isWithinPast24Hours(bookingDBNet?.booking_created_at as string) || bookingDBNet?.booking_status === "CANCELLED") {
+  /*if (!isWithinPast24Hours(bookingDBNet?.booking_created_at as string) || bookingDBNet?.booking_status === "CANCELLED") {
+    return null;
+  }*/
+
+  if (!isEligible) {
     return null;
   }
 
   return (<>
+
     <button
       type='button'
       onClick={() => {
@@ -66,7 +87,7 @@ export default function BookingCancelButton() {
     >
       {cancelling ? "Canceling..." : "Cancel The Booking"}
     </button>
-    {error && <ErrorMessage error={BookingCancellingError} />}
+    {error && <ErrorMessage error={BookingCancellingError} customErrorMessage={errorMessage} />}
 
     <ModalCancelApprove
       isOpen={cancelling}

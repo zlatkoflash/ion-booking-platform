@@ -6,6 +6,8 @@ import { AttachThePaymentMethodToTheCustomerDefault, createSetupIntentAction, ge
 import { useAuth } from '@/app/User/AuthProvider';
 import Stripe from 'stripe';
 import { useBookingEditor } from '../../BookingEditorProvider';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/libs/store';
 
 const ChangePaymentForm = ({ bookingId }: { bookingId: string }) => {
 
@@ -14,10 +16,13 @@ const ChangePaymentForm = ({ bookingId }: { bookingId: string }) => {
     user,
   } = useAuth();
 
-  const {
+  /*const {
     bookingDBNet,
     BookingDB
-  } = useBookingEditor();
+  } = useBookingEditor();*/
+  const bookingCalendarState = useSelector((state: RootState) => state.bookingCalendar);
+  const bookingDBNet = bookingCalendarState.editor.bookingDBNet;
+  const BookingDB = bookingCalendarState.editor.BookingDB;
 
   const [defaultPaymentCardDetails, setDefaultPaymentCardDetails] = useState<string>("");
 
@@ -60,7 +65,7 @@ const ChangePaymentForm = ({ bookingId }: { bookingId: string }) => {
             card: cardElement,
             billing_details: {
               email: user?.email || undefined,
-              name: user?.name || undefined,
+              // name: user?. || undefined,
             },
           },
         }
@@ -121,6 +126,9 @@ const ChangePaymentForm = ({ bookingId }: { bookingId: string }) => {
                 : ""
             }.
           </p>
+
+
+
           <button
             type="button"
             onClick={() => setIsChanging(true)}

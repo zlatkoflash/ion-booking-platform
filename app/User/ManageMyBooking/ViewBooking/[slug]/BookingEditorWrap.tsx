@@ -8,6 +8,7 @@ import { UserLoginForm } from "@/app/User/content/LoginForm";
 import { IBokunBooking, IBokunGetExperienceById } from "@/utils/bokun";
 import { IBookingDatabaseNet } from "@/interface/payment.booking";
 import BookingUpdateModalSuccess from "./BookingUpdateModalSuccess";
+import HydrateMyBookingEditor from "./HydrateMyBookingEditor";
 
 export default function BookingEditorWrap({
   bokunBooking,
@@ -34,12 +35,26 @@ export default function BookingEditorWrap({
     error
   } = useAuth();
 
-  if (!isAuthenticated)
+  {
+    /*if (!isAuthenticated){
     return (
-      <UserLoginForm />
+      // <UserLoginForm />
     );
+  }*/
+  }
   return (
     <>
+
+      <HydrateMyBookingEditor
+        clientType="booking-editor"
+        bokunBookingForediting={bokunBooking}
+        bookingDBNet={bookingDBNet}
+        bookingPayments={bookingPayments}
+        bookingRefunds={bookingRefunds}
+        iCanCancel={iCanCancel}
+        BookingDB={BookingDB}
+      />
+
       <UserAdminHeader />
 
       {
@@ -50,7 +65,9 @@ export default function BookingEditorWrap({
         */
       }
 
-      <BookingEditorProvider
+      {
+        /*
+        <BookingEditorProvider
         clientType="booking-editor"
         bokunBookingForediting={bokunBooking}
         bookingDBNet={bookingDBNet}
@@ -60,10 +77,18 @@ export default function BookingEditorWrap({
         BookingDB={BookingDB}
       >
         <BookingActivitySelector
-          dataForExperience={dataForExperience}
+          dataForExperienceOut={dataForExperience}
         />
         <BookingUpdateModalSuccess isOpen={true} onClose={() => { }} />
       </BookingEditorProvider>
+        */
+      }
+
+      <BookingActivitySelector
+        dataForExperienceOut={dataForExperience}
+      />
+      <BookingUpdateModalSuccess isOpen={true} onClose={() => { }} />
+
 
     </>
   );

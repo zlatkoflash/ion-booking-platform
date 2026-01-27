@@ -23,10 +23,11 @@ export default function ManageMyBookingContentWrapPage() {
   } = useAuth();
 
 
-  if (!isAuthenticated)
+  /*if (!isAuthenticated){
     return (
-      <UserLoginForm />
+      // <UserLoginForm />
     );
+  }*/
 
 
   return <>

@@ -2,12 +2,15 @@
 
 import { useBookingSidebar } from '@/app/TourView/[[...slug]]/content/BookingSidebarProvider';
 import { IBokunAvailability } from '@/interface/Interface';
+import { availiabilityCount, BookingCalendarActions } from '@/libs/features/BookingCalendar/bookingCalendarSlice';
+import { RootState } from '@/libs/store';
 // import { IBokunSlot } from '@/app/interface/interface';
-import { formatDateString, normalizeDateToYYYYMMDD } from '@/utils/dateUtils';
+import { formatDateString, formatToYYYYMMDD, normalizeDateToYYYYMMDD } from '@/utils/dateUtils';
 import {
   ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 export interface IZCalendarWidget {
@@ -26,7 +29,7 @@ export default function ZCalendarWidget(
 
   const {
     // slots,
-    availablilitesForDateRange,
+    // availablilitesForDateRange,
     selectedDate,
     onDateClick,
     onMonthChange,
@@ -34,11 +37,19 @@ export default function ZCalendarWidget(
     // set_calendarActiveMonth,
   } = data;
 
-  const {
-    calendarActiveMonth,
-    set_calendarActiveMonth,
+  const dispatch = useDispatch();
+
+  const bookingCalendarState = useSelector((state: RootState) => state.bookingCalendar);
+  const availablilitesForDateRange = bookingCalendarState.availablilitesForDateRange;
+
+  /*const {
+    // calendarActiveMonth,
+    // set_calendarActiveMonth,
     availiabilityCount
-  } = useBookingSidebar();
+  } = useBookingSidebar();*/
+
+  const calendarActiveMonth = useSelector((state: RootState) => state.bookingCalendar.calendarActiveMonth);
+  const calendarActiveMonthDate = new Date(calendarActiveMonth);
 
   // const [currentMonth, setCurrentMonth] = useState(new Date());
   /*useEffect(() => {
@@ -88,13 +99,16 @@ export default function ZCalendarWidget(
     // onMonthChange && onMonthChange(new Date());
     let newDateChanged: Date;
     console.log("calendarActiveMonth:", calendarActiveMonth);
+    const OldDate: Date = new Date(calendarActiveMonth);
     if (direction === 'prev') {
-      newDateChanged = new Date(calendarActiveMonth.getFullYear(), calendarActiveMonth.getMonth() - 1, 1);
+      newDateChanged = new Date(OldDate.getFullYear(), OldDate.getMonth() - 1, 1);
     } else {
-      newDateChanged = new Date(calendarActiveMonth.getFullYear(), calendarActiveMonth.getMonth() + 1, 1);
+      newDateChanged = new Date(OldDate.getFullYear(), OldDate.getMonth() + 1, 1);
     }
     console.log("newDateChanged:", newDateChanged);
-    set_calendarActiveMonth(newDateChanged)
+    // set_calendarActiveMonth(newDateChanged)
+
+    dispatch(BookingCalendarActions.set_calendarActiveMonth(formatToYYYYMMDD(newDateChanged)));
     /*setCurrentMonth(prev => {
       const newDate = new Date(prev);
       if (direction === 'prev') {
@@ -131,7 +145,7 @@ export default function ZCalendarWidget(
           navigateMonth('prev');
           console.log("navigateMonth('prev');");
           if (onMonthChange !== undefined) {
-            onMonthChange(calendarActiveMonth)
+            onMonthChange(calendarActiveMonthDate)
           }
 
         }}
@@ -141,7 +155,7 @@ export default function ZCalendarWidget(
       </button>
 
       <h4 className="text-lg font-semibold text-gray-800">
-        {calendarActiveMonth.toLocaleDateString('en', { month: 'long', year: 'numeric' })}
+        {calendarActiveMonthDate.toLocaleDateString('en', { month: 'long', year: 'numeric' })}
       </h4>
 
       <button
@@ -149,7 +163,7 @@ export default function ZCalendarWidget(
           navigateMonth('next');
           console.log("navigateMonth('next');");
           if (onMonthChange !== undefined) {
-            onMonthChange(calendarActiveMonth)
+            onMonthChange(calendarActiveMonthDate)
           }
         }}
         className="p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -171,7 +185,7 @@ export default function ZCalendarWidget(
 
       {/* Calendar Days */}
       <div className="grid grid-cols-7 gap-1">
-        {getDaysInMonth(calendarActiveMonth).map((date, index) => {
+        {getDaysInMonth(calendarActiveMonthDate).map((date, index) => {
           if (!date) {
             return <div key={index} className="h-12"></div>;
           }
@@ -184,7 +198,7 @@ export default function ZCalendarWidget(
           // console.log("availability", availability);
           const hasAvailability = availabilitiesForDate.length > 0 && availabilitiesForDate.some(
             // slot => slot.availabilityCount > 0
-            slot => availiabilityCount(slot) > 0
+            slot => availiabilityCount(bookingCalendarState, slot) > 0
           );
           // const hasAvailability = true;
           const isSelected = selectedDate === dateString;

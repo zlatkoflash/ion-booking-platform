@@ -12,8 +12,10 @@ export default function ViewMyBookingContent({ bookingId }: { bookingId: string 
 
   const { user } = useAuth();
 
-  if (!user) {
-    return <UserLoginForm />;
+  {
+    /*if (!user) {
+    // return <UserLoginForm />;
+    }*/
   }
 
   console.log("user:", user);

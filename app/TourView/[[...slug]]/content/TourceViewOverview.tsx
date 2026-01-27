@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useBookingEditor } from "../BookingEditorProvider";
 import EditorTableRefunds from "./editor/EditorTableRefunds";
 import EditorTablePayments from "./editor/EditorTablePayments";
+import { RootState } from "@/libs/store";
+import { useSelector } from "react-redux";
 
 export interface IExperienceceViewOverview {
   experience: IExperienceCompleteZ
@@ -15,9 +17,54 @@ export interface IExperienceceViewOverview {
 export default function TourceViewOverview(data: IExperienceceViewOverview) {
   console.log("TourceViewOverview:", data);
 
-  const {
+  /*const {
     clientType
-  } = useBookingEditor();
+  } = useBookingEditor();*/
+  const bookingCalendarState = useSelector((state: RootState) => state.bookingCalendar);
+  const clientType = bookingCalendarState.editor.clientType;
+  const experience = bookingCalendarState.dataForExperience?.experience;
+  console.log("Expericen for the booking:", experience);
+
+  const bookingBokun = bookingCalendarState.editor.bokunBookingForediting;
+
+  console.log("Booking Bokun trouceViewOverview:", bookingBokun);
+
+  const groupSizeOnEditor = () => {
+    const quantityByPricing = bookingBokun?.activityBookings[0].quantityByPricingCategory;
+    if (quantityByPricing === undefined) {
+      return null;
+    }
+    const arrayCountitesPricing = Object.entries(quantityByPricing).map(([id, qty]) => ({
+      categoryId: id,
+      count: qty
+    }));
+    const pricingCategoryBookings = bookingBokun?.activityBookings[0].pricingCategoryBookings;
+    if (clientType === "booking-editor") {
+      return <>
+        {
+          arrayCountitesPricing.map((item: { categoryId: string, count: number }, key: number) => {
+
+            const CategoryPricing = pricingCategoryBookings?.find((pricingCategoryBooking) => Number(pricingCategoryBooking.pricingCategoryId) === Number(item.categoryId));
+
+            return <div key={`group-size-editor-count-participants-${key}-${item.categoryId}`}>
+              <div className="flex items-center">
+                {
+                  // <Users className="w-6 h-6 text-blue-600 mr-3" />
+                }
+                <div>
+                  <div className="text-gray-600">
+                    {CategoryPricing?.bookedTitle}
+                    <strong className="ml-2 display-inline-block">{item.count}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          })
+        }
+      </>
+    }
+    return null;
+  }
 
   return <>
     <div className="bg-white rounded-2xl p-8 shadow-lg">
@@ -42,14 +89,20 @@ export default function TourceViewOverview(data: IExperienceceViewOverview) {
           <Users className="w-6 h-6 text-blue-600 mr-3" />
           <div>
             <div className="font-semibold text-gray-800">Group Size</div>
-            <div className="text-gray-600">Max 15 people</div>
+            <div className="text-gray-600">{
+              clientType === "booking" ? "Max 15 people" : groupSizeOnEditor()
+            }</div>
           </div>
         </div>
         <div className="flex items-center">
           <Clock className="w-6 h-6 text-blue-600 mr-3" />
           <div>
             <div className="font-semibold text-gray-800">Start Time</div>
-            <div className="text-gray-600">Multiple times</div>
+            <div className="text-gray-600">
+              {
+                clientType === "booking" ? "Multiple times" : new Date(bookingBokun?.activityBookings[0].date as number).toLocaleString()
+              }
+            </div>
           </div>
         </div>
       </div>

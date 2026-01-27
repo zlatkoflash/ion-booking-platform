@@ -102,9 +102,9 @@ const BokunBookingEditor: React.FC = () => {
     // isModalSuccessOpen
   } = useBookingSingleItem();
 
-  const {
+  /*const {
     isModalSuccessOpen
-  } = useBookingEditor();
+  } = useBookingEditor();*/
 
 
   console.log("BokunBookingEditor:: bokunBooking:", bokunBooking);

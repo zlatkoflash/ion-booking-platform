@@ -2,6 +2,8 @@ import { AbbreviatedMonthDate, FormatTimeFromDate } from "@/utils/dateUtils";
 import { useBookingEditor } from "../../BookingEditorProvider";
 import { truncateId } from "@/utils/stripe";
 import { useCurrencyFormatter } from "@/utils/formats";
+import { useSelector } from "react-redux";
+import { RootState } from "@/libs/store";
 
 export interface IPaymentDB {
   id: number; // Integer ID from your Supabase table
@@ -30,7 +32,9 @@ export interface IPaymentDB {
 
 export default function EditorTablePayments() {
 
-  const { bookingPayments } = useBookingEditor()
+  /*const { bookingPayments } = useBookingEditor()*/
+  const bookingCalendarState = useSelector((state: RootState) => state.bookingCalendar);
+  const bookingPayments = bookingCalendarState.editor.bookingPayments;
 
   return (<div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm mb-5">
     <div className="border-b border-gray-200 bg-gray-50/50 px-6 py-4 flex justify-between items-center">

@@ -57,11 +57,16 @@ export default async function TourViewPage({ params }: { params: { slug: string[
       experience={dataForExperience.experience as IExperienceCompleteZ}
     />
 
-    <BookingEditorProvider clientType='booking'>
+    {
+      /*<BookingEditorProvider clientType='booking'>
       <BookingActivitySelector
-        dataForExperience={dataForExperience}
+        dataForExperienceOut={dataForExperience}
       />
-    </BookingEditorProvider>
+    </BookingEditorProvider>*/
+    }
+    <BookingActivitySelector
+      dataForExperienceOut={dataForExperience}
+    />
 
 
 

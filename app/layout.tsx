@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./User/AuthProvider";
 import { getAuthToken, getUserDetailsFromServer } from "./User/api/add-custom-token";
+import StoreProvider from "@/providers/StoreProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,10 +46,18 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider token={token} userFromOut={logedUser} stripeCustomerId={stripeCustomerId}>
-          {children}
-        </AuthProvider>
+        <StoreProvider >
+          <AuthProvider
+          // token={token}
+          // userFromOut={logedUser}
+          // stripeCustomerId={stripeCustomerId}
+          >
+            {children}
+          </AuthProvider>
+
+
+        </StoreProvider>
       </body>
-    </html>
+    </html >
   );
 }

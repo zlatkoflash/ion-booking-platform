@@ -11,13 +11,13 @@ export const ZSignup = async (email: string, password: string) => {
         password: password
       }
     );
-    const resultJson = await result.json();
-    console.log("resultJson:", resultJson);
+    // const resultJson = await result.json();
+    console.log("resultJson:", result);
 
     return {
       ok: true,
       message: "Signup completed",
-      data: resultJson
+      data: result
     };
   }
   catch (error) {
@@ -42,13 +42,13 @@ export const ZSignin = async (email: string, password: string) => {
         password: password
       }
     );
-    const resultJson = await result.json();
-    console.log("resultJson:", resultJson);
+    // const resultJson = await result.json();
+    console.log("resultJson:", result);
 
     return {
       ok: true,
       message: "Signin completed",
-      data: resultJson
+      data: result
     };
   }
   catch (error) {
@@ -72,13 +72,13 @@ export const signupUserIfNotExist = async (email: string, name: string) => {
         name: name
       }
     );
-    const resultJson = await result.json();
-    console.log("resultJson:", resultJson);
+    // const resultJson = await result.json();
+    console.log("resultJson:", result);
 
     return {
       ok: true,
       message: "Signup completed",
-      data: resultJson
+      data: result
     };
   }
   catch (error) {
@@ -100,13 +100,13 @@ export const attachPaymentMethodToCustomer = async (email: string, paymentMethod
         paymentMethodId: paymentMethodId
       }
     );
-    const resultJson = await result.json();
-    console.log("resultJson:", resultJson);
+    // const resultJson = await result.json();
+    console.log("resultJson:", result);
 
     return {
       ok: true,
       message: "Payment method attached to customer",
-      data: resultJson
+      data: result
     };
   }
   catch (error) {

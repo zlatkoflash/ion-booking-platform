@@ -1,6 +1,9 @@
 'use client';
 
 
+import { ISupabaseUser } from '@/utils/interface/auth';
+import { createClient } from '@/utils/supabaseClient';
+import { useRouter } from 'next/navigation';
 // --- TYPES ---
 // import { type User } from '@supabase/supabase-js';
 
@@ -11,30 +14,34 @@ import React, {
   useEffect,
   type Dispatch,
   type PropsWithChildren,
+  useState,
+  useRef,
 } from 'react';
 // import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 // import { authReducer, initialState, type AuthState, type AuthAction } from './authReducer';
 
 // custom User interface for the auth state supabase when will need we will add supabase user type
-interface User {
+/*interface User {
   id: string;
   email: string;
   name: string;
   role: string;
-}
+}*/
 // The shape of your global authentication state
 export interface AuthState {
   isAuthenticated: boolean;
-  isInitialized: boolean;
-  user: User | null;
-  error: string | null;
+  isInitialized?: boolean;
+  user: ISupabaseUser | null;
+  error?: string | null;
   stripeCustomerId: string | null;
+  token: string | null;
+  // dispatch?: Dispatch<AuthAction>;
 }
 
 // All possible actions that can be dispatched to the reducer
 export type AuthAction =
-  | { type: 'INITIALIZE'; payload: { isAuthenticated: boolean; user: User | null } }
-  | { type: 'LOGIN'; payload: { user: User } }
+  | { type: 'INITIALIZE'; payload: { isAuthenticated: boolean; user: ISupabaseUser | null } }
+  | { type: 'LOGIN'; payload: { user: ISupabaseUser } }
   | { type: 'LOGOUT' }
   | { type: 'AUTH_ERROR'; payload: { error: string } };
 
@@ -45,83 +52,156 @@ export const initialState: AuthState = {
   user: null,
   error: null,
   stripeCustomerId: null,
+  token: null,
 };
 
-// --- REDUCER FUNCTION ---
-export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
-  switch (action.type) {
-    case 'INITIALIZE':
-      // Called on app load to set the initial state from cookies/storage
-      return {
-        ...state,
-        isAuthenticated: action.payload.isAuthenticated,
-        isInitialized: true,
-        user: action.payload.user,
-        error: null,
-      };
-
-    case 'LOGIN':
-      // Called after successful verification (e.g., via verifyOtp)
-      return {
-        ...state,
-        isAuthenticated: true,
-        user: action.payload.user,
-        error: null,
-      };
-
-    case 'LOGOUT':
-      // Called after successful logout
-      return {
-        ...state,
-        isAuthenticated: false,
-        user: null,
-        error: null,
-      };
-
-    case 'AUTH_ERROR':
-      // Called if an API or authentication error occurs
-      return {
-        ...state,
-        error: action.payload.error,
-      };
-
-    default:
-      return state;
-  }
-};
-
-
-
-// --- CONTEXT TYPES ---
-// The full context value includes the state and the dispatch function
-interface AuthContextType extends AuthState {
-  dispatch: Dispatch<AuthAction>;
-}
 
 // 1. Create the Context
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthState | undefined>(undefined);
 
 // --- PROVIDER COMPONENT ---
-export function AuthProvider({ children, token, userFromOut, stripeCustomerId }: PropsWithChildren<{ token: string | null, userFromOut: any | null, stripeCustomerId: string | null }>) {
+export function AuthProvider({
+  children,
+  // token, userFromOut, stripeCustomerId 
+}: PropsWithChildren<{
+  // token: string | null, userFromOut: any | null, stripeCustomerId: string | null 
+}>) {
+
+  const supabase = createClient();
+  const router = useRouter();
 
   console.log("Auth Provider Rendering...");
 
-  const [state, dispatch] = useReducer(authReducer, {
-    isAuthenticated: userFromOut !== null,
-    user: userFromOut,
-    error: null,
-    isInitialized: true,
-    stripeCustomerId: stripeCustomerId,
+  const [authDetails, setAuthDetails] = useState<{
+    token: string | null,
+    user: any | null,
+    stripeCustomerId: string | null,
+  }>({
+    token: null,
+    user: null,
+    stripeCustomerId: null,
   });
 
-  // The value provided to all consumers
-  const contextValue: AuthContextType = {
-    ...state,
-    dispatch,
-  };
+
+  const initialized = useRef(false);
+
+  useEffect(() => {
+    /*setAuthDetails({
+      token: token,
+      user: userFromOut,
+      stripeCustomerId: stripeCustomerId,
+    });*/
+
+    const initializeSession = async () => {
+      if (initialized.current) return;
+      initialized.current = true;
+
+      const { data: { session } } = await supabase.auth.getSession();
+
+      console.log("data supabase session:", session);
+
+      if (session) {
+        // session.user.id
+        // dispatch(authActions.setUser(session.user));
+        // dispatch(authActions.setUser(session.user as any));
+        console.log("session.user:", session.user);
+
+        setAuthDetails({
+          ...authDetails,
+          // token: token,
+          user: session.user,
+          // stripeCustomerId: stripeCustomerId,
+        });
 
 
-  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+      } else {
+        // dispatch(authActions.clearAuth());
+        // dispatch(authActions.setUser(null));
+        setAuthDetails({
+          ...authDetails,
+          // token: token,
+          user: null,
+          // stripeCustomerId: stripeCustomerId,
+        });
+      }
+    };
+
+    initializeSession();
+
+    // 2. THE EVENT LISTENER
+    // This is the "Switchboard" that listens for signals from Supabase
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event: string, session: any) => {
+        console.log("Auth Event:", event);
+        console.log("Auth Session:", session);
+
+        // Scenario: User logs in or token is refreshed in the background
+        if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+          if (session?.user) {
+            /*dispatch(authActions.setAuth({
+              user: session.user,
+              isAuthenticated: true
+            }));*/
+            // dispatch(authActions.setUser(session.user));
+            setAuthDetails({
+              ...authDetails,
+              // token: token,
+              user: session.user,
+              // stripeCustomerId: stripeCustomerId,
+            });
+          }
+        }
+
+        // Scenario: User logs out (from THIS tab OR another tab)
+        if (event === "SIGNED_OUT") {
+          /*dispatch(authActions.clearAuth());*/
+
+          // router.refresh clears the Next.js server-side cache for the current page
+          // dispatch(authActions.setUser(null));
+          setAuthDetails({
+            ...authDetails,
+            // token: token,
+            user: null,
+            // stripeCustomerId: stripeCustomerId,
+          });
+          router.refresh();
+          // router.push("/login");
+        }
+
+        // Scenario: Password changed or user deleted
+        if (event === "USER_UPDATED") {
+          if (session?.user) {
+            // dispatch(authActions.setAuth({ user: session.user, isAuthenticated: true }));
+            // dispatch(authActions.setUser(session.user));
+            setAuthDetails({
+              ...authDetails,
+              // token: token,
+              user: session.user,
+              // stripeCustomerId: stripeCustomerId,
+            });
+          }
+        }
+      }
+    );
+
+
+    return () => {
+      subscription.unsubscribe();
+    }
+
+
+  }, [authDetails.token, authDetails.user, authDetails.stripeCustomerId]);
+
+
+  return <AuthContext.Provider value={{
+    user: authDetails.user,
+    token: authDetails.token,
+    stripeCustomerId: authDetails.stripeCustomerId,
+    isAuthenticated: authDetails.user !== null,
+    //isInitialized: true,
+    /*error: null,
+    dispatch: () => { },*/
+  }}>{children}</AuthContext.Provider>;
 }
 
 // --- CUSTOM HOOK ---

@@ -13,7 +13,7 @@ export default async function HomeContent() {
   console.log("Before bokun:");
   // const toursBokun = await SupabaseEdgeFetchPost("/bokun/search", {});
   const toursBokun = await BokunSearch({});
-  console.log("toursBokun:", toursBokun);
+  // console.log("toursBokun:", toursBokun);
 
 
 

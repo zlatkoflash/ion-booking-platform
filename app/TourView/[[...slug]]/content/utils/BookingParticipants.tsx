@@ -2,10 +2,14 @@ import {
 
   // this function is not good
   // BokunAbsAvailablePlaces, 
-  FPriceEngine, FTotalCountPerRate, FTotalCountPerRateandCategory
+  // FPriceEngine, 
+  FTotalCountPerRate, FTotalCountPerRateandCategory
 } from "@/utils/FPriceEngine";
 import { useBookingSidebar } from "../BookingSidebarProvider";
 import { TriangleAlert } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/libs/store";
+import { availiabilityCount, BookingCalendarActions } from "@/libs/features/BookingCalendar/bookingCalendarSlice";
 
 export interface IBookingParticipants {
 
@@ -13,13 +17,19 @@ export interface IBookingParticipants {
 
 export default function BookingParticipants() {
 
-  const {
-    selectedAvailability,
-    dataForExperience,
-    priceEngine,
-    set_priceEngine,
-    availiabilityCount
-  } = useBookingSidebar();
+  /*const {
+    // selectedAvailability,
+    // dataForExperience,
+    // priceEngine,
+    // set_priceEngine,
+    // availiabilityCount
+  } = useBookingSidebar();*/
+
+  const dispatch = useDispatch();
+  const bookingCalendarState = useSelector((state: RootState) => state.bookingCalendar);
+  const selectedAvailability = bookingCalendarState.selectedAvailability;
+  const dataForExperience = bookingCalendarState.dataForExperience;
+  const priceEngine = bookingCalendarState.priceEngine;
 
   /**
    * Will hold array of the default rate,
@@ -31,11 +41,18 @@ export default function BookingParticipants() {
 
   console.log("priceEngine inside Booking participatns:", priceEngine);
 
+  // const bookingState = useSelector((state: RootState) => state.bookingCalendar);
   // this is not good
   // const maxAvailabilityCount = BokunAbsAvailablePlaces(selectedAvailability);
   // const maxAvailabilityCount = selectedAvailability.availabilityCount;
-  const maxAvailabilityCount = availiabilityCount(selectedAvailability);
+  // const maxAvailabilityCount = availiabilityCount(selectedAvailability);
+  const maxAvailabilityCount = availiabilityCount(bookingCalendarState, selectedAvailability);
+
   // availiabilityCount
+
+  if (dataForExperience === null) {
+    return null;
+  }
 
   return <div>
     <h3 className="text-lg font-semibold text-gray-800 mb-4">Select Participants</h3>
@@ -125,14 +142,20 @@ export default function BookingParticipants() {
 
                           console.log("-");
 
-                          FPriceEngine(
+                          /*FPriceEngine(
                             "-",
                             priceCategoryId,
                             selectedAvailability,
                             rate,
                             priceEngine,
                             set_priceEngine
-                          );
+                          );*/
+                          dispatch(BookingCalendarActions.updatePriceEngine({
+                            addRemoveParticipant: '-',
+                            priceCategoryId,
+                            selectedAvailability,
+                            rate
+                          }));
 
                         }}
                         className={`w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 cursor-pointer ${totalCountPerRateAndCategory <= 0 ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}`}
@@ -160,14 +183,20 @@ export default function BookingParticipants() {
                         onClick={() => {
 
 
-                          FPriceEngine(
+                          /*FPriceEngine(
                             "+",
                             priceCategoryId,
                             selectedAvailability,
                             rate,
                             priceEngine,
                             set_priceEngine
-                          );
+                          );*/
+                          dispatch(BookingCalendarActions.updatePriceEngine({
+                            addRemoveParticipant: '+',
+                            priceCategoryId,
+                            selectedAvailability,
+                            rate
+                          }));
 
                         }}
                         className={`w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 cursor-pointer ${

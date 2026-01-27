@@ -5,26 +5,43 @@ import { ChevronDown, LogOut } from 'lucide-react'; // Using lucide-react for ic
 import { handleLogout } from '../api/add-custom-token';
 import { useAuth } from '../AuthProvider';
 import Link from 'next/link';
+import { createClient } from '@/utils/supabaseClient';
+import { useRouter } from 'next/navigation';
 
 
 const UserAdminHeader = () => {
+
+  const supabase = createClient();
+  const router = useRouter();
+
+
   const [isOpen, setIsOpen] = useState(false);
 
   const {
     user,
     isAuthenticated,
     isInitialized,
-    dispatch,
+    // dispatch,
     error
   } = useAuth();
+
 
   const onLogout = async () => {
     console.log("onLogout");
 
-    dispatch({
+    /*dispatch({
       type: "LOGOUT"
     })
-    await handleLogout();
+    await handleLogout();*/
+
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error logging out:", error);
+    }
+    router.refresh();
+
+
+
   };
 
   // Simple initial generation for the circular avatar placeholder

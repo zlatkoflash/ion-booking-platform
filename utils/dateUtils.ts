@@ -73,24 +73,31 @@ export const FormatTimeFromDate = (dateString: string) => {
 
 
 
+export const formatToYYYYMMDD = (date: Date): string => {
+  // Use padStart to ensure month and day are two digits (e.g., 01, 09)
+  const year = date.getFullYear();
+  // JavaScript months are 0-indexed (0=Jan, 11=Dec), so add 1
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
 
+  return `${year}-${month}-${day}`;
+};
 /**
  * Takes a Date object and returns the first and last days of that month 
  * in the YYYY-MM-DD format.
  * * @param selectedMonth A Date object representing any day within the desired month.
  * @returns An object containing the firstDate and lastDate strings.
  */
-export const getMonthBoundaries = (selectedMonth: Date): { firstDate: string, lastDate: string } => {
+export const getMonthBoundaries = (selectedMonth: Date | string)
+  : {
+    firstDate: string, lastDate: string
+  } => {
   // Helper function to format a Date object into YYYY-MM-DD string
-  const formatToYYYYMMDD = (date: Date): string => {
-    // Use padStart to ensure month and day are two digits (e.g., 01, 09)
-    const year = date.getFullYear();
-    // JavaScript months are 0-indexed (0=Jan, 11=Dec), so add 1
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
 
-    return `${year}-${month}-${day}`;
-  };
+
+  if (typeof selectedMonth === 'string') {
+    selectedMonth = new Date(selectedMonth);
+  }
 
   // --- 1. Get the First Day of the Month ---
   // Create a new Date object based on the input month, but set the day to 1.
@@ -121,3 +128,73 @@ export const isWithinPast24Hours = (createdAt: string) => {
   // AND ensure the date isn't somehow in the future
   return (now - createdDate) < twentyFourHoursInMs && (now - createdDate) >= 0;
 };
+
+
+export const formatToClientTime = (ms: number) => {
+  const date = new Date(ms);
+
+  // Format the date part (e.g., Jan 27, 2026)
+  const datePart = date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  });
+
+  // Format the time part (e.g., 10:00 AM)
+  const timePart = date.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  });
+
+  return `${datePart} • ${timePart}`;
+};
+
+
+export const getTimeDifference = (date1: number, date2: number) => {
+  // Use let because we will subtract from it as we go
+  let diff = date2 - date1;
+
+  // Calculate the total hours before "diff" is modified
+  // We use Math.trunc to see the full hours regardless of direction
+  const totalHours = Math.trunc(diff / (1000 * 60 * 60));
+
+  const msInYear = 1000 * 60 * 60 * 24 * 365.25;
+  const msInDay = 1000 * 60 * 60 * 24;
+  const msInHour = 1000 * 60 * 60;
+  const msInMinute = 1000 * 60;
+
+  const years = Math.trunc(diff / msInYear);
+  diff -= years * msInYear;
+
+  const days = Math.trunc(diff / msInDay);
+  diff -= days * msInDay;
+
+  const hours = Math.trunc(diff / msInHour);
+  diff -= hours * msInHour;
+
+  const minutes = Math.trunc(diff / msInMinute);
+
+  return {
+    years,
+    days,
+    hours,
+    minutes,
+    totalHours // Added this
+  };
+};
+
+// Example 1: Event is 1h 30m in the PAST
+// Result: { years: 0, days: 0, hours: -1, minutes: -30 }
+
+// Example 2: Event is 25 hours in the FUTURE
+// Result: { years: 0, days: 1, hours: 1, minutes: 0 }
+
+// Example usage:
+// const time = getTimeDifference(new Date().getTime(), "2026-01-28T10:00:00");
+// console.log(`${time.days}d ${time.hours}h ${time.minutes}m`);
+// Output example: "01d 08h 12m"
+
+// Example usage with milliseconds:
+// console.log(formatToClientTime(1737942279000)); 
+// Output: "Jan 27, 2026 • 1:44 AM" (based on the user's local clock)

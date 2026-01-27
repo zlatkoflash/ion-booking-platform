@@ -1,22 +1,31 @@
+import { useSelector } from "react-redux";
 import { useBookingSidebar } from "../BookingSidebarProvider";
+import { RootState } from "@/libs/store";
+import { bookedTotalSum, differenceWhenEditingBooking, selectedRate_totalSum } from "@/libs/features/BookingCalendar/bookingCalendarSlice";
 
 const BookingEditorPriceDifference = () => {
 
-  const {
-    selectedAvailability,
+  /*const {
+    // selectedAvailability,
     selectedDate,
-    selectedRate,
+    // selectedRate,
     selectedRate_countParticipants,
     selectedRate_totalSum,
     bookedTotalSum,
     experience,
     priceEngine,
 
-  } = useBookingSidebar();
+  } = useBookingSidebar();*/
 
-  const newTotal = selectedRate_totalSum();
-  const oldTotal = bookedTotalSum();
-  const difference = newTotal - oldTotal;
+  const bookingCalendarState = useSelector((state: RootState) => state.bookingCalendar);
+
+  const selectedAvailability = bookingCalendarState.selectedAvailability;
+  const selectedRate = bookingCalendarState.selectedRate;
+
+  /*const newTotal = selectedRate_totalSum(bookingCalendarState);
+  const oldTotal = bookedTotalSum(bookingCalendarState);
+  const difference = newTotal - oldTotal;*/
+  const difference = differenceWhenEditingBooking(bookingCalendarState);
 
   // Logic for UI states
   const isAdditionalCharge = difference > 0;

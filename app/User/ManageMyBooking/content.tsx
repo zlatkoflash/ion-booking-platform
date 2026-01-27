@@ -6,7 +6,9 @@ import { TableBookingsProvider } from "../ProviderTableBookings";
 
 export default function ManageMyBookingContent() {
   return <>
-    <TableBookingsProvider bookings_owner="logged-client" >
+    <TableBookingsProvider
+    // bookings_owner="logged-client" 
+    >
       <TableWithBookings />
     </TableBookingsProvider>
   </>

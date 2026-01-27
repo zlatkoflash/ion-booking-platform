@@ -1,5 +1,6 @@
 export const zconfig: {
   supabase: {
+    url: string,
     api_link: string,
     isForLive: boolean,
     anon: string,
@@ -11,6 +12,7 @@ export const zconfig: {
   }
 } = {
   supabase: {
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL as string,
     api_link: process.env.NEXT_PUBLIC_SUPABASE_EDGE_API as string,
     isForLive: process.env.NODE_ENV === "production",
     anon: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string,

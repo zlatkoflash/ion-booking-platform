@@ -70,6 +70,12 @@ export const FTotalCountPerRate = (// pricingCategoryId: number,
 export const FPriceEngine_ObjectForCount = (pricingCategoryId: number,
   availability: IBokunAvailability,
   rate: IBokunActivityRate, priceEngineLoc: IBookPricingEngine) => {
+
+  console.log("pricingCategoryId:", pricingCategoryId);
+  console.log("availability:", availability);
+  console.log("rate:", rate);
+  console.log("priceEngineLoc:", priceEngineLoc.counts);
+  // priceEngineLoc.counts[0].availabilityId
   const objectForCount = priceEngineLoc.counts.find(
     c => {
       return c.availabilityId === availability.id && c.priceCategoryId === pricingCategoryId && c.rateId === rate.id;
@@ -80,7 +86,7 @@ export const FPriceEngine_ObjectForCount = (pricingCategoryId: number,
 /**
  * On changing the counts of users it update the state
  */
-export const FPriceEngine = (
+/*export const FPriceEngine = (
   addRemoveParticipant: '-' | '+',
   pricingCategoryId: number,
   availability: IBokunAvailability,
@@ -92,11 +98,7 @@ export const FPriceEngine = (
   // console.log("availability:", availability);
 
   const priceEngineLoc = { ...priceEngine };
-  /*const objectForCount = priceEngineLoc.counts.find(
-    c => {
-      return c.availabilityId === Number(availability.id) && c.priceCategoryId === pricingCategoryId && c.rateId === rate.id;
-    }
-  );*/
+
   let objectForCount = FPriceEngine_ObjectForCount(
     pricingCategoryId, availability, rate, priceEngineLoc
   );
@@ -127,7 +129,7 @@ export const FPriceEngine = (
 
   set_priceEngine({ ...priceEngineLoc });
 
-}
+}*/
 
 export const BokunAvailabilityRateTotalPrice = (
   // experience: IExperienceCompleteZ, 

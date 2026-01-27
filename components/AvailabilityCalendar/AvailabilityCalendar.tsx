@@ -13,6 +13,9 @@ import { IBokunAvailability } from '@/interface/Interface';
 import AvailableTimes from './AvailableTimes';
 import { useBookingSidebar } from '@/app/TourView/[[...slug]]/content/BookingSidebarProvider';
 import { useBookingEditor } from '@/app/TourView/[[...slug]]/BookingEditorProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { availiabilityCount, BookingCalendarActions, IBookingCalendarState } from '@/libs/features/BookingCalendar/bookingCalendarSlice';
+import { RootState } from '@/libs/store';
 
 /*export interface IBokunSlot {
   startTimeId: number;
@@ -45,25 +48,36 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
   // onSlotSelect,
 }) => {
 
-  const {
+  /*const {
     clientType,
     bokunBookingForediting
-  } = useBookingEditor();
+  } = useBookingEditor();*/
+  const clientType = useSelector((state: RootState) => state.bookingCalendar.editor.clientType);
+  const bokunBookingForediting = useSelector((state: RootState) => state.bookingCalendar.editor.bokunBookingForediting);
 
   const {
-    availablilitesForDateRange,
-    setAvailablilitesForDateRange,
-    selectedDate,
-    setSelectedDate,
+    // availablilitesForDateRange,
+    // setAvailablilitesForDateRange,
+    // selectedDate,
+    //setSelectedDate,
 
-    selectedAvailability,
-    setSelectedAvailability,
-    setSelectedAvailabilityAndTheRate,
-    availiabilityCount,
+    // selectedAvailability,
+    // setSelectedAvailability,
+    // setSelectedAvailabilityAndTheRate,
+    // availiabilityCount,
 
-    calendarActiveMonth,
-    set_calendarActiveMonth,
+    // calendarActiveMonth,
+    // set_calendarActiveMonth,
   } = useBookingSidebar();
+
+  const dispatch = useDispatch();
+  const bookingCalendarState = useSelector((state: RootState) => state.bookingCalendar);
+  const availablilitesForDateRange = bookingCalendarState.availablilitesForDateRange;
+  const selectedAvailability = bookingCalendarState.selectedAvailability;
+
+  const selectedDate = bookingCalendarState.selectedDate;
+
+  const calendarActiveMonth = useSelector((state: RootState) => state.bookingCalendar.calendarActiveMonth);
 
   // const [slots, setSlots] = useState<IBokunAvailability[]>([]);
   const [loading, setLoading] = useState(true);
@@ -100,25 +114,27 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
       );
       console.log("avaialbilitesData:", avaialbilitesData);
       // setSlots(avaialbilitesData.availabilities);
-      setAvailablilitesForDateRange(avaialbilitesData.availabilities);
+      // setAvailablilitesForDateRange(avaialbilitesData.availabilities);
+      dispatch(BookingCalendarActions.setAvailablilitesForDateRange(avaialbilitesData.availabilities));
       if (clientType === "booking-editor") {
         // we need to check activity with this type of id: 4541791_20260126
         // 4541791 is the time id, 20260126 is the date
         const idForEditorAvailability = `${bokunBookingForediting?.activityBookings[0]?.startTimeId}_${formatDateStringWithoutDashes(new Date(bokunBookingForediting?.activityBookings[0]?.date as number))}`;
-        console.log("avaialbilitesData.availabilities:", avaialbilitesData.availabilities);
-        console.log("bokunBookingForediting?.activityBookings[0].activity.id:", bokunBookingForediting?.activityBookings[0]);
+        // console.log("avaialbilitesData.availabilities:", avaialbilitesData.availabilities);
+        // console.log("bokunBookingForediting?.activityBookings[0].activity.id:", bokunBookingForediting?.activityBookings[0]);
 
-        console.log("idForEditorAvailability:", idForEditorAvailability);
+        // console.log("idForEditorAvailability:", idForEditorAvailability);
 
         if (selectedAvailability.id === undefined) {
 
-          console.log("Editor availability selecting...");
+          // console.log("Editor availability selecting...");
 
           const selectedAvailablilityFromEditor = avaialbilitesData.availabilities.find((availability) => availability.id === idForEditorAvailability);
-          console.log("selectedAvailablilityFromEditor:", selectedAvailablilityFromEditor);
+          // console.log("selectedAvailablilityFromEditor:", selectedAvailablilityFromEditor);
           if (selectedAvailablilityFromEditor !== null && selectedAvailablilityFromEditor !== undefined) {
 
-            setSelectedAvailabilityAndTheRate(selectedAvailablilityFromEditor);
+            // setSelectedAvailabilityAndTheRate(selectedAvailablilityFromEditor);
+            dispatch(BookingCalendarActions.setSelectedAvailabilityAndTheRate(selectedAvailablilityFromEditor));
           }
         }
         // console.log("availability.id:", availability.id);
@@ -136,16 +152,19 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
   }
 
 
-  const handleAvailabilityClick = (availability: IBokunAvailability) => {
+  /*const handleAvailabilityClick = (availability: IBokunAvailability) => {
+    const countForAvailability = useSelector((state: RootState) => availiabilityCount(state, availability));
     if (
       // availability.availabilityCount <= 0
-      availiabilityCount(availability) <= 0
+      // availiabilityCount(availability) <= 0
+      countForAvailability <= 0
     ) return;
 
     console.log('🎯 Slot selected:', availability);
-    setSelectedAvailability(availability);
+    // setSelectedAvailability(availability);
+    dispatch(BookingCalendarActions.setSelectedAvailability(availability));
     // onSlotSelect && onSlotSelect(slot);
-  };
+  };*/
 
 
 
@@ -183,7 +202,8 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
            */
           console.log("dateString:", dateString);
           setSelectedSlot(firstSlotOfTheDay);
-          setSelectedDate(dateString);
+          // setSelectedDate(dateString);
+          dispatch(BookingCalendarActions.setSelectedDate(dateString));
           // setSelectedMonth(new Date(dateString));
           // console.log();
         }}
@@ -237,7 +257,10 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
               <div className="text-sm text-blue-700">
                 {
                   // selectedSlot.availabilityCount
-                  availiabilityCount(selectedSlot)
+                  // availiabilityCount(selectedSlot)
+                  // useSelector((state: RootState) => availiabilityCount(state, selectedSlot))
+                  availiabilityCount(bookingCalendarState, selectedSlot)
+
                 } spots available
               </div>
             </div>

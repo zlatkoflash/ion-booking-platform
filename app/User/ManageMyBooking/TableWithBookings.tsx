@@ -181,7 +181,9 @@ export default function TableWithBookings() {
                         row.bokun_confirmation_code
                       }
                     </div>
-                    <div className="text-xs text-gray-500">{row.booking_created_at?.replace('T', ' ').slice(0, 16)}</div>
+                    <div className="text-xs text-gray-500">{// booking_created_at?.replace('T', ' ').slice(0, 16)
+                      (new Date(row.booking_created_at)).toLocaleString()
+                    }</div>
                   </td>
                   {
                     /**
