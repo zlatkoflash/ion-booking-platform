@@ -85,6 +85,8 @@ export const BokunSearch = async (data: any) => {
     };
   }
 
+  console.log("bokun search result:", result);
+
   try {
     // const json = JSON.parse(resultText);
     // console.log("Bokun search data:", json);
@@ -385,6 +387,7 @@ export const BokunReserveBooking = async (
       showPricesInNotification: true,
       note: "Reserved from Bolt (pre-payment)",
       directBooking: bookingRequest,
+      // nationality: 
 
       user: user
       // shoppingCart: {}

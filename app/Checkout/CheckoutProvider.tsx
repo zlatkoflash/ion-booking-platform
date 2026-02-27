@@ -200,7 +200,8 @@ export const BookingCheckoutProvider: React.FC<BookingCheckoutProviderProps> = (
           { questionId: "phoneNumber", values: [contactDetails.phone], },
           { questionId: "address", values: [contactDetails.address as string], },
           { questionId: "city", values: [contactDetails.city as string], },
-          { questionId: "country", values: [contactDetails.country as string], }
+          { questionId: "country", values: [contactDetails.country as string], },
+          { questionId: "nationality", values: ["MKD"], }
         ],
         activityId: Number(searchParamsFor.activity),
         date: searchParamsFor.date,
