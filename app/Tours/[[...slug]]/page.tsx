@@ -1,6 +1,9 @@
 // import { IExperience } from '@/app/interface/interface';
 import ToursForToursPage from '@/components/grids/ToursForToursPage';
-import { BokunSearch } from '@/utils/bokun';
+import ToursForToursPageV2 from '@/components/grids/ToursForToursPageV2';
+import { getApiData } from '@/utils/api';
+// import { BokunSearch } from '@/utils/bokun';
+import { IDBTour } from '@/utils/interface/interfaceDatabase';
 /*import {
   MapPin,
   // Star, 
@@ -24,10 +27,21 @@ export default async function ToursPageContentParams({ params }: { params: Tours
   console.log("It is working");
 
 
-  const fetchedTours = await BokunSearch({
+  /*const fetchedTours = await BokunSearch({
     category: TheParams.slug !== undefined ? TheParams.slug[0] : ""
-  });
+  });*/
   // console.log("Ohrid demo:", fetchedTours.items[2].tour);// comment this line it is for testing purposes
+
+  const toursBokunData = await getApiData<{
+    ok: boolean;
+    tours: { tour: IDBTour }[]
+  }>("/booking-public/get-experiences", "POST", {
+    filters: {
+      categories: [TheParams.slug !== undefined ? TheParams.slug[0] : ""]
+    }
+  }, "not-authorize", "application/json");
+  console.log("toursBokunData 2:", toursBokunData);
+
 
   return <div className="min-h-screen bg-gray-50 py-8">
     <div className="max-w-7xl mx-auto px-6">
@@ -42,10 +56,19 @@ export default async function ToursPageContentParams({ params }: { params: Tours
 
       </div>
 
-      <ToursForToursPage
+      {
+        /*<ToursForToursPage
         error={fetchedTours.error}
         ok={fetchedTours.ok}
         tours={fetchedTours.items}
+      />*/
+      }
+
+      <ToursForToursPageV2
+        // error={toursBokunData.error}
+        // ok={toursBokunData.ok}
+        // tours={toursBokunData.tours}
+        ToursData={toursBokunData.tours}
       />
 
     </div>

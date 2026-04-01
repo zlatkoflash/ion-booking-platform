@@ -1,7 +1,7 @@
 'use client';
 
 import { IExperienceZ } from "@/interface/Interface"
-import { BokunGetExperienceById, IBokunGetExperienceById } from "@/utils/bokun";
+// import { BokunGetExperienceById, IBokunGetExperienceById } from "@/utils/bokun";
 import { useState } from "react";
 import { redirect } from 'next/navigation';
 import { ArrowLeft } from "lucide-react";
@@ -56,7 +56,7 @@ export default function ButtonViewTour(data: IButtonViewTour) {
 
     set_loading(true);
 
-    const dataForBokunProduct: IBokunGetExperienceById = await BokunGetExperienceById(
+    /*const dataForBokunProduct: IBokunGetExperienceById = await BokunGetExperienceById(
       data.tourId ? data.tourId : data?.tour?.id
     );
     console.log("dataForBokunProduct 2:", dataForBokunProduct);
@@ -70,8 +70,8 @@ export default function ButtonViewTour(data: IButtonViewTour) {
         console.log("Slug exist");
         redirect(`/TourView/${dataForBokunProduct.experience.slug}`)
       }
-    }
-    else { }
+  }
+    else { }*/
 
 
     set_loading(false);

@@ -2,7 +2,6 @@ import { AlertCircle } from "lucide-react";
 
 /**
  * Converts a SCREAMING_SNAKE_CASE error code (e.g., "ERROR_BOOKING_RESERVATION_FAIL")
- * into a human-readable string (e.g., "Error booking reservation fail").
  * * @param errorCode The input error code string.
  * @returns The formatted string.
  */
@@ -16,7 +15,6 @@ function formatErrorCodeLocal(errorCode: string): string {
   const formattedString = errorCode.toLowerCase().replace(/_/g, ' ');
 
   // 2. Capitalize the first letter of the first word
-  //    "error booking reservation fail" -> "Error booking reservation fail"
   return formattedString.charAt(0).toUpperCase() + formattedString.slice(1);
 }
 

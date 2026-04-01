@@ -1,8 +1,12 @@
 // import { IExperience } from "@/app/interface/interface";
 import GridHomeTours from "@/components/grids/GridHomeTours";
+import GridHomeToursV2 from "@/components/grids/GridHomeToursV2";
 import { IGridHomeToursItem } from "@/components/panels/GridHomeToursItem";
 import { zconfig } from "@/config/config";
-import { BokunSearch } from "@/utils/bokun";
+import { getApiData } from "@/utils/api";
+// import { BokunSearch } from "@/utils/bokun";
+import { IDBTour } from "@/utils/interface/interfaceDatabase";
+// import { BokunSearch } from "@/utils/bokun";
 import { SupabaseEdgeFetchPost } from "@/utils/supabase";
 import Link from "next/link";
 // import { MapPin, Star, Users, Calendar } from 'lucide-react';
@@ -12,7 +16,13 @@ export default async function HomeContent() {
 
   console.log("Before bokun:");
   // const toursBokun = await SupabaseEdgeFetchPost("/bokun/search", {});
-  const toursBokun = await BokunSearch({});
+  // const toursBokun = await BokunSearch({});
+  const toursBokunData = await getApiData<{
+    ok: boolean;
+    tours: { tour: IDBTour }[]
+  }>("/booking-public/get-experiences", "POST", {}, "not-authorize", "application/json");
+  console.log("toursBokunData 2:", toursBokunData);
+
   // console.log("toursBokun:", toursBokun);
 
 
@@ -50,8 +60,16 @@ export default async function HomeContent() {
         </div>
 
         {
-          toursBokun.ok === true ?
-            <GridHomeTours items={toursBokun.items} /> :
+          // toursBokun.ok === true ?
+          toursBokunData.ok === true ?
+            <>
+              {
+                <GridHomeToursV2 toursData={toursBokunData.tours} />
+              }
+              {
+                // <GridHomeTours items={toursBokun.items} />
+              }
+            </> :
             <>
               <div className="text-center py-12">
                 <div className="space-y-4">

@@ -5,7 +5,7 @@ This should be deleted
 // /src/context/BookingSidebarContext.tsx
 'use client'; // 👈 Essential for client-side state hooks
 
-// import { IBokunActivityRate, IBokunAvailability, IExperienceCompleteZ } from '@/interface/Interface';
+// import { IBookingActivityRate, IBokunAvailability, IExperienceCompleteZ } from '@/interface/Interface';
 // import { IBokunGetExperienceById } from '@/utils/bokun';//
 // import { BokunAvailabilityRateTotalPrice, FTotalCountPerRate } from '@/utils/FPriceEngine';
 import
@@ -69,8 +69,8 @@ interface BookingSidebarContextType {
   // setSelectedAvailabilityAndTheRate: (availability: IBokunAvailability) => void,
   // availiabilityCount: (availability: IBokunAvailability) => number,
 
-  // selectedRate: IBokunActivityRate,
-  // setSelectedRate: (selectedRate: IBokunActivityRate) => void,
+  // selectedRate: IBookingActivityRate,
+  // setSelectedRate: (selectedRate: IBookingActivityRate) => void,
 
   /*calendarActiveMonth: Date,
   set_calendarActiveMonth: (d: Date) => void,*/
@@ -128,7 +128,7 @@ const BookingSidebarContext = createContext<BookingSidebarContextType>({
   set_priceEngine: () => { },*/
 
 
-  // selectedRate: {} as IBokunActivityRate,
+  // selectedRate: {} as IBookingActivityRate,
   // setSelectedRate: () => { },
 
 
@@ -203,8 +203,8 @@ export function BookingSidebarProvider({ children,
     dispatch(BookingCalendarActions.setSelectedAvailability(availability));
     const defaultRate = availability.rates.find(r => { return r.id === availability.defaultRateId });
     console.log("defaultRate:", defaultRate);
-    // setSelectedRate(defaultRate as IBokunActivityRate);
-    dispatch(BookingCalendarActions.setSelectedRate(defaultRate as IBokunActivityRate));
+    // setSelectedRate(defaultRate as IBookingActivityRate);
+    dispatch(BookingCalendarActions.setSelectedRate(defaultRate as IBookingActivityRate));
     console.log("availablility:", availability);
   }*/
 
@@ -231,7 +231,7 @@ export function BookingSidebarProvider({ children,
   }*/
 
 
-  // const [selectedRate, setSelectedRate] = useState<IBokunActivityRate>({} as IBokunActivityRate);
+  // const [selectedRate, setSelectedRate] = useState<IBookingActivityRate>({} as IBookingActivityRate);
   const selectedRate = bookingCalendarState.selectedRate;
 
   /*const [priceEngine, set_priceEngine] = useState<IBookPricingEngine>({

@@ -1,11 +1,16 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { IBokunActivityRate, IBokunAvailability, IExperienceCompleteZ } from "@/interface/Interface";
+import { IBookingActivityRate, IBokunAvailability, IExperienceCompleteZ } from "@/interface/Interface";
 import { ISearchParamsForBooking } from './page';
 import { IBookPriceEngineCount } from '../TourView/[[...slug]]/content/BookingSidebarProvider';
-import { BokunConfirmTheBooking, BokunReserveBooking, IBokunBooking, IBookingMetadata, ITransactionDetails } from '@/utils/bokun';
+import {
+  BokunConfirmTheBooking,
+  // BokunReserveBooking, 
+  IBokunBooking, IBookingMetadata, ITransactionDetails
+} from '@/utils/bokun';
 import { IContactDetails } from '../interface/interface';
+import { getApiData } from '@/utils/api';
 
 // 1. Context State Type
 interface BookingCheckoutContextState {
@@ -13,7 +18,7 @@ interface BookingCheckoutContextState {
   // and the other is a typo, or perhaps intended for a different complex object.
   // I'll stick to a standard set for a booking checkout flow.
   experience: IExperienceCompleteZ;
-  rate: IBokunActivityRate;
+  rate: IBookingActivityRate;
   availability: IBokunAvailability;
 
   counts: IBookPriceEngineCount[],
@@ -28,7 +33,7 @@ interface BookingCheckoutContextState {
 
   // Actions (for updating the state from components)
   /*setExperience: (exp: IExperienceCompleteZ) => void;
-  setRate: (rate: IBokunActivityRate) => void;
+  setRate: (rate: IBookingActivityRate) => void;
   setAvailability: (avail: IBokunAvailability) => void;*/
 
 
@@ -46,7 +51,19 @@ interface BookingCheckoutContextState {
   confirmed_booking: IBokunBooking,
   set_confirmed_booking: (booking: IBokunBooking) => void,
 
-  ___ReserveTheBooking: (user: { id: string, email: string }) => Promise<{ ok: boolean, bookingHash: string, booking: IBokunBooking, bookingDB: any }>,
+  ___ReserveTheBooking: (user: { id: string, email: string }) => Promise<{
+    // ok: boolean, bookingHash: string, booking: IBokunBooking, bookingDB: any
+    ok: boolean,
+    bookingHash: string,
+    bookingDbId: string,
+    bookingId: number,
+    // booking: IBokunBooking, 
+    // bookingDB: any, 
+    // serverResult: any, 
+    message?: string,
+    confirmationCode: string,
+    customer_email: string
+  }>,
   ___ConfirmTheBooking: (paymentMethodId: string, confirmationCode?: string, transactionDetails?: ITransactionDetails, bookingToken?: string) => Promise<{ ok: boolean, bookingHash: string, booking: IBokunBooking, bookingToken: string }>,
 
   contactDetails: IContactDetails,
@@ -56,13 +73,13 @@ interface BookingCheckoutContextState {
   // bookingProcessStatus: "not-started" | "start" | "reserve" | "confirm" | "pay",
   processBooking: {
 
-    reserved: boolean, reservedError: boolean,
+    reserved: boolean, reservedError: boolean, reservedErrorMessage?: string,
     confirmed: boolean, confirmedError: boolean,
     paid: boolean, paidError: boolean,
     savedDataToDB: boolean, savedDataToDBError: boolean,
     userSetInSystem: boolean, userSetInSystemError: boolean
   },
-  set_processBooking: (processBooking: { reserved: boolean, confirmed: boolean, paid: boolean, savedDataToDB: boolean, reservedError: boolean, confirmedError: boolean, paidError: boolean, savedDataToDBError: boolean, userSetInSystem: boolean, userSetInSystemError: boolean, }) => void,
+  set_processBooking: (processBooking: { reserved: boolean, confirmed: boolean, paid: boolean, savedDataToDB: boolean, reservedError: boolean, reservedErrorMessage?: string, confirmedError: boolean, paidError: boolean, savedDataToDBError: boolean, userSetInSystem: boolean, userSetInSystemError: boolean, }) => void,
 }
 
 
@@ -70,7 +87,7 @@ interface BookingCheckoutContextState {
 // as they will be defined in the provider)
 const BookingCheckoutContext = createContext<BookingCheckoutContextState>({
   experience: {} as IExperienceCompleteZ,
-  rate: {} as IBokunActivityRate,
+  rate: {} as IBookingActivityRate,
   availability: {} as IBokunAvailability,
   counts: [],
   /*setExperience: () => { },
@@ -92,7 +109,31 @@ const BookingCheckoutContext = createContext<BookingCheckoutContextState>({
   confirmed_booking: {} as IBokunBooking,
   set_confirmed_booking: () => { },
 
-  ___ReserveTheBooking: async (): Promise<{ ok: boolean, bookingHash: string, booking: IBokunBooking, bookingDB: any }> => { return { ok: true, bookingHash: "", booking: {} as IBokunBooking, bookingDB: {} } },
+  ___ReserveTheBooking: async (): Promise<{
+    ok: boolean,
+    bookingHash: string,
+    bookingDbId: string,
+    bookingId: number,
+    // booking: IBokunBooking, 
+    // bookingDB: any, 
+    // serverResult: any, 
+    message?: string,
+    confirmationCode: string,
+    customer_email: string
+  }> => {
+    return {
+      ok: true,
+      bookingHash: "",
+      bookingDbId: "",
+      bookingId: 0,
+      confirmationCode: "",
+      customer_email: "",
+      message: "",
+      // confirmationCode: "",
+      // customer_email: "",
+      // booking: {} as IBokunBooking, bookingDB: {} 
+    }
+  },
   ___ConfirmTheBooking: async (paymentMethodId: string, confirmationCode?: string, transactionDetails?: ITransactionDetails): Promise<{ ok: boolean, bookingHash: string, booking: IBokunBooking, bookingToken: string }> => { return { ok: true, bookingHash: "", booking: {} as IBokunBooking, bookingToken: "" } },
 
   contactDetails: {} as IContactDetails,
@@ -105,7 +146,7 @@ const BookingCheckoutContext = createContext<BookingCheckoutContextState>({
     savedDataToDB: false, savedDataToDBError: false,
     userSetInSystem: false, userSetInSystemError: false,
   },
-  set_processBooking: (processBooking: { reserved: boolean, confirmed: boolean, paid: boolean, savedDataToDB: boolean, reservedError: boolean, confirmedError: boolean, paidError: boolean, savedDataToDBError: boolean }) => { },
+  set_processBooking: (processBooking: { reserved: boolean, confirmed: boolean, paid: boolean, savedDataToDB: boolean, reservedError: boolean, reservedErrorMessage?: string, confirmedError: boolean, paidError: boolean, savedDataToDBError: boolean }) => { },
 });
 
 // --- 3. Create the Provider Component ---
@@ -113,7 +154,7 @@ const BookingCheckoutContext = createContext<BookingCheckoutContextState>({
 interface BookingCheckoutProviderProps {
   children: ReactNode;
   experience: IExperienceCompleteZ;
-  rate: IBokunActivityRate;
+  rate: IBookingActivityRate;
   availability: IBokunAvailability;
   searchParamsFor: ISearchParamsForBooking
   totalPrice: number,
@@ -124,7 +165,7 @@ export const BookingCheckoutProvider: React.FC<BookingCheckoutProviderProps> = (
 
   // State initialization
   /*const [experience, setExperience] = useState<IExperienceCompleteZ | null>(null);
-  const [rate, setRate] = useState<IBokunActivityRate | null>(null);
+  const [rate, setRate] = useState<IBookingActivityRate | null>(null);
   const [availability, setAvailability] = useState<IBokunAvailability | null>(null);*/
 
   const [step, setStep] = useState<string>('contact');
@@ -156,14 +197,25 @@ export const BookingCheckoutProvider: React.FC<BookingCheckoutProviderProps> = (
 
   );
 
-  const [processBooking, set_processBooking] = useState<{ reserved: boolean, confirmed: boolean, paid: boolean, savedDataToDB: boolean, reservedError: boolean, confirmedError: boolean, paidError: boolean, savedDataToDBError: boolean, userSetInSystem: boolean, userSetInSystemError: boolean }>({
-    reserved: false, confirmed: false, paid: false, savedDataToDB: false, reservedError: false, confirmedError: false, paidError: false, savedDataToDBError: false, userSetInSystem: false, userSetInSystemError: false
+  const [processBooking, set_processBooking] = useState<{ reserved: boolean, confirmed: boolean, paid: boolean, savedDataToDB: boolean, reservedError: boolean, reservedErrorMessage?: string, confirmedError: boolean, paidError: boolean, savedDataToDBError: boolean, userSetInSystem: boolean, userSetInSystemError: boolean }>({
+    reserved: false, confirmed: false, paid: false, savedDataToDB: false, reservedError: false, reservedErrorMessage: "", confirmedError: false, paidError: false, savedDataToDBError: false, userSetInSystem: false, userSetInSystemError: false
   });
 
   // const [step, setStep] = useState<'contact' | 'payment'>('contact');
 
 
-  const ___ReserveTheBooking = async (user: { id: string, email: string }): Promise<{ ok: boolean, bookingHash: string, booking: IBokunBooking, bookingDB: any }> => {
+  const ___ReserveTheBooking = async (user: { id: string, email: string }): Promise<{
+    ok: boolean,
+    bookingHash: string,
+    bookingDbId: string,
+    bookingId: number,
+    // booking: IBokunBooking, 
+    // bookingDB: any, 
+    // serverResult: any, 
+    message?: string,
+    confirmationCode: string,
+    customer_email: string
+  }> => {
     // const countsJson = searchParamsF
     const passangers: {
       pricingCategoryId: number,
@@ -173,13 +225,7 @@ export const BookingCheckoutProvider: React.FC<BookingCheckoutProviderProps> = (
     }[] = [];
     for (const countFor of counts) {
       console.log(countFor);
-      // groupSize don't work, for example when is groupSize:5 for adults and groupSize:2 for children, it is calculating like 2 people, so i will try parsing by groupSize: 1
-      /*passangers.push({
-        groupSize: countFor.count,
-        pricingCategoryId: countFor.priceCategoryId,
-        passengerDetails: [],
-        answers: []
-      });*/
+
       for (let kk = 0; kk < countFor.count; kk++) {
         passangers.push({
           // groupSize: countFor.count,
@@ -191,43 +237,59 @@ export const BookingCheckoutProvider: React.FC<BookingCheckoutProviderProps> = (
       }
     }
     console.log("passangers:", passangers);
-    const resultsAfterReserve = await BokunReserveBooking(
-      {
-        contactDetailsArray: [
-          { questionId: "firstName", values: [contactDetails.firstName], },
-          { questionId: "lastName", values: [contactDetails.lastName], },
-          { questionId: "email", values: [contactDetails.email], },
-          { questionId: "phoneNumber", values: [contactDetails.phone], },
-          { questionId: "address", values: [contactDetails.address as string], },
-          { questionId: "city", values: [contactDetails.city as string], },
-          { questionId: "country", values: [contactDetails.country as string], },
-          { questionId: "nationality", values: ["MKD"], }
-        ],
-        activityId: Number(searchParamsFor.activity),
-        date: searchParamsFor.date,
-        rateId: Number(searchParamsFor.rate),
-        startTimeId: Number(searchParamsFor.startTimeId),
-        passengers: passangers,
+    const reservePayload = {
+      contactDetailsArray: [
+        { questionId: "firstName", values: [contactDetails.firstName], },
+        { questionId: "lastName", values: [contactDetails.lastName], },
+        { questionId: "email", values: [contactDetails.email], },
+        { questionId: "phoneNumber", values: [contactDetails.phone], },
+        { questionId: "address", values: [contactDetails.address as string], },
+        { questionId: "city", values: [contactDetails.city as string], },
+        { questionId: "country", values: [contactDetails.country as string], },
+        { questionId: "nationality", values: ["MKD"], }
+      ],
+      activityId: Number(searchParamsFor.activity),
+      date: searchParamsFor.date,
+      rateId: Number(searchParamsFor.rate),
+      startTimeId: Number(searchParamsFor.startTimeId),
+      passengers: passangers,
 
-        // price is autocalculated by boku
-        // amount: totalPrice,
+      // price is autocalculated by boku
+      // amount: totalPrice,
 
-        user: user
-      },
-    );
-    console.log("resultsAfterReserve:", resultsAfterReserve);
-    console.log("resultsAfterReserve data:", resultsAfterReserve.bookingResevationData.data);
+      user: user
+    };
 
-    if (resultsAfterReserve.bookingResevationData.data.bookingHash !== undefined) {
+
+    const reseveData = await getApiData("/booking-public/ReserveBooking", "POST", reservePayload, "not-authorize", "application/json");
+    console.log("reseveData new >>>:", reseveData);
+
+    return reseveData;
+
+
+    // const resultsAfterReserve = await BokunReserveBooking(reservePayload);
+
+
+    // console.log("resultsAfterReserve old >>>:", resultsAfterReserve);
+    // console.log("resultsAfterReserve data:", resultsAfterReserve.bookingResevationData.data);
+
+    /*if (
+      resultsAfterReserve.bookingResevationData.data.bookingHash !== undefined
+
+    ) {
       const bookingHash = resultsAfterReserve.bookingResevationData.data.bookingHash;
       const booking = resultsAfterReserve.bookingResevationData.data.booking;
       // set_reservation_bookingHash(bookingHash);
       // set_reserved_booking(booking);
       return {
         ok: true,
-        bookingHash: bookingHash,
-        booking: booking,
-        bookingDB: resultsAfterReserve.bookingResevationData.data.bookingDB
+        bookingHash: reseveData.bookingHash,
+        bookingId: reseveData.bookingId,
+        bookingDbId: reseveData.bookingDbId,
+        message: reseveData.message
+        // booking: booking,
+        // bookingDB: resultsAfterReserve.bookingResevationData.data.bookingDB,
+        //serverResult: resultsAfterReserve
       };
     }
     else {
@@ -236,10 +298,15 @@ export const BookingCheckoutProvider: React.FC<BookingCheckoutProviderProps> = (
       return {
         ok: false,
         bookingHash: "",
-        booking: {} as IBokunBooking,
-        bookingDB: undefined
+        bookingDbId: "",
+        bookingId: 0,
+        message: ""
+        // booking: {} as IBokunBooking,
+        // bookingDB: undefined,
+        // serverResult: resultsAfterReserve,
+        // message: resultsAfterReserve.bookingResevationData.data.message
       };
-    }
+    }*/
 
   }
 

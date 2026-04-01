@@ -1,5 +1,5 @@
 import { useBookingSidebar } from "@/app/TourView/[[...slug]]/content/BookingSidebarProvider";
-import { IBokunActivityRate, IBokunAvailability } from "@/interface/Interface";
+import { IBookingActivityRate, IBokunAvailability } from "@/interface/Interface";
 import { availiabilityCount, BookingCalendarActions } from "@/libs/features/BookingCalendar/bookingCalendarSlice";
 import { RootState } from "@/libs/store";
 import { normalizeDateToYYYYMMDD } from "@/utils/dateUtils";

@@ -6,7 +6,7 @@ import { useBookingSingleItem } from "../BookingProvider";
 export default function BookingEditorUpdater() {
 
   const { bokunBooking } = useBookingSingleItem();
-  console.log("bokunBooking:", bokunBooking);
+  // console.log("bokunBooking:", bokunBooking);
 
   const [isLoading, setIsLoading] = useState(false);
 

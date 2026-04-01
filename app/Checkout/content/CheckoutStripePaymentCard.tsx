@@ -66,8 +66,8 @@ const StripePaymentForm: React.FC = () => {
   // Your booking data (replace with actual context/props)
   // const totalPrice = 21726; // price in cents
   const currency = 'EUR';
-  const bookingHash = 'YOUR_BOKUN_RESERVATION_HASH';
-  const externalRef = 'YOUR_UNIQUE_ORDER_ID';
+  // const bookingHash = 'YOUR_BOKUN_RESERVATION_HASH';
+  // const externalRef = 'YOUR_UNIQUE_ORDER_ID';
   // ---
 
   /**
@@ -121,16 +121,26 @@ const StripePaymentForm: React.FC = () => {
      * we must reserve the booking, before we can confirm it
      * after payment we will confirm it
      */
-    const { bookingHash, booking, bookingDB } = await ___ReserveTheBooking(userRaw);
-    if (bookingHash === "" || booking === null || booking === undefined) {
-      set_processBooking({ ...processBooking, reservedError: true });
+    const {
+      // bookingHash, booking, bookingDB, message 
+      message, bookingDbId, bookingHash, bookingId, ok,
+      confirmationCode,
+      customer_email
+    } = await ___ReserveTheBooking(userRaw);
+    if (
+      bookingHash === "" || ok !== true || bookingDbId === ""
+      // || booking === null || booking === undefined
+    ) {
+
+
+
+      set_processBooking({ ...processBooking, reservedError: true, reservedErrorMessage: message });
       setLoading(false);
       console.log("Reservation failed");
       return;
     }
-    console.log("payment, reserved booking details:", bookingHash, booking);
     // const bookingDB = bookingResevationData.data.bookingDB;
-    // return setLoading(false); // debugging
+    // console.log("Returning for debugging when ___ReserveTheBooking"); return setLoading(false); // debugging
 
 
 
@@ -208,13 +218,17 @@ const StripePaymentForm: React.FC = () => {
         currency: currency,
         paymentMethodId: paymentMethod.id,
 
-        bookingDBId: bookingDB.id,
+        // bookingDBId: bookingDB.id,
+        bookingDBId: bookingDbId,
 
         // 👇 Your Custom Data Fields 👇
         bookingHash: "bookingHashConfirm",
-        bookingId: booking.bookingId.toString(),
-        confirmationCode: booking.confirmationCode,
-        customerEmail: booking.customer.email,
+        // bookingId: booking.bookingId.toString(),
+        bookingId: bookingId.toString(),
+        // confirmationCode: booking.confirmationCode,
+        confirmationCode: confirmationCode,
+        // customerEmail: booking.customer.email,
+        customerEmail: customer_email,
 
       });
     console.log("payment, paymentIntent:", paymentIntent);
@@ -276,13 +290,15 @@ const StripePaymentForm: React.FC = () => {
      */
     const { bookingHash: bookingHashConfirm, booking: bookingConfirm, bookingToken } = await ___ConfirmTheBooking(
       paymentMethod.id,
-      booking.confirmationCode, {
-      "transactionDate": formatDateString(new Date()),
-      "transactionId": paymentIntent.data.id,
-      "cardBrand": paymentMethod.card?.brand as string,
-      "last4": paymentMethod.card?.last4 as string,
-      // "paymentMethodId": paymentMethod.id
-    });
+      // booking.confirmationCode, 
+      confirmationCode,
+      {
+        "transactionDate": formatDateString(new Date()),
+        "transactionId": paymentIntent.data.id,
+        "cardBrand": paymentMethod.card?.brand as string,
+        "last4": paymentMethod.card?.last4 as string,
+        // "paymentMethodId": paymentMethod.id
+      });
     if (bookingHashConfirm === "") {
       set_processBooking({ ...processBooking, confirmedError: true });
       setLoading(false);
@@ -391,7 +407,7 @@ const StripePaymentForm: React.FC = () => {
 
       {
         processBooking.reservedError && (
-          <ErrorMessage error={BookingReservationFailedError} />
+          <ErrorMessage error={BookingReservationFailedError} customErrorMessage={processBooking.reservedErrorMessage} />
         )
       }
       {

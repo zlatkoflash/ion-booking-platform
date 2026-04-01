@@ -5,28 +5,39 @@ import BookingSidebar from "./content/BookingSidebar";
 import { BookingSidebarProvider } from "./content/BookingSidebarProvider";
 import TourceViewOverview from "./content/TourceViewOverview";
 import TourViewGallery from "./content/TourViewGallery";
-import { IBokunGetExperienceById } from "@/utils/bokun";
+// import { IBokunGetExperienceById } from "@/utils/bokun";
 import BookingActivitySelectorHydrate from "./BookingActivitySelectorHydrate";
 import { useSelector } from "react-redux";
 import { RootState } from "@/libs/store";
+import { IDBTour } from "@/utils/interface/interfaceDatabase";
 
 export default function BookingActivitySelector({
-  dataForExperienceOut,
+  // dataForExperienceOut,
+  tourDetailsInit
   // editorType = "client"
 }: {
-  dataForExperienceOut: IBokunGetExperienceById;
+  // dataForExperienceOut: IBokunGetExperienceById;
+  tourDetailsInit: {
+    tour: IDBTour
+  }
   // editorType: "client" | "admin";
 }) {
 
-  const dataForExperience = useSelector((state: RootState) => state.bookingCalendar.dataForExperience);
-  console.log("dataForExperienceOut:", dataForExperienceOut);
+  // dataForExperienceOut.experience.
 
-  console.log("dataForExperience>>>:", dataForExperience);
+  // const dataForExperience = useSelector((state: RootState) => state.bookingCalendar.dataForExperience);
+  const tourDetails = useSelector((state: RootState) => state.bookingCalendar.tourDetails);
+  // console.log("dataForExperienceOut:", dataForExperienceOut);
+
+  // console.log("dataForExperience>>>:", dataForExperience);
 
   return (
 
     <>
-      <BookingActivitySelectorHydrate dataForExperience={dataForExperienceOut} />
+      <BookingActivitySelectorHydrate
+        //dataForExperience={dataForExperienceOut}
+        tourDetailsInit={tourDetailsInit}
+      />
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Main Content */}
@@ -35,25 +46,20 @@ export default function BookingActivitySelector({
 
 
             {/* Overview */}
-            <TourceViewOverview experience={dataForExperienceOut.experience as IExperienceCompleteZ} />
+            <TourceViewOverview
+              // experience={dataForExperienceOut.experience as IExperienceCompleteZ}
+              tourDetails={tourDetailsInit}
+            />
 
             {/* Photo Gallery */}
-            <TourViewGallery experience={dataForExperienceOut.experience as IExperienceCompleteZ} />
+            <TourViewGallery
+              // experience={dataForExperienceOut.experience as IExperienceCompleteZ}
+              tourDetails={tourDetailsInit}
+            />
           </div>
 
-          {/* Booking Sidebar */}
           {
-            /*<BookingSidebarProvider
-          // dataForExperience={dataForExperience}
-          >
-            {
-              dataForExperience !== null && <BookingSidebar />
-            }
-
-          </BookingSidebarProvider>*/
-          }
-          {
-            dataForExperience !== null && <BookingSidebar />
+            tourDetails !== null && <BookingSidebar />
           }
         </div>
       </div>

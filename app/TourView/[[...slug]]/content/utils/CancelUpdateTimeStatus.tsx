@@ -12,9 +12,7 @@ export default function CancelUpdateTimeStatus() {
   const ActivityBookingDate = new Date(bookingForEditing?.activityBookings[0].date as number);
   console.log("ActivityBookingDate:", ActivityBookingDate);
   const bookingDBNet = bookingCalendarState.editor.bookingDBNet;
-  /*const selectedAvailability = bookingCalendarState.selectedAvailability;
-  const selectedDate = bookingCalendarState.selectedDate;
-  const experience = bookingCalendarState.dataForExperience?.experience;*/
+
 
   const timeDifference = getTimeDifference(
     new Date().getTime(),

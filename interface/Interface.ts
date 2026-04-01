@@ -120,7 +120,7 @@ export interface IExperienceCompleteZ extends IExperienceBokunTourSharedInterfac
     fullTitle: string;
   }[],
 
-  rates: IBokunActivityRate[];
+  rates: IBookingActivityRate[];
 
   // when load by slug or id, name don't work, it is working title
   // title: string,
@@ -166,7 +166,10 @@ interface IBokunPriceDetails {
   currency: string; // e.g., "ISK" (Icelandic Króna)
 }
 
-export interface IBokunActivityRate {
+/**
+ * This interface is based on bokun data so we will continue with this format for the next api if it come
+ */
+export interface IBookingActivityRate {
   id: number;
   title: string;
   description: string | null;
@@ -217,7 +220,7 @@ export interface IBokunAvailability {
   pickupAvailabilityCount: number;
   unlimitedAvailability: boolean;
   defaultRateId: number; // e.g., 2224483
-  rates: IBokunActivityRate[];
+  rates: IBookingActivityRate[];
   pricesByRate: IBokunPriceByRate[];
   comboActivity: boolean;
   comboStartTimes: any[]; // Assuming an array of related start times, type unknown

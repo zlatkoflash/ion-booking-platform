@@ -22,7 +22,7 @@ export const GetBookingsFromDB = async (user: ISupabaseUser, payload: {
   console.log("GetBookingsFromDB init... user:", user);
 
   const result = await SupabaseEdgeFetchPost(
-    user.user_metadata.role === "administrator" ? "/bokun-administrator/GetBookingsFromDB" : "/bokun-admin-client/GetBookingsFromDB",
+    user.user_metadata.role === "administrator" ? "/administrator/GetBookingsFromDB" : "/bokun-admin-client/GetBookingsFromDB",
     payload, true);
   // const resultText = await result.text();
   // const resultJSON = JSON.parse(resultText);
@@ -94,7 +94,7 @@ export const RefundPartialForBooking = async (payload: {
   note: string
 }) => {
 
-  const result = await SupabaseEdgeFetchPost("/bokun-administrator/refund-partial-for-booking", payload, true);
+  const result = await SupabaseEdgeFetchPost("/administrator/refund-partial-for-booking", payload, true);
   // const resultText = await result.text();
 
   // const resultJSON = JSON.parse(resultText);
@@ -105,7 +105,7 @@ export const RefundPartialForBooking = async (payload: {
 }
 
 
-export const GetStripeClientSecret = async (payload?: {
+/*export const GetStripeClientSecret = async (payload?: {
   dbBookingId: string
 }) => {
 
@@ -117,7 +117,7 @@ export const GetStripeClientSecret = async (payload?: {
 
 
   return result;
-}
+}*/
 export async function createSetupIntentAction(customerId: string) {
   try {
     const setupIntent = await getStripeServer().setupIntents.create({

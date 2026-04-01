@@ -1,15 +1,17 @@
 "use client"
 
 import { BookingCalendarActions } from "@/libs/features/BookingCalendar/bookingCalendarSlice";
-import { IBokunGetExperienceById } from "@/utils/bokun";
+// import { IBokunGetExperienceById } from "@/utils/bokun";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { IDBTour } from "@/utils/interface/interfaceDatabase";
 
 export default function BookingActivitySelectorHydrate({
-  dataForExperience,
+  //dataForExperience,
+  tourDetailsInit
 }: {
-  dataForExperience: IBokunGetExperienceById;
-
+  // dataForExperience: IBokunGetExperienceById;
+  tourDetailsInit: { tour: IDBTour }
 
 
 }) {
@@ -17,7 +19,8 @@ export default function BookingActivitySelectorHydrate({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(BookingCalendarActions.setDataForExperience(dataForExperience));
+    // dispatch(BookingCalendarActions.setDataForExperience(dataForExperience));
+    dispatch(BookingCalendarActions.setTourDetails(tourDetailsInit));
   }, []);
 
   return null;

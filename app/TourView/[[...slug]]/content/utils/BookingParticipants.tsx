@@ -28,7 +28,8 @@ export default function BookingParticipants() {
   const dispatch = useDispatch();
   const bookingCalendarState = useSelector((state: RootState) => state.bookingCalendar);
   const selectedAvailability = bookingCalendarState.selectedAvailability;
-  const dataForExperience = bookingCalendarState.dataForExperience;
+  // const dataForExperience = bookingCalendarState.dataForExperience;
+  const tourDetails = bookingCalendarState.tourDetails;
   const priceEngine = bookingCalendarState.priceEngine;
 
   /**
@@ -50,7 +51,7 @@ export default function BookingParticipants() {
 
   // availiabilityCount
 
-  if (dataForExperience === null) {
+  if (tourDetails === null) {
     return null;
   }
 
@@ -88,7 +89,7 @@ export default function BookingParticipants() {
           );
           console.log("totalCountForTheRate:", totalCountForTheRate, "maxAvailabilityCount:", maxAvailabilityCount);
           const minSelectedParticipantsIsOK = totalCountForTheRate >= minPerBooking;
-          const maxSelectedParticipantsIsOK = totalCountForTheRate <= maxPerBooking;
+          // const maxSelectedParticipantsIsOK = totalCountForTheRate <= maxPerBooking;
 
           return (<div className="prices-categories-wrap" key={`prices-categories-wrap-${rateIndex}`}>
 
@@ -105,7 +106,9 @@ export default function BookingParticipants() {
                 const categoryUnit = pricesForRate?.pricePerCategoryUnit.find(categoryUnit => categoryUnit.id === priceCategoryId);
                 console.log("categoryUnit:", categoryUnit);
 
-                const pricingCategoriesDetails = dataForExperience.experience?.pricingCategories.find(priceCategoryDetails => priceCategoryDetails.id === priceCategoryId);
+                // const pricingCategoriesDetails = dataForExperience.experience?.pricingCategories.find(priceCategoryDetails => priceCategoryDetails.id === priceCategoryId);
+
+                const pricingCategoriesDetails = tourDetails?.tour.pricing_categories.find(priceCategoryDetails => priceCategoryDetails.id === priceCategoryId);
 
                 const totalCountPerRateAndCategory = FTotalCountPerRateandCategory(
                   selectedAvailability,
@@ -131,25 +134,12 @@ export default function BookingParticipants() {
                     </div>
                     <div className="flex items-center space-x-3">
                       <button
-                        // onClick={() => {
-                        // console.log("setQty(catId, (quantities[catId] || 0) - 1)");
-                        // setQty(catId, (quantities[catId] || 0) - 1)
-                        // }}
+
                         onClick={() => {
-                          /*console.log("rate:", rate);
-                          console.log('dataForExperience', dataForExperience);
-                          console.log("selectedAvailability:", selectedAvailability);*/
+
 
                           console.log("-");
 
-                          /*FPriceEngine(
-                            "-",
-                            priceCategoryId,
-                            selectedAvailability,
-                            rate,
-                            priceEngine,
-                            set_priceEngine
-                          );*/
                           dispatch(BookingCalendarActions.updatePriceEngine({
                             addRemoveParticipant: '-',
                             priceCategoryId,

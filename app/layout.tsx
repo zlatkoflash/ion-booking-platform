@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./User/AuthProvider";
-import { getAuthToken, getUserDetailsFromServer } from "./User/api/add-custom-token";
+// import { getAuthToken, getUserDetailsFromServer } from "./User/api/add-custom-token";
 import StoreProvider from "@/providers/StoreProvider";
 
 const geistSans = Geist({
@@ -26,19 +26,19 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  let logedUser = null;
-  let stripeCustomerId = "";
-  const token = await getAuthToken();
+  // let logedUser = null;
+  // let stripeCustomerId = "";
+  // const token = await getAuthToken();
   // console.log("token:", token);
 
 
-  const detailsForUser = await getUserDetailsFromServer();
-  console.log("detailsForUser:", detailsForUser);
+  // const detailsForUser = await getUserDetailsFromServer();
+  //console.log("detailsForUser:", detailsForUser);
 
-  if (detailsForUser !== null) {
+  /*if (detailsForUser !== null) {
     logedUser = detailsForUser.user;
     stripeCustomerId = detailsForUser.stripeCustomerId;
-  }
+  }*/
   // return null;
 
   return (
@@ -53,6 +53,9 @@ export default async function RootLayout({
           // stripeCustomerId={stripeCustomerId}
           >
             {children}
+
+
+
           </AuthProvider>
 
 

@@ -13,19 +13,19 @@ import {
 import { redirect } from 'next/navigation';
 
 
-import { IContactDetails } from '@/app/interface/interface';
+/*import { IContactDetails } from '@/app/interface/interface';
 import { IBokunGetExperienceById } from '@/utils/bokun';
-import { useBookingSidebar } from '../BookingSidebarProvider';
+import { useBookingSidebar } from '../BookingSidebarProvider';*/
 import BookingParticipants from './BookingParticipants';
 import { getTimeDifference, normalizeDateToYYYYMMDD } from '@/utils/dateUtils';
-import { useBookingEditor } from '../../BookingEditorProvider';
+// import { useBookingEditor } from '../../BookingEditorProvider';
 import { useEffect, useState } from 'react';
-import { UpdateBooking } from '@/utils/bokunAdminClient';
-import { useBookingSingleItem } from '@/app/User/ManageMyBooking/ViewBooking/[slug]/BookingProvider';
+// import { UpdateBooking } from '@/utils/bokunAdminClient';
+// import { useBookingSingleItem } from '@/app/User/ManageMyBooking/ViewBooking/[slug]/BookingProvider';
 import BookingCancelButton from './BookingCancelButton';
 import BookingEditorPriceDifference from './BookingEditorPriceDifference';
-import ChangePaymentMethod from './AdminChangePaymentMethod';
-import AdminChangePaymentMethodWrap from './AdminChangePaymentMethodWrap';
+/*import ChangePaymentMethod from './AdminChangePaymentMethod';
+import AdminChangePaymentMethodWrap from './AdminChangePaymentMethodWrap';*/
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/libs/store';
 import { bookedTotalSum, BookingCalendarActions, selectedRate_countParticipants, selectedRate_totalSum } from '@/libs/features/BookingCalendar/bookingCalendarSlice';
@@ -74,8 +74,9 @@ export default function BookingCardForm() {
   const priceEngine = bookingCalendarState.priceEngine;
   const selectedDate = bookingCalendarState.selectedDate;
   // const experience = useSelector((state: RootState) => state.bookingCalendar.);
-  const dataForExperience = bookingCalendarState.dataForExperience;
-  const experience = dataForExperience?.experience;
+  // const dataForExperience = bookingCalendarState.dataForExperience;
+  /// const experience = dataForExperience?.experience;
+  const tourDetails = bookingCalendarState.tourDetails;
 
   console.log("selectedAvailability:", selectedAvailability);
   const [updatingBooking, setUpdatingBooking] = useState(false);
@@ -208,7 +209,8 @@ export default function BookingCardForm() {
                         // selectedAvailability.activityId is actually experience.id 
                         activity: selectedAvailability.activityId.toString(),
                         availability: selectedAvailability.id,
-                        experience: experience?.id as string,
+                        // experience: experience?.id as string,
+                        experience: tourDetails?.tour.api_experience_id.toString() as string,
                         participants: selectedRate_countParticipants(bookingCalendarState).toString(),
                         // total must match with the server calculated sum, if it don't match it should produce error
                         total: selectedRate_totalSum(bookingCalendarState).toString(),

@@ -1,4 +1,4 @@
-import { IBokunActivityRate, IBokunAvailability, IExperienceCompleteZ } from "@/interface/Interface";
+import { IBookingActivityRate, IBokunAvailability, IExperienceCompleteZ } from "@/interface/Interface";
 import { IBookPricingEngine } from "../app/TourView/[[...slug]]/content/BookingSidebarProvider";
 
 /**
@@ -12,7 +12,7 @@ import { IBookPricingEngine } from "../app/TourView/[[...slug]]/content/BookingS
 export const FTotalCountPerRateandCategory = (
   // pricingCategoryId: number,
   availability: IBokunAvailability,
-  rate: IBokunActivityRate, priceEngineLoc: IBookPricingEngine, pricingCategoryId: number) => {
+  rate: IBookingActivityRate, priceEngineLoc: IBookPricingEngine, pricingCategoryId: number) => {
   let count = 0;
   const countsFor = priceEngineLoc.counts.filter(c => {
     return c.availabilityId === availability.id && c.rateId === rate.id
@@ -44,7 +44,7 @@ export const BokunAbsAvailablePlaces = (availabiliy: IBokunAvailability) => {
  */
 export const FTotalCountPerRate = (// pricingCategoryId: number,
   availability: IBokunAvailability,
-  rate: IBokunActivityRate,
+  rate: IBookingActivityRate,
   priceEngineLoc: IBookPricingEngine,
   // pricingCategoryId: number
 ) => {
@@ -69,7 +69,7 @@ export const FTotalCountPerRate = (// pricingCategoryId: number,
  */
 export const FPriceEngine_ObjectForCount = (pricingCategoryId: number,
   availability: IBokunAvailability,
-  rate: IBokunActivityRate, priceEngineLoc: IBookPricingEngine) => {
+  rate: IBookingActivityRate, priceEngineLoc: IBookPricingEngine) => {
 
   console.log("pricingCategoryId:", pricingCategoryId);
   console.log("availability:", availability);
@@ -90,7 +90,7 @@ export const FPriceEngine_ObjectForCount = (pricingCategoryId: number,
   addRemoveParticipant: '-' | '+',
   pricingCategoryId: number,
   availability: IBokunAvailability,
-  rate: IBokunActivityRate,
+  rate: IBookingActivityRate,
   priceEngine: IBookPricingEngine,
   set_priceEngine: (pe: IBookPricingEngine) => void
 ) => {
@@ -134,7 +134,7 @@ export const FPriceEngine_ObjectForCount = (pricingCategoryId: number,
 export const BokunAvailabilityRateTotalPrice = (
   // experience: IExperienceCompleteZ, 
   availability: IBokunAvailability,
-  rate: IBokunActivityRate,
+  rate: IBookingActivityRate,
   priceEngine: IBookPricingEngine
 ) => {
   try {

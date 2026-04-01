@@ -33,7 +33,8 @@ export default function BookingSidebar() {
 
   const bookingCalendarState = useSelector((state: RootState) => state.bookingCalendar);
   const selectedAvailability = bookingCalendarState.selectedAvailability;
-  const dataForExperience = bookingCalendarState.dataForExperience;
+  // const dataForExperience = bookingCalendarState.dataForExperience;
+  const tourDetails = bookingCalendarState.tourDetails;
   const clientType = bookingCalendarState.editor.clientType;
   const bookingForEditing = bookingCalendarState.editor.bokunBookingForediting;
   const bookingDBNet = bookingCalendarState.editor.bookingDBNet;
@@ -55,6 +56,7 @@ export default function BookingSidebar() {
 
   const [isReady, setIsReady] = useState(false);
 
+  // dataForExperience?.experience.
 
   console.log("Check when selectedSlot have data how the html react");
 
@@ -65,7 +67,7 @@ export default function BookingSidebar() {
   }, []);
 
 
-  if (!isReady || dataForExperience === null) {
+  if (!isReady || tourDetails === null) {
     return null;
   }
 
@@ -81,7 +83,11 @@ export default function BookingSidebar() {
 
         ) &&
         <AvailabilityCalendar
-          activityId={dataForExperience.experience?.id as string}
+          activityId={
+            // dataForExperience.experience?.id as string
+            tourDetails.tour.api_experience_id.toString()
+            // "0"
+          }
 
         />
       }

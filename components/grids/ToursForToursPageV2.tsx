@@ -4,21 +4,21 @@ import { AlertCircle, MapPin, Users } from "lucide-react";
 import { IGridHomeToursItem } from "../panels/GridHomeToursItem"
 import Image from "next/image";
 
-export interface IExperiencesForToursPage {
-  tours: IGridHomeToursItem[],
-  ok: boolean,
-  error: any
-}
 
 
 import placeholder from './../../assets/images/placeholder.png';
 import Link from "next/link";
 import ButtonViewTour from "../buttons/ButtonViewTour";
 import { GetBokunConstantsAsGoodText } from "@/utils/formats";
+import { IDBTour } from "@/utils/interface/interfaceDatabase";
 // import { BokunSearch } from "@/utils/bokun";
 
-export default function ToursForToursPage(
-  data: IExperiencesForToursPage
+export default function ToursForToursPageV2(
+  { ToursData }: {
+    ToursData: {
+      tour: IDBTour
+    }[]
+  }
 ) {
 
   // const error = "Error is there";
@@ -26,23 +26,8 @@ export default function ToursForToursPage(
 
   return <>
 
-    {
-      // 1 === 1 ||
-      !data.ok && (
-        <div className="max-w-2xl mx-auto mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <div className="flex items-center">
-            <AlertCircle className="w-5 h-5 text-yellow-600 mr-3" />
-            <div>
-              <div className="font-semibold text-yellow-800">Using Demo Data</div>
-              <div className="text-sm text-yellow-700">
-                Bokun API: {data.error}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
-    {data.tours === undefined || data.tours.length === 0 ? (
+    {ToursData === undefined || ToursData.length === 0 ? (
       <div className="text-center py-12">
         <div className="space-y-4">
           <p className="text-gray-500 text-lg">No tours found</p>
@@ -58,34 +43,34 @@ export default function ToursForToursPage(
       </div>
     ) : (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {data.tours.map((tour: IGridHomeToursItem, key: number) => {
+        {ToursData.map((tourData: { tour: IDBTour }, key: number) => {
 
           // tour.tour.
 
 
           return <div
-            key={`tour-item-${key}-${tour.tour.id}`}
+            key={`tour-item-${key}-${tourData.tour.id}`}
             className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
           >
             <div className="relative">
               <Image
-                src={tour.tour.image !== "" ? tour.tour.image : placeholder}
+                src={tourData.tour.cover !== "" ? tourData.tour.cover : placeholder}
                 width={660}
                 height={660}
                 loading="eager"
-                alt={tour.tour.name}
+                alt={tourData.tour.title as string}
                 className="w-full h-48 object-cover"
               />
               <div className="absolute top-4 right-4">
                 {
-                  tour.tour.tags.length > 0 ?
-                    tour.tour.tags.map((tag, index) => (
+                  tourData.tour.categories !== null ?
+                    tourData.tour.categories?.map((category, index) => (
                       <Link
-                        href={`/Tours/${tag}`}
+                        href={`/Tours/${category}`}
                         key={index}
                         className="inline-block bg-white bg-opacity-90 text-gray-800 text-xs px-2 py-1 rounded-full mr-1 mb-1 font-medium"
                       >
-                        {GetBokunConstantsAsGoodText(tag)}
+                        {GetBokunConstantsAsGoodText(category)}
                       </Link>
                     ))
                     :
@@ -96,41 +81,33 @@ export default function ToursForToursPage(
 
             <div className="p-6">
               <h2 className="text-xl font-bold text-gray-800 mb-3">
-                {tour.tour.name}
+                {tourData.tour.title}
               </h2>
 
               <div className="flex items-center text-gray-600 mb-2">
                 <MapPin className="w-4 h-4 mr-2" />
-                <span className="text-sm">{tour.tour.location}</span>
+                <span className="text-sm">{tourData.tour.location.city}</span>
               </div>
 
               {
-                // tour.vendor
-                1 === 1
-                && (
-                  <div className="flex items-center text-gray-500 mb-3">
-                    <Users className="w-4 h-4 mr-2" />
-                    <span className="text-sm">by {tour.tour.vendor.title}</span>
-                  </div>
-                )}
+                <div className="flex items-center text-gray-500 mb-3">
+                  <Users className="w-4 h-4 mr-2" />
+                  <span className="text-sm">by {tourData.tour.vendor.title}</span>
+                </div>
+              }
 
               <div className="text-gray-600 text-sm mb-4 line-clamp-3">
-                <div dangerouslySetInnerHTML={{ __html: tour.tour.descirption.summary }} />
+                <div dangerouslySetInnerHTML={{ __html: tourData.tour.description as string }} />
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="text-2xl font-bold text-green-600">
-                  €{typeof tour.tour.price === 'number' ? tour.tour.price.toFixed(2) : '49.99'}
+                  €{tourData.tour.price?.toFixed(2)}
                 </div>
-                {/*<button
-                  onClick={() => {
-                    window.location.href = `/tour/${tour.tour.id}`
-                  }}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer hover:opacity-70"
-                >
+                {/*<ButtonViewTour style="for-tours-page" tour={tourData.tour} />*/}
+                <Link className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer hover:opacity-70" href={`/TourView/${tourData.tour.slug && tourData.tour.slug !== "" ? tourData.tour.slug : tourData.tour.id}`}>
                   View Details
-                </button>*/}
-                <ButtonViewTour style="for-tours-page" tour={tour.tour} />
+                </Link>
               </div>
             </div>
           </div>

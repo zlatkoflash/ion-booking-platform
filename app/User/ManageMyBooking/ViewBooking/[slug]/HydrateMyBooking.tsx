@@ -1,15 +1,18 @@
 "use client";
 
 import { BookingCalendarActions } from "@/libs/features/BookingCalendar/bookingCalendarSlice";
-import { IBokunBooking, IBokunGetExperienceById } from "@/utils/bokun";
+import {
+  IBokunBooking,
+  // IBokunGetExperienceById
+} from "@/utils/bokun";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 export default function HydrateMyBooking({
-  dataForExperience,
+  // dataForExperience,
   bokunBooking
 }: {
-  dataForExperience: IBokunGetExperienceById;
+  // dataForExperience: IBokunGetExperienceById;
   bokunBooking: IBokunBooking;
 }) {
 

@@ -2,8 +2,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import ChangePaymentMethod from "./AdminChangePaymentMethod";
 import { Elements } from "@stripe/react-stripe-js";
 import { zconfig } from "@/config/config";
-import { useEffect, useState } from "react";
-import { GetStripeClientSecret } from "@/utils/bokunAdminClient";
+// import { useEffect, useState } from "react";
+// import { GetStripeClientSecret } from "@/utils/bokunAdminClient";
 
 export default function AdminChangePaymentMethodWrap({ bookingId }: {
   bookingId: string

@@ -98,13 +98,13 @@ export function AuthProvider({
 
       const { data: { session } } = await supabase.auth.getSession();
 
-      console.log("data supabase session:", session);
+      // console.log("data supabase session:", session);
 
       if (session) {
         // session.user.id
         // dispatch(authActions.setUser(session.user));
         // dispatch(authActions.setUser(session.user as any));
-        console.log("session.user:", session.user);
+        // console.log("session.user:", session.user);
 
         setAuthDetails({
           ...authDetails,

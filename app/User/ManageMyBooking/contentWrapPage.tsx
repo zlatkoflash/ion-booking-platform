@@ -1,9 +1,12 @@
 'use client'
 
-import { getAuthToken, handleLogout } from "../api/add-custom-token";
+/*import {
+  getAuthToken,
+  // handleLogout 
+} from "../api/add-custom-token";*/
 import { useAuth } from "../AuthProvider";
 import UserAdminHeader from "../content/Header";
-import { UserLoginForm } from "../content/LoginForm";
+// import { UserLoginForm } from "../content/LoginForm";
 import ManageMyBookingContent from "./content";
 
 export default function ManageMyBookingContentWrapPage() {
@@ -12,7 +15,6 @@ export default function ManageMyBookingContentWrapPage() {
   console.log("token:", token);*/
 
 
-  // await handleLogout();
 
   // const token = await getAuthToken();
   const {

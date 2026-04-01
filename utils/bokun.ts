@@ -66,7 +66,8 @@ export interface IBokunItem extends IExperienceBokunTourSharedInterface {
   // activityCategories: string[],
 }
 
-export const BokunSearch = async (data: any) => {
+/**/
+/*export const BokunSearch = async (data: any) => {
 
 
   let result = null;
@@ -141,9 +142,9 @@ export const BokunSearch = async (data: any) => {
   }
 
 
-}
+}*/
 
-export interface IBokunGetExperienceById {
+/*export interface IBokunGetExperienceById {
   ok: boolean,
   error?: any,
   message?: string,
@@ -219,7 +220,7 @@ export const BokunGetExperienceByIdOrSlug = async (idOrSlug: string | number): P
     return ResultBySlug;
   }
 
-}
+}*/
 
 
 /**
@@ -228,7 +229,7 @@ export const BokunGetExperienceByIdOrSlug = async (idOrSlug: string | number): P
  * @param dateForMonth 
  * @returns 
  */
-export const BokunGetAvailabilitiesForExperience = async (experienceId: any, dateStart: string, dateEnd: string): Promise<{
+/*export const BokunGetAvailabilitiesForExperience = async (experienceId: any, dateStart: string, dateEnd: string): Promise<{
   ok: boolean,
   message: string,
   error?: any,
@@ -249,17 +250,7 @@ export const BokunGetAvailabilitiesForExperience = async (experienceId: any, dat
         }
       }
     );
-    // console.log(result);
-    // resultText = await result.text();
-    // console.log("BokunGetAvailabilitiesForExperience resultText:", resultText);
-    /*const resultText = await result.text();
-    const json = JSON.parse(resultText);
-    return {
-      ok: true,
-      message: "Getting the data for experience",
-      // experience: 
-      experience: json.data?.experience,
-    };*/
+
   }
   catch (error) {
     return {
@@ -292,7 +283,7 @@ export const BokunGetAvailabilitiesForExperience = async (experienceId: any, dat
     };
   }
 
-}
+}*/
 
 export const GetDetailsForBooking = async (details: any) => {
   try {
@@ -317,7 +308,7 @@ export const GetDetailsForBooking = async (details: any) => {
 
 
 
-export const BokunReserveBooking = async (
+/*export const BokunReserveBooking = async (
   {
     contactDetailsArray,
     activityId,
@@ -347,29 +338,15 @@ export const BokunReserveBooking = async (
 
     const bookingRequest = {
 
-      mainContactDetails: contactDetailsArray/*[
-        { questionId: "firstName", values: ["Zlatko"] },
-        { questionId: "lastName", values: ["Derkoski"] },
-        { questionId: "email", values: ["zlatkoflash@gmail.com"] },
-        { questionId: "phoneNumber", values: ["+38970526556"] }
-      ]*/,
+      mainContactDetails: contactDetailsArray,
       activityBookings: [{
         activityId: activityId,
         rateId: rateId,
         startTimeId: startTimeId,
         date: date,
-        /*"pickup": true,
-        "pickupPlaceId": 0,
-        "pickupDescription": "string",
-        "dropoff": true,
-        "dropoffPlaceId": 0,
-        "dropoffDescription": "string",
-        "checkedIn": true,*/
+
         "note": "Booking from WIT-3.0 web application",
-        // "customized": true,
-        // "customizedTime": "string",
-        // "customizedPrice": 0,
-        // passengers: [],
+
         passengers: passengers,
         answers: [],
         pickupAnswers: [],
@@ -394,9 +371,18 @@ export const BokunReserveBooking = async (
       // amount: amount
     };
 
-    console.log("bookingReservationPayload:", bookingReservationPayload);
 
-    const result = await SupabaseEdgeFetchPost('/bokun/ReserveBooking', bookingReservationPayload);
+    // const result = await SupabaseEdgeFetchPost('/bokun/ReserveBooking', bookingReservationPayload);
+    const payloadNewV2 = {
+      user,
+      contactDetailsArray,
+      activityId,
+      rateId,
+      startTimeId,
+      date,
+      passengers,
+    };
+    const result = await SupabaseEdgeFetchPost('/bokun/ReserveBooking', payloadNewV2);
     console.log("GetDetailsForBooking result:", result);
     // const resultText = await result.text();
     // const bookingResevationData = JSON.parse(resultText);
@@ -413,7 +399,7 @@ export const BokunReserveBooking = async (
       message: 'Reservation can\'t be completed.'
     }
   }
-}
+}*/
 
 
 export const StripePaymentIntentForTheBooking = async (customerId: string, paymentIntent: {

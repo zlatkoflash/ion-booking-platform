@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Send2HoursTokenForSignInWithEmail, SendTestEmail, TryToLoginWithTheCode } from '@/utils/bokun';
-import { getAuthToken, saveCustomTokenToCookie } from '../api/add-custom-token';
-import { useAuth } from '../AuthProvider';
+// import { getAuthToken, saveCustomTokenToCookie } from '../api/add-custom-token';
+// import { useAuth } from '../AuthProvider';
 import { createClient } from '@/utils/supabaseClient';
 import { ISupabaseUser } from '@/utils/interface/auth';
 // Assuming your Supabase client is initialized and imported here
@@ -72,11 +72,7 @@ export const UserLoginForm: React.FC = () => {
     if (result.data === null || result.data.session === undefined || result.data.session === null) {
       setError("Invalid code, Please Try Again");
     } else {
-      // here we set the token in the server cookies
-      /*console.log("result.data.token:", result.data.token);
-      await saveCustomTokenToCookie(result.data.token);
-      // router.refresh();
-      window.location.reload();*/
+
 
       console.log("result.data.session:", result.data.session);
       const userAuth = result.data.session.user as ISupabaseUser;

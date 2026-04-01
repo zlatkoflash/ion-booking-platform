@@ -3,18 +3,24 @@
  */
 
 import { IBookPricingEngine } from "@/app/TourView/[[...slug]]/content/BookingSidebarProvider";
-import { IBokunActivityRate, IBokunAvailability } from "@/interface/Interface";
+import { IBookingActivityRate, IBokunAvailability } from "@/interface/Interface";
 import { IBookingDatabaseNet } from "@/interface/payment.booking";
 import { RootState } from "@/libs/store";
-import { IBokunBooking, IBokunGetExperienceById } from "@/utils/bokun";
+import {
+  IBokunBooking,
+  // IBokunGetExperienceById 
+} from "@/utils/bokun";
 import { BokunAvailabilityRateTotalPrice, FPriceEngine_ObjectForCount, FTotalCountPerRate } from "@/utils/FPriceEngine";
+import { IDBTour } from "@/utils/interface/interfaceDatabase";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type ClientMode = "booking" | "booking-editor";
 
 export interface IBookingCalendarState {
 
-  dataForExperience: IBokunGetExperienceById | null,
+  // dataForExperience: IBokunGetExperienceById | null,
+
+  tourDetails: { tour: IDBTour } | null,
 
   availablilitesForDateRange: IBokunAvailability[],
 
@@ -23,7 +29,7 @@ export interface IBookingCalendarState {
    */
   selectedAvailability: IBokunAvailability,
 
-  selectedRate: IBokunActivityRate,
+  selectedRate: IBookingActivityRate,
 
   // it will hold the year month and the date YYYY-MM-DD
   // calendarActiveMonth: Date,
@@ -54,11 +60,13 @@ export interface IBookingCalendarState {
 
 const initialState: IBookingCalendarState = {
 
-  dataForExperience: null,
+  // dataForExperience: null,
+
+  tourDetails: null,
 
   availablilitesForDateRange: [],
   selectedAvailability: {} as IBokunAvailability,
-  selectedRate: {} as IBokunActivityRate,
+  selectedRate: {} as IBookingActivityRate,
 
   // calendarActiveMonth: new Date(),
   calendarActiveMonth: new Date().toISOString().split('T')[0],
@@ -109,15 +117,19 @@ export const bookingCalendarSlice = createSlice({
       state.selectedAvailability = action.payload;
       const defaultRate = availability.rates.find(r => { return r.id === availability.defaultRateId });
       console.log("defaultRate:", defaultRate);
-      // setSelectedRate(defaultRate as IBokunActivityRate);
-      // dispatch(BookingCalendarActions.setSelectedRate(defaultRate as IBokunActivityRate));
-      state.selectedRate = defaultRate as IBokunActivityRate;
+      // setSelectedRate(defaultRate as IBookingActivityRate);
+      // dispatch(BookingCalendarActions.setSelectedRate(defaultRate as IBookingActivityRate));
+      state.selectedRate = defaultRate as IBookingActivityRate;
       console.log("availablility:", availability);
 
     },
 
-    setDataForExperience: (state, action: PayloadAction<IBokunGetExperienceById>) => {
+    /*setDataForExperience: (state, action: PayloadAction<IBokunGetExperienceById>) => {
       state.dataForExperience = action.payload;
+    },*/
+
+    setTourDetails: (state, action: PayloadAction<{ tour: IDBTour }>) => {
+      state.tourDetails = action.payload;
     },
 
 

@@ -8,7 +8,7 @@ import {
 import { formatDate, formatDateString, formatDateStringWithoutDashes, getMonthBoundaries, normalizeDateToYYYYMMDD } from '../../utils/dateUtils';
 import ZCalendarWidget from './ZCalendarWidget';
 // import { IBokunSlot } from '@/app/interface/interface';
-import { BokunGetAvailabilitiesForExperience } from '@/utils/bokun';
+// import { BokunGetAvailabilitiesForExperience } from '@/utils/bokun';
 import { IBokunAvailability } from '@/interface/Interface';
 import AvailableTimes from './AvailableTimes';
 import { useBookingSidebar } from '@/app/TourView/[[...slug]]/content/BookingSidebarProvider';
@@ -16,6 +16,7 @@ import { useBookingEditor } from '@/app/TourView/[[...slug]]/BookingEditorProvid
 import { useDispatch, useSelector } from 'react-redux';
 import { availiabilityCount, BookingCalendarActions, IBookingCalendarState } from '@/libs/features/BookingCalendar/bookingCalendarSlice';
 import { RootState } from '@/libs/store';
+import { getApiData } from '@/utils/api';
 
 /*export interface IBokunSlot {
   startTimeId: number;
@@ -107,11 +108,25 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({
     setError(null);
     const monthBoundaries = getMonthBoundaries(calendarActiveMonth);
     try {
-      const avaialbilitesData = await BokunGetAvailabilitiesForExperience(
+      /*const avaialbilitesData = await BokunGetAvailabilitiesForExperience(
         activityId,
         monthBoundaries.firstDate,
         monthBoundaries.lastDate
-      );
+      );*/
+
+      const avaialbilitesData = await getApiData<{
+        ok: boolean,
+        availabilities: IBokunAvailability[]
+        // }>("/bokun/GetAvailabilitiesForExperience", "POST", {
+      }>("/booking-public/GetAvailabilitiesForExperience", "POST", {
+        experienceId: activityId,
+        details: {
+          startDate: monthBoundaries.firstDate,
+          endDate: monthBoundaries.lastDate
+        }
+      }, "not-authorize", "application/json");
+
+
       console.log("avaialbilitesData:", avaialbilitesData);
       // setSlots(avaialbilitesData.availabilities);
       // setAvailablilitesForDateRange(avaialbilitesData.availabilities);

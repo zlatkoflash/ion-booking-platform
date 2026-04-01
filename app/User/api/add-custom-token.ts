@@ -1,12 +1,13 @@
 'use server'
 
+import { getApiData } from '@/utils/api';
 import { SupabaseEdgeFetchPost } from '@/utils/supabase';
 import { cookies } from 'next/headers';
 
 const CUSTOM_AUTH_COOKIE_NAME = 'auth_token';
 
 // ⚠️ Function MUST run on the server
-export async function saveCustomTokenToCookie(myCustomToken: string) {
+/*export async function saveCustomTokenToCookie(myCustomToken: string) {
 
   console.log("myCustomToken:", myCustomToken);
 
@@ -27,14 +28,14 @@ export async function saveCustomTokenToCookie(myCustomToken: string) {
 
   // You would typically redirect the user after a successful login here:
   // redirect('/dashboard'); 
-}
+}*/
 
 /**
  * Retrieves the custom JWT from the secure HTTP-Only cookie.
  * This function must ONLY run on the server (Server Component, Server Action, or Route Handler).
  * * @returns The JWT string if present, otherwise returns null.
  */
-export async function getAuthToken(): Promise<string | null> {
+/*export async function getAuthToken(): Promise<string | null> {
   const cookieStore = await cookies();
 
   // 1. Get the cookie object from the store
@@ -42,8 +43,8 @@ export async function getAuthToken(): Promise<string | null> {
 
   // 2. Return the value if the cookie exists, otherwise return null
   return tokenCookie ? tokenCookie.value : null;
-}
-export async function getUserDetailsFromServer(): Promise<{
+}*/
+/*export async function getUserDetailsFromServer(): Promise<{
   token: string,
   user: {
     email: string,
@@ -57,18 +58,19 @@ export async function getUserDetailsFromServer(): Promise<{
 
 
   const token = await getAuthToken();
+
+  console.log("Token:::::", token);
+
   if (token === null) {
     return null;
   }
   // const user = await getUserDetailsFromServer();
   // return { token, user };
 
-  const details = await SupabaseEdgeFetchPost('/bokun/GetUserDetailsByToken', {
-    token: token,
-  });
-  const detailsText = await details.text();
-  const detailsJSON = JSON.parse(detailsText);
-  console.log("details user loading:", detailsJSON);
+  
+  const detailsJSON = await getApiData("/bokun/GetUserDetailsByToken", "POST", { token }, "authorize", "application/json");
+
+  console.log("detailsJSON User By Token::::", detailsJSON);
 
   if (detailsJSON.data === null || detailsJSON.data === undefined || detailsJSON.data.user === undefined || detailsJSON.data.user === null) {
     return null;
@@ -79,14 +81,14 @@ export async function getUserDetailsFromServer(): Promise<{
     user: detailsJSON.data.user,
     stripeCustomerId: detailsJSON.data.stripeCustomerId,
   }
-}
+}*/
 
 
 /**
  * Deletes the custom JWT from the secure HTTP-Only cookie and redirects the user.
  * This function must ONLY run on the server / route handler
  */
-export async function handleLogout() {
+/*export async function handleLogout() {
   const cookieStore = await cookies();
 
   // 1. Delete the cookie.
@@ -101,4 +103,4 @@ export async function handleLogout() {
 
   // 2. Redirect the user to a public page.
   // redirect('/login');
-}
+}*/
