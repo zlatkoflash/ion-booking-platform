@@ -1,0 +1,26 @@
+{
+  "based_on_your_filters": "Selon vos filtres",
+  "the_walks_you_cannot_miss_in": "Les promenades incontournables à",
+  "handpicked_experiences_travelers_are_booking_right_now": "Des expériences sélectionnées que les voyageurs réservent en ce moment",
+  "experienceOther": {
+    "badgesStrings": [
+      "Tendance"
+    ],
+    "title": "Découvrez plus de Florence",
+    "subtitle": "Les expériences que les voyageurs sauvegardent en ce moment"
+  },
+  "subscribtionBanner": {
+    "title": "Vous voulez quelque chose rien que pour vous ?",
+    "subtitle": "Dites-nous ce que vous aimez et nous concevrons l'expérience parfaite.",
+    "button_label": "Demander votre visite privée"
+  },
+  "contentPhotoBottom": {
+    "badgesStrings": [
+      "Guide"
+    ],
+    "title": "Rencontrez les habitants qui rendent chaque promenade inoubliable",
+    "paragraphs": [
+      "Né à Florence. Grandir avec l'Italie."
+    ]
+  }
+}

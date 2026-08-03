@@ -1,0 +1,26 @@
+{
+  "based_on_your_filters": "Based on your filters",
+  "the_walks_you_cannot_miss_in": "The walks you cannot miss in",
+  "handpicked_experiences_travelers_are_booking_right_now": "Handpicked experiences travelers are booking right now",
+  "experienceOther": {
+    "badgesStrings": [
+      "Trending"
+    ],
+    "title": "Discover more of Florence",
+    "subtitle": "Experiences travelers are saving right now"
+  },
+  "subscribtionBanner": {
+    "title": "Want something just for you?",
+    "subtitle": "Tell us what you love and we will craft the perfect experience.",
+    "button_label": "Request your private tour"
+  },
+  "contentPhotoBottom": {
+    "badgesStrings": [
+      "Guide"
+    ],
+    "title": "Meet the locals who make every walk unforgettable",
+    "paragraphs": [
+      "Born in Florence. Growing with Italy."
+    ]
+  }
+}

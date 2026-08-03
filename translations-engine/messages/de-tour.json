@@ -1,0 +1,16 @@
+{
+  "inclusions": {
+    "BUS_FARE": "Busfahrpreis",
+    "TIP_OR_GRATUITY": "Trinkgeld",
+    "NATIONAL_PARK_ENTRANCE_FEE": "Nationalpark-Eintrittsgebühr",
+    "FUEL_SURCHARGE": "Treibstoffzuschlag",
+    "DEPARTURE_TAX": "Abreisesteuer",
+    "PARKING_FEES": "Parkgebühren",
+    "ENTRY_TAX": "Eintrittsteuer",
+    "FOOD_AND_DRINKS": "Speisen und Getränke",
+    "LANDING_AND_FACILITY_FEES": "Landungs- und Facility-Gebühren",
+    "ENTRY_OR_ADMISSION_FEE": "Eintrittsgebühr",
+    "WIFI": "WLAN",
+    "GOODS_AND_SERVICES_TAX": "Mehrwertsteuer / Waren- und Dienstleistungssteuer"
+  }
+}

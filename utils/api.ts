@@ -93,7 +93,13 @@ export const getApiData = async <T = any>(
     try {
       json = text ? JSON.parse(text) : {};
     } catch (e) {
-      throw new Error(`Invalid JSON response: ${text.substring(0, 100)}`);
+      // throw new Error(`Invalid JSON response: ${text.substring(0, 100)}`);
+      return {
+        ok: false,
+        status: 400,
+        message: `Invalid JSON response: ${text.substring(0, 100)}`,
+        errorDetails: text
+      } as T
     }
 
     // 7. Standard Error Mapping

@@ -1,0 +1,16 @@
+{
+  "inclusions": {
+    "BUS_FARE": "Tarif de bus",
+    "TIP_OR_GRATUITY": "Pourboire",
+    "NATIONAL_PARK_ENTRANCE_FEE": "Frais d'entrée au parc national",
+    "FUEL_SURCHARGE": "Surtaxe carburant",
+    "DEPARTURE_TAX": "Taxe de départ",
+    "PARKING_FEES": "Frais de stationnement",
+    "ENTRY_TAX": "Taxe d'entrée",
+    "FOOD_AND_DRINKS": "Nourriture et boissons",
+    "LANDING_AND_FACILITY_FEES": "Frais de débarquement et d'installations",
+    "ENTRY_OR_ADMISSION_FEE": "Frais d'entrée ou d'admission",
+    "WIFI": "Wi-Fi",
+    "GOODS_AND_SERVICES_TAX": "Taxe sur les produits et services"
+  }
+}

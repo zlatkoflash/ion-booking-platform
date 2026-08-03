@@ -1,0 +1,16 @@
+{
+  "emailNotValid": "The email address you entered is not valid. Please try again.",
+  "passwordNotValid": "The password you entered is not valid, Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one special character and one number. Please try again.",
+  "passwordsNotMatch": "The passwords entered do not match. Please try again.",
+  "userExists": "The email address you entered is already in use. Please try again.",
+  "userDoNotExist": "You can't do this action, because the user does not exist. Please try again.",
+  "userDoNotExistByEmail": "The email address you entered does not exist. Please try again.",
+  "general": "An error occurred. Please try again.",
+  "invalidToken": "The code entered is not valid. Please try again.",
+  "wrongCredentials": "The email address or password you entered is not valid. Please try again.",
+  "wrongCredentials_afterSignup": "Auto login after signup is failed. Please try login manually.",
+  "theServerCanNotUpdateYourPassword": "The server can't update your password. Please try again later.",
+  "paymentGatewayNotAvailable": "Payment gateway not available, please try again later.",
+  "cardInfoNotAvailable": "Card information is not available, please try again later.",
+  "booking_not_created": "Booking not created"
+}

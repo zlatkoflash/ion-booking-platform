@@ -1,0 +1,16 @@
+{
+  "inclusions": {
+    "BUS_FARE": "Biglietto dell'autobus",
+    "TIP_OR_GRATUITY": "Mancia",
+    "NATIONAL_PARK_ENTRANCE_FEE": "Biglietto d'ingresso al parco nazionale",
+    "FUEL_SURCHARGE": "Supplemento carburante",
+    "DEPARTURE_TAX": "Tassa di partenza",
+    "PARKING_FEES": "Costi di parcheggio",
+    "ENTRY_TAX": "Tassa d'ingresso",
+    "FOOD_AND_DRINKS": "Cibo e bevande",
+    "LANDING_AND_FACILITY_FEES": "Tariffe di sbarco e struttura",
+    "ENTRY_OR_ADMISSION_FEE": "Biglietto d'ingresso o tassa di ammissione",
+    "WIFI": "Wi-Fi",
+    "GOODS_AND_SERVICES_TAX": "Imposta sui beni e servizi"
+  }
+}

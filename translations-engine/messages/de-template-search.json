@@ -1,0 +1,26 @@
+{
+  "based_on_your_filters": "Basierend auf deinen Filtern",
+  "the_walks_you_cannot_miss_in": "Die Spaziergänge, die du nicht verpassen darfst in",
+  "handpicked_experiences_travelers_are_booking_right_now": "Handverlesene Erlebnisse, die Reisende gerade buchen",
+  "experienceOther": {
+    "badgesStrings": [
+      "Trend"
+    ],
+    "title": "Entdecke mehr von Florenz",
+    "subtitle": "Erlebnisse, die Reisende gerade speichern"
+  },
+  "subscribtionBanner": {
+    "title": "Möchtest du etwas ganz Persönliches?",
+    "subtitle": "Sag uns, was du liebst, und wir stellen das perfekte Erlebnis für dich zusammen.",
+    "button_label": "Private Tour anfragen"
+  },
+  "contentPhotoBottom": {
+    "badgesStrings": [
+      "Guide"
+    ],
+    "title": "Lerne die Einheimischen kennen, die jeden Spaziergang unvergesslich machen",
+    "paragraphs": [
+      "In Florenz geboren. Mit Italien gewachsen."
+    ]
+  }
+}

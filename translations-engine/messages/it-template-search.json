@@ -1,0 +1,26 @@
+{
+  "based_on_your_filters": "In base ai tuoi filtri",
+  "the_walks_you_cannot_miss_in": "Le passeggiate da non perdere a",
+  "handpicked_experiences_travelers_are_booking_right_now": "Esperienze selezionate che i viaggiatori stanno prenotando adesso",
+  "experienceOther": {
+    "badgesStrings": [
+      "Di tendenza"
+    ],
+    "title": "Scopri di più su Firenze",
+    "subtitle": "Esperienze che i viaggiatori stanno salvando in questo momento"
+  },
+  "subscribtionBanner": {
+    "title": "Vuoi qualcosa fatto apposta per te?",
+    "subtitle": "Raccontaci cosa ami e creeremo l'esperienza perfetta.",
+    "button_label": "Richiedi il tuo tour privato"
+  },
+  "contentPhotoBottom": {
+    "badgesStrings": [
+      "Guida"
+    ],
+    "title": "Incontra le persone del posto che rendono ogni passeggiata indimenticabile",
+    "paragraphs": [
+      "Nati a Firenze. Cresciuti con l'Italia."
+    ]
+  }
+}

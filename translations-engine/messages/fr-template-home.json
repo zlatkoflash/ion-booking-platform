@@ -1,0 +1,16 @@
+{
+  "content_photo": {
+    "badges_strings": [
+      "À propos de nous"
+    ],
+    "title": "Plus qu'une simple visite : une meilleure façon de découvrir la ville",
+    "paragraphs": [
+      "Nous mettons en relation les voyageurs avec des guides locaux passionnés qui transforment de simples promenades en expériences inoubliables. Des cafés cachés et des rues paisibles aux monuments emblématiques et aux récits culturels, chaque itinéraire est conçu pour vous aider à découvrir la ville comme un habitant.",
+      "Que vous exploriez la ville le temps d'une journée ou que vous y séjourniez une semaine, nos expériences de marche sélectionnées avec soin rendent le voyage plus personnel, authentique et mémorable."
+    ],
+    "blue_paragraph": "De vraies personnes. De vrais lieux. De vraies histoires.",
+    "button_details": {
+      "label": "Rencontrez nos guides"
+    }
+  }
+}

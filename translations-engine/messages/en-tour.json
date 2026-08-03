@@ -1,0 +1,16 @@
+{
+  "inclusions": {
+    "BUS_FARE": "Bus fare",
+    "TIP_OR_GRATUITY": "Tip or gratuity",
+    "NATIONAL_PARK_ENTRANCE_FEE": "National park entrance fee",
+    "FUEL_SURCHARGE": "Fuel surcharge",
+    "DEPARTURE_TAX": "Departure tax",
+    "PARKING_FEES": "Parking fees",
+    "ENTRY_TAX": "Entry tax",
+    "FOOD_AND_DRINKS": "Food and drinks",
+    "LANDING_AND_FACILITY_FEES": "Landing and facility fees",
+    "ENTRY_OR_ADMISSION_FEE": "Entry or admission fee",
+    "WIFI": "Wifi",
+    "GOODS_AND_SERVICES_TAX": "Goods and services tax"
+  }
+}

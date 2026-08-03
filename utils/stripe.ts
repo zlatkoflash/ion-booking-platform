@@ -1,79 +1,102 @@
+"use server";
 
-/*import { loadStripe } from '@stripe/stripe-js';
+import Stripe from "stripe";
+import { getApiData } from "./api";
+import { IDBBookingDetails } from "./interface-database";
+import { checkEmail } from "./strings";
 
-// Initialize Stripe
-export const stripePromise = loadStripe(
-  import.meta.env.STRIPE_PK || ''
-);
 
-// Create a checkout session
-export const createCheckoutSession = async (params: {
-  tourTitle: string;
-  price: number;
-  confirmationCode?: string;
-  contactDetails?: any;
-  bokun?: any;
-}) => {
-  const response = await fetch(
-    `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-checkout-session`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-      },
-      body: JSON.stringify(params)
+// 🛑 Declared outside the function: This stays alive in the server's memory scope
+let stripeInstance: Stripe | null = null;
+
+export const getStripeServer = async (): Promise<Stripe> => {
+  // If it already exists, return it instantly. No recreation, no performance hit.
+  if (!stripeInstance) {
+    console.log("Initializing Stripe Server Instance (Runs only once per container initialization)...");
+
+    stripeInstance = new Stripe(process.env.STRIPE_SK!, {
+      // apiVersion: "2025-01-27",
+      apiVersion: "2026-06-24.dahlia"
+      // The SDK handles HTTP Keep-Alive and connection pooling automatically under the hood
+    });
+  }
+
+  return stripeInstance;
+};
+
+
+/**
+ * Private function for getting the customer id by email
+ * it create if not exist and return
+ * if falure return null
+ */
+export const getStripeCustomerId = async (email: string): Promise<string | null> => {
+  if (!email) return null;
+
+  try {
+    // 1. Initialize your server-side Stripe instance
+    const stripe = await getStripeServer();
+
+    // 2. Search Stripe to see if this email already exists
+    const existingCustomers = await stripe.customers.list({
+      email: email,
+      limit: 1,
+    });
+
+    if (existingCustomers.data.length > 0) {
+      return existingCustomers.data[0].id;
     }
-  );
 
-  const result = await response.json();
+    // 3. IF NOT EXISTS: Create a brand new customer record
+    const newCustomer = await stripe.customers.create({
+      email: email,
+    });
 
-  if (!response.ok) {
-    throw new Error(result.error || 'Failed to create checkout session');
-  }
-
-  return result;
-};
-
-// Redirect to Stripe Checkout
-export const redirectToCheckout = async (sessionId: string) => {
-  const stripe = await stripePromise;
-
-  if (!stripe) {
-    throw new Error('Stripe not loaded');
-  }
-
-  const { error } = await stripe.redirectToCheckout({ sessionId });
-
-  if (error) {
-    throw new Error(error.message);
+    return newCustomer.id;
+  } catch (error) {
+    console.error("Error in getStripeCustomerId:", error);
+    return null; // Return null on failure to match your signature cleanly
   }
 };
 
-// Format price for display
-export const formatPrice = (amount: number, currency = 'EUR') => {
-  return new Intl.NumberFormat('en-EU', {
-    style: 'currency',
-    currency: currency,
-  }).format(amount);
-};
+/**
+ * 
+ * @param booking_id 
+ * This function get stripe customer id / or create customer if not exist
+ * it is based on booking
+ * reason, there we have customer email
+ * reason, booking must be loaded so we check that is valid
+ * after loading we process to getting the customer
+ */
+export const getStripeCustomerId_ByBooking = async (booking_id: string): Promise<{
+  ok: boolean;
+  stripe_customer_id?: string | null;
+  message: string,
+  booking?: IDBBookingDetails | null
+}> => {
 
-// Convert price to cents for Stripe
-export const toCents = (amount: number) => {
-  return Math.round(amount * 100);
-};
+  const details = await getApiData<{
+    ok: boolean;
+    message: string;
+    booking: IDBBookingDetails;
+  }>("/booking-public/check-booking-validity", "POST", {
+    booking_id,
+  }, "not-authorize", "application/json");
 
-// Convert cents back to euros
-export const fromCents = (cents: number) => {
-  return cents / 100;
-};*/
+  if (!details.ok || !checkEmail(details.booking.customer_details.email_address)) {
+    return {
+      ok: false,
+      message: details.message,
+    };
+  }
 
+  const stripeCustomerID = await getStripeCustomerId(details.booking.customer_details.email_address)
 
+  return {
+    ok: true,
+    message: details.message,
+    stripe_customer_id: stripeCustomerID,
+    booking: details.booking
+  };
 
-export const truncateId = (id: string) => {
-  if (!id) return "";
-  if (id.length <= 10) return id; // Don't truncate if it's already short
-
-  // Takes the first 6 characters and the last 3 characters
-  return `${id.slice(0, 6)}...${id.slice(-3)}`;
-};
+}

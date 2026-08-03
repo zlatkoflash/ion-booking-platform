@@ -1,0 +1,16 @@
+{
+  "emailNotValid": "L'adresse e-mail que vous avez saisie n'est pas valide. Veuillez réessayer.",
+  "passwordNotValid": "Le mot de passe que vous avez saisi n'est pas valide. Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule, un caractère spécial et un chiffre. Veuillez réessayer.",
+  "passwordsNotMatch": "Les mots de passe saisis ne correspondent pas. Veuillez réessayer.",
+  "userExists": "L'adresse e-mail que vous avez saisie est déjà utilisée. Veuillez réessayer.",
+  "userDoNotExist": "Vous ne pouvez pas effectuer cette action car l'utilisateur n'existe pas. Veuillez réessayer.",
+  "userDoNotExistByEmail": "L'adresse e-mail que vous avez saisie n'existe pas. Veuillez réessayer.",
+  "general": "Une erreur s'est produite. Veuillez réessayer.",
+  "invalidToken": "Le code saisi n'est pas valide. Veuillez réessayer.",
+  "wrongCredentials": "L'adresse e-mail ou le mot de passe que vous avez saisi n'est pas valide. Veuillez réessayer.",
+  "wrongCredentials_afterSignup": "La connexion automatique après l'inscription a échoué. Veuillez essayer de vous connecter manuellement.",
+  "theServerCanNotUpdateYourPassword": "Le serveur ne peut pas mettre à jour votre mot de passe. Veuillez réessayer plus tard.",
+  "paymentGatewayNotAvailable": "Passerelle de paiement indisponible, veuillez réessayer plus tard.",
+  "cardInfoNotAvailable": "Les informations de la carte ne sont pas disponibles, veuillez réessayer plus tard.",
+  "booking_not_created": "Réservation non créée"
+}

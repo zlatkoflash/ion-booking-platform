@@ -1,0 +1,16 @@
+{
+  "emailNotValid": "L'indirizzo email inserito non è valido. Riprova.",
+  "passwordNotValid": "La password inserita non è valida. La password deve contenere almeno 8 caratteri, una lettera maiuscola, una lettera minuscola, un carattere speciale e un numero. Riprova.",
+  "passwordsNotMatch": "Le password inserite non coincidono. Riprova.",
+  "userExists": "L'indirizzo email inserito è già in uso. Riprova.",
+  "userDoNotExist": "Non puoi eseguire questa azione perché l'utente non esiste. Riprova.",
+  "userDoNotExistByEmail": "L'indirizzo email inserito non esiste. Riprova.",
+  "general": "Si è verificato un errore. Riprova.",
+  "invalidToken": "Il codice inserito non è valido. Riprova.",
+  "wrongCredentials": "L'indirizzo email o la password inseriti non sono validi. Riprova.",
+  "wrongCredentials_afterSignup": "L'accesso automatico dopo la registrazione non è riuscito. Prova ad accedere manualmente.",
+  "theServerCanNotUpdateYourPassword": "Il server non può aggiornare la tua password. Riprova più tardi.",
+  "paymentGatewayNotAvailable": "Gateway di pagamento non disponibile, riprova più tardi.",
+  "cardInfoNotAvailable": "Le informazioni della carta non sono disponibili, riprova più tardi.",
+  "booking_not_created": "Prenotazione non creata"
+}

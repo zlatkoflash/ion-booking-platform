@@ -1,3 +1,5 @@
+// import { zconfig } from "@/config/config";
+
 import { zconfig } from "@/config/config";
 
 export const fetchPublicData = async (

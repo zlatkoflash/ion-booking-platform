@@ -3,6 +3,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { zconfig } from '@/config/config'
+import { ISupabaseUser } from './interface-auth'
 
 // 1. Make the function ASYNC
 export async function createServerSupabase() {
@@ -29,4 +30,14 @@ export async function createServerSupabase() {
       },
     }
   )
+}
+
+export async function getLoggedUser(): Promise<ISupabaseUser | null> {
+  const supabase = await createServerSupabase()
+
+  // 4. Safely refresh and retrieve the authenticated user session
+  const { data: { user } } = await supabase.auth.getUser()
+  const userAuth = user as ISupabaseUser | null
+
+  return userAuth;
 }

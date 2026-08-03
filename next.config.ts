@@ -1,35 +1,31 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+// Point it explicitly to your new configuration engine file
+const withNextIntl = createNextIntlPlugin(
+  './translations-engine/request.ts'
+);
+
 
 const nextConfig: NextConfig = {
-
-  serverExternalPackages: ['puppeteer-core', '@sparticuz/chromium-min'],
-
   /* config options here */
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.pexels.com',
-        port: '', // Leave this empty unless the host uses a non-standard port
-        pathname: '/**', // Allows any path on this hostname
-      },
-      {
-        protocol: 'https',
-        hostname: 'imgcdn.bokun.tools',
-        port: '', // Leave this empty unless the host uses a non-standard port
-        pathname: '/**', // Allows any path on this hostname
+        hostname: 'kteqrchatotypfdxrsum.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/**',
       },
       {
         protocol: 'https',
         hostname: 'bokun.s3.amazonaws.com',
-        port: '', // Leave this empty unless the host uses a non-standard port
-        pathname: '/**', // Allows any path on this hostname
+        port: '',
+        pathname: '/**', // Allows all image paths inside this bucket
       },
-
-
-
     ],
   },
 };
 
-export default nextConfig;
+// export default nextConfig;
+export default withNextIntl(nextConfig);
