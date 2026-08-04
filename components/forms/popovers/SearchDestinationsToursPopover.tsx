@@ -186,7 +186,7 @@ export default function SearchDestinationsToursPopover(
         {/* Clickable Area Containing Text Input */}
         <div className="input-field-wrapper">
           <Form.Group controlId="destinationsSearchInput">
-            <div className="field-micro-label">{tForms("where").toUpperCase()}</div>
+            <div className="field-micro-label">{tForms("where").toLocaleUpperCase()}</div>
             <Form.Control
               type="text"
               placeholder={tForms("enter_by_location_title")}

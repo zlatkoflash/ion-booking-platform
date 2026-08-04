@@ -6,6 +6,7 @@ import BookingsResultsList from "./components/BookingsResultsList";
 import { getApiData } from "@/utils/api";
 import { IDBBookingDetails } from "@/utils/interface-database";
 import NoContentIllustration from "./components/NoContentIllustration";
+import { getTranslations } from "next-intl/server";
 
 export default async function BookingsAndRefunds(
   { params, searchParams }
@@ -26,6 +27,7 @@ export default async function BookingsAndRefunds(
   const paramsFor = await searchParams;
   console.log("paramsFor:", paramsFor);
   console.log("paramsFor.status:", paramsFor.status);
+  const tCommon = await getTranslations("Common");
 
   const details = await getApiData<{
     ok: boolean,
@@ -62,8 +64,8 @@ export default async function BookingsAndRefunds(
 
         {
           details.v_total_count === 0 && <NoContentIllustration type="no-items-after-searching"
-            title="No bookings found"
-            paragraph="Try adjusting your search terms, changing the filters, or clearing your search to see more results"
+            title={tCommon("no_bookings_found")}
+            paragraph={tCommon("try_adjusting_your_search_terms_changing_the_filters_or_clearing_your_search_to_see_more_results")}
           />
         }
 
@@ -72,8 +74,8 @@ export default async function BookingsAndRefunds(
 
     {
       details.v_absolute_total_count === 0 && <NoContentIllustration type="items-not-found"
-        title="No bookings yet"
-        paragraph="You don't have any bookings to display"
+        title={tCommon("no_bookings_yet")}
+        paragraph={tCommon("you_dont_have_any_bookings_to_display")}
       />
     }
 

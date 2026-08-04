@@ -4,6 +4,7 @@ import { getApiData } from "@/utils/api";
 import { useEffect } from "react";
 import IconText from "../buttons/IconText";
 import { IDBTourIncludeDetails } from "@/utils/interface-database";
+import { useTranslations } from "next-intl";
 
 export default function CardExperienceLabels({
   bookingDetails
@@ -12,30 +13,7 @@ export default function CardExperienceLabels({
 }) {
 
 
-  /*const LoadTheLabelsForExperience = async () => {
-
-    console.log("start loading labels... ", experience_id);
-
-    const result = await getApiData<{
-      ok: boolean,
-      labels: {}
-    }>(
-      "/booking-public/get-info-about-experience",
-      "POST",
-      {
-        id_database,
-        experience_id,
-        date_start,
-        date_end,
-        number_of_people
-      }
-    );
-
-    console.log("Result after loading: ", result);
-
-    console.log("end loading labels... ", experience_id);
-
-  }*/
+  const tCommon = useTranslations("Common");
 
   useEffect(() => {
     // LoadTheLabelsForExperience()
@@ -53,7 +31,7 @@ export default function CardExperienceLabels({
     }
     if (typeof bookingDetails.booked_tours_today === "number" && bookingDetails.booked_tours_today > 0 &&
       bookingDetails.booked_tours_today <= 10) {
-      result.push(<IconText key={2} text={`Booked ${bookingDetails.booked_tours_today} times today`} iconType="power-outline" type="card-city-label" />);
+      result.push(<IconText key={2} text={`${tCommon("booked")} ${bookingDetails.booked_tours_today} ${tCommon("times_today")}`} iconType="power-outline" type="card-city-label" />);
     }
 
     return result;

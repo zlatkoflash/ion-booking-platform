@@ -153,5 +153,7 @@
     "child": "Kind",
     "infants": "Kleinkinder",
     "infant": "Kleinkind"
-  }
+  },
+  "edit": "Bearbeiten",
+  "delete": "Löschen"
 }

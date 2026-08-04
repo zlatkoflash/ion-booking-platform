@@ -429,6 +429,10 @@ $desktopWidthMin: $mobileWidth + 1px;
 html {
   font-size: 10px;
 
+  @media(max-width: $mobileWidth) {
+    font-size: calc(100vw * 10/375);
+  }
+
   // Colors/Text/Fg-Subtle (body)
   --color-text-fg-subtle: #6B7383;
   //Colors/Border/border-default
@@ -2598,6 +2602,12 @@ footer {
 .hero {
   &.hero-home {
     padding-top: calc(14.4rem);
+    min-height: 65.6rem;
+
+    @media(max-width: $mobileWidth) {
+      min-height: calc(100dvh - 8.8rem);
+    }
+
     padding-bottom: 4rem;
 
     @media(max-width: $mobileWidth) {
@@ -5811,6 +5821,7 @@ footer {
       display: flex;
       flex: 1;
       margin-bottom: 0px;
+      max-width: calc(100% - 3rem);
 
       .title {
         // color: var(--color-text-fg);

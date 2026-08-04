@@ -367,7 +367,7 @@ export default function FormSelectedValuesClient(
                 temporaryPrice.total_discount > NETPrice ?
                   <>
                     <Title headingType="p" headingStyle="Text-lg-Regular" color="--color-text-fg-subtle" className="mb-3">{tForms("you_will_be_additional_charged")}:</Title>
-                    <PriceGroup price={temporaryPrice.total_discount - NETPrice} discountPercent={0} text="TOTAL" type="cart-item" bolder={true} />
+                    <PriceGroup price={temporaryPrice.total_discount - NETPrice} discountPercent={0} text={tForms("total").toLocaleUpperCase()} type="cart-item" bolder={true} />
                   </>
                   : null
               }
@@ -376,7 +376,7 @@ export default function FormSelectedValuesClient(
                 temporaryPrice.total_discount < NETPrice ?
                   <>
                     <Title headingType="p" headingStyle="Text-lg-Regular" color="--color-text-fg-subtle" className="mb-3">{tForms("you_will_be_refunded")}:</Title>
-                    <PriceGroup price={temporaryPrice.total_discount - NETPrice} discountPercent={0} text={tForms("total").toUpperCase()} type="cart-item" bolder={true} />
+                    <PriceGroup price={temporaryPrice.total_discount - NETPrice} discountPercent={0} text={tForms("total").toLocaleUpperCase()} type="cart-item" bolder={true} />
                   </>
                   : null
               }

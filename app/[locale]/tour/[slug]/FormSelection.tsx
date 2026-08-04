@@ -1,15 +1,12 @@
 "use client";
 
 import IconText from "@/components/buttons/IconText";
-import TourPageSelector from "@/components/forms/inputs/TourPageSelector";
 import PriceGroup from "@/components/typography/PriceGroup";
 import SelectorDate from "./SelectorDate";
 import SelectorTime from "./SelectorTime";
 import SelectorParticipants from "./SelectorParticipants";
-import ZBadge from "@/components/buttons/ZBadge";
 import CartItemsLines from "@/components/typography/CartItemsLines";
 import TourFormSubmitButtons from "./TourFormSubmitButtons";
-import IconTextGroupGrid from "@/components/buttons/IconTextGroupGrid";
 import FormSectionChecksItems from "./FormSectionChecksItemst";
 import { IDBTourIncludeDetails } from "@/utils/interface-database";
 import { IBookingTimeActivitySlot } from "@/utils/interface-booking";
@@ -18,6 +15,7 @@ import { getPriceForCategory } from "@/utils/booking-client";
 import AvailableSlotsLabel from "./AvailableSlotsLabel";
 import { updateUrlParam } from "@/utils/navigation";
 import { setActiveTimeSlot, setFilterParticipantsCount, setPriceLoading } from "@/redux/booking/bookingSlice";
+import { useTranslations } from "next-intl";
 
 export default function FormSelectionTourDetails(
   {
@@ -41,6 +39,8 @@ export default function FormSelectionTourDetails(
     }
 ) {
 
+  const tCommon = useTranslations("Common");
+
   const selectedTimeSlot = useAppSelector((state) => state.booking.activeTimeSlot);
   const updateUrlParamFor = updateUrlParam();
   const dispatch = useAppDispatch()
@@ -62,33 +62,6 @@ export default function FormSelectionTourDetails(
     return <></>
   }
 
-  /*if (tour === null)
-    return <>
-
-      <form className="form-booking-selection">
-
-        <PriceGroup price={37.49} currencySign="€" type="price-group-for-tour-page" />
-
-        <ZBadge label={`Only 3 slots left`} variant="warning" type="form-badge" />
-
-        <IconText iconType="ticket" text="Discounted rates for kids" type="label-for-form" />
-
-
-        <SelectorDate />
-        <SelectorTime isForExistingBooking={false} />
-        <SelectorParticipants />
-
-        <IconText iconType="info-circle-outline" type="info-form" text="Booked 60 times yesterday" />
-
-        <CartItemsLines />
-
-        <TourFormSubmitButtons />
-
-        <FormSectionChecksItems />
-
-      </form>
-
-    </>*/
 
 
 
@@ -122,7 +95,7 @@ export default function FormSelectionTourDetails(
             "adult"
           )
         ) &&
-        <IconText iconType="ticket" text="Discounted rates for kids" type="label-for-form" />
+        <IconText iconType="ticket" text={tCommon("discounted_rates_for_kids")} type="label-for-form" />
       }
 
 
@@ -155,7 +128,7 @@ export default function FormSelectionTourDetails(
 
       {
         tour.booked_tours_yesterday > 5 &&
-        <IconText iconType="info-circle-outline" type="info-form" text={`Booked ${tour.booked_tours_yesterday} times yesterday`} />
+        <IconText iconType="info-circle-outline" type="info-form" text={`${tCommon("booked")} ${tour.booked_tours_yesterday} ${tCommon("times_yesterday")}`} />
       }
 
       <CartItemsLines />

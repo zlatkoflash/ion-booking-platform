@@ -51,7 +51,7 @@
   "pay_now": "Pay now",
   "no_extra_fees_you_ll_be_charged": "No extra fees. You'll be charged {price} on {date}",
   "now": "now",
-  "reserve_now_and_pay_later": "Reserve Now & Pay Later",
+  "reserve_now_and_pay_later": "Reserve now & pay later",
   "book_tour_for": "Book tour for {price}",
   "free_cancellation": "Free cancellation",
   "cancel_up_to_24_hours_in_advance": "Cancel up to 24 hours in advance",
@@ -153,5 +153,7 @@
     "child": "Child",
     "infants": "Infants",
     "infant": "Infant"
-  }
+  },
+  "edit": "Edit",
+  "delete": "Delete"
 }

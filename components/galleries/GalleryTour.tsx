@@ -81,8 +81,8 @@ export default function GalleryTour(
           }
           {
             iconTextsLabels === null && <>
-              <IconText text="Best Seller" iconType="trophy-outline" type="card-city-label" />
-              <IconText text="Booked 10 times today" iconType="power-outline" type="card-city-label" />
+              <IconText text={tCommon("best_seller")} iconType="trophy-outline" type="card-city-label" />
+              <IconText text={tCommon("booked_n_times_today", { n: 10 })} iconType="power-outline" type="card-city-label" />
             </>
           }
         </IconsTextInlineGroup>

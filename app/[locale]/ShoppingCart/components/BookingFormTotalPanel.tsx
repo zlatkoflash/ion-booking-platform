@@ -6,6 +6,7 @@ import Title from "@/components/typography/Title";
 import { IBookingParticipants, IBookingPrice } from "@/redux/booking/bookingSlice";
 import { useRouter } from "@/translations-engine/routing";
 import { IDBBookingDetails, IDBTourIncludeDetails } from "@/utils/interface-database";
+import { useTranslations } from "next-intl";
 
 export default function BookingFormTotalPanel(
   {
@@ -26,12 +27,14 @@ export default function BookingFormTotalPanel(
   const countItems = participants.adults + participants.children + participants.infants;
   const router = useRouter();
 
+  const tCommon = useTranslations("Common");
+
   return <>
     <form className="form-booking-selection">
 
 
       <Title headingType="h3" headingStyle="Text-xl-Semibold" color="--color-text-fg">
-        Subtotal ({countItems}) {countItems === 1 ? "item" : "items"}
+        {tCommon("subtotal")} ({countItems}) {countItems === 1 ? "item" : "items"}
       </Title>
 
       <CartItemsLines
@@ -40,7 +43,7 @@ export default function BookingFormTotalPanel(
         tourOut={tour}
       />
 
-      <ButtonDefault label="Go to checkout" variant="primary" onClick={() => {
+      <ButtonDefault label={tCommon("go_to_checkout")} variant="primary" onClick={() => {
         router.push(`/booking/${booking.id}/details`);
       }} className="d-flex w-100" disabled={booking.is_expired} />
 

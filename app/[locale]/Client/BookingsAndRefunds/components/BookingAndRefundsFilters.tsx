@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl";
 export default function BookingAndRefundFilters() {
 
   const tCommon = useTranslations("Common");
+  const tForms = useTranslations("Forms");
 
   const searchParams = useSearchParams();
 
@@ -80,7 +81,7 @@ export default function BookingAndRefundFilters() {
 
               <CustomSelect
                 options={[
-                  { label: tCommon("all_statues"), value: "" },
+                  { label: tCommon("all_statuses"), value: "" },
                   { label: tCommon("confirmed"), value: EBookingStatus.CONFIRMED },
                   { label: tCommon("reserved"), value: EBookingStatus.RESERVED },
                   { label: tCommon("pending_hold"), value: EBookingStatus.PENDING_HOLD },

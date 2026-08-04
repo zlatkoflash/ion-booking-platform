@@ -154,5 +154,7 @@
     "child": "Enfant",
     "infants": "Nourrissons",
     "infant": "Nourrisson"
-  }
+  },
+  "edit": "Modifier",
+  "delete": "Supprimer"
 }

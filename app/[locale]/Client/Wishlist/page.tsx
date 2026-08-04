@@ -4,6 +4,8 @@ import WrapWishlistItems from "./components/WrapWishlistItemst";
 import { getApiData } from "@/utils/api";
 import { IDBTourIncludeDetails } from "@/utils/interface-database";
 import NoContentIllustration from "../BookingsAndRefunds/components/NoContentIllustration";
+// import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 export default async function PageWishList(
   {
@@ -20,6 +22,8 @@ export default async function PageWishList(
   const paramsFor = await searchParams;
   const orderType = paramsFor.orderType ? paramsFor.orderType : "recently-saved";
 
+  const tCommon = await getTranslations("Common");
+
   const detailsWishList = await getApiData<{
     ok: boolean,
     message: string,
@@ -34,11 +38,11 @@ export default async function PageWishList(
     !detailsWishList.ok || detailsWishList.experiences.length === 0) {
     return <>
       <HeaderHome />
-      <BookingAndRefundsHeading title="Wishlist" />
+      <BookingAndRefundsHeading title={tCommon("wishlist")} />
 
       <NoContentIllustration type="wishlist-empty"
-        title="Your wishlist is empty"
-        paragraph="Start saving experiences you love to find them here later."
+        title={tCommon("wishlist_empty_title")}
+        paragraph={tCommon("wishlist_empty_subtitle")}
 
       />
 
@@ -49,7 +53,7 @@ export default async function PageWishList(
 
     <HeaderHome />
 
-    <BookingAndRefundsHeading title="Wishlist" />
+    <BookingAndRefundsHeading title={tCommon("wishlist")} />
 
     <WrapWishlistItems experiences={detailsWishList.experiences} />
 

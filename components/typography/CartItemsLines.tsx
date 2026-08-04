@@ -46,7 +46,7 @@ export default function CartItemsLines(
         bookingPrice.fees === 0 && <PriceGroup price={bookingPrice.fees} text={tForms("booking_fee")} type="cart-item" badgeText={tForms('no_fees')} />
       }
 
-      <PriceGroup price={bookingPrice.total} discountPercent={tour !== null ? tour.discount : 0} text={tForms('total').toUpperCase()} type="cart-item" bolder={true} />
+      <PriceGroup price={bookingPrice.total} discountPercent={tour !== null ? tour.discount : 0} text={tForms('total').toLocaleUpperCase()} type="cart-item" bolder={true} />
     </div>
   </>
 }

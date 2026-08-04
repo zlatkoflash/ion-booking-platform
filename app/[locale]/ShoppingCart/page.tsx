@@ -10,6 +10,7 @@ import { IBookingPrice } from "@/redux/booking/bookingSlice";
 import BookingPendingCounter from "../booking/[booking_id]/details/BookingPendingCounter";
 import FormSectionChecksItems from "../tour/[slug]/FormSectionChecksItemst";
 import BookingFormTotalPanel from "./components/BookingFormTotalPanel";
+import { getTranslations } from "next-intl/server";
 
 export default async function ShoppingCart(
   {
@@ -23,6 +24,7 @@ export default async function ShoppingCart(
 
   const params = await searchParams;
 
+  const tCommon = await getTranslations("Common");
 
   const loggedUser = await getLoggedUser();
 
@@ -65,10 +67,10 @@ export default async function ShoppingCart(
     return <>
       <HeaderHome />
 
-      <BookingAndRefundsHeading title="Shipping Cart" />
+      <BookingAndRefundsHeading title={tCommon("shipping_cart")} />
       <NoContentIllustration type="no-items-in-cart"
-        title="Your cart is empty"
-        paragraph="Looks like you haven’t added anything yet."
+        title={tCommon("your_cart_is_empty")}
+        paragraph={tCommon("looks_like_you_havent_added_anything_yet")}
       />
     </>
   }
@@ -79,14 +81,14 @@ export default async function ShoppingCart(
 
     <HeaderHome />
 
-    <BookingAndRefundsHeading title="Shipping Cart" />
+    <BookingAndRefundsHeading title={tCommon("shipping_cart")} />
 
 
     {
       (details.booking === null || details.booking.status !== EBookingStatus.RESERVED || details.booking.is_expired) && <>
         <NoContentIllustration type="no-items-in-cart"
-          title="Your cart is empty"
-          paragraph="Looks like you haven’t added anything yet."
+          title={tCommon("your_cart_is_empty")}
+          paragraph={tCommon("looks_like_you_havent_added_anything_yet")}
         />
       </>
     }
@@ -102,22 +104,7 @@ export default async function ShoppingCart(
             </div>
             <CartItemsWrap booking={details.booking} key={`${details.booking.id}`} tour={details.tour} price={details.price} />
           </>}
-          /*rightChildren={[
-            <BookingPendingCounter
-              key={'holding-spot'}
-              expiring_date={details.booking.date_expire_after_creating}
-            />,
 
-            <BookingFormTotalPanel
-              key={`booking-form-total-panel-${details.booking.id}`}
-              participants={details.booking.count_participants}
-              price={details.price}
-              tour={details.tour}
-              booking={details.booking}
-            />,
-
-            <FormSectionChecksItems key={"check-items-about-booking"} showStrict={true} />
-          ]}*/
           rightChildren={RightContent()}
         />
       </>

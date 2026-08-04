@@ -71,8 +71,6 @@ export default function SignupForm(
       password: password
     }, "not-authorize", "application/json");
 
-    console.log("results for:", results);
-
     if (!results.ok) {
       setErrorMessage(tValidation("general"));
     }

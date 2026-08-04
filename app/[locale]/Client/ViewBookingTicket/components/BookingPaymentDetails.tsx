@@ -132,11 +132,11 @@ export function TablePaymentDetails(
                       {
                         // `[>>> ${item.payment_type}]`
                       }
-                      {item.payment_type?.charAt(0).toUpperCase() + item.payment_type?.slice(1)}
+                      {item.payment_type?.charAt(0).toLocaleUpperCase() + item.payment_type?.slice(1)}
 
                       {item.payment_type === "card" && (
                         <span className="text-nowrap">
-                          • {item.payment_card_type?.toUpperCase()} • {item.payment_card_last_x4_digits}
+                          • {item.payment_card_type?.toLocaleUpperCase()} • {item.payment_card_last_x4_digits}
                         </span>
                       )}
                     </Title>

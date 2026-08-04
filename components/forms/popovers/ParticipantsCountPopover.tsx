@@ -81,7 +81,7 @@ export default function ParticipantsCountPopover(
       >
         {/* Clickable Entry Wrapper Panel */}
         <div className="clickable-input-wrapper position-relative">
-          <div className="field-micro-label">{tForms("who").toUpperCase()}</div>
+          <div className="field-micro-label">{tForms("who").toLocaleUpperCase()}</div>
 
           {/* Active text value output frame */}
           <div className="search-field-output text-truncate">

@@ -65,7 +65,7 @@ export default function CalendardInputPopover(
         {/* Clickable Display Area Wrapper */}
         <div className="clickable-date-display d-flex flex-wrap align-items-center gap-2">
           {/* Label Header text inside container box */}
-          <div className="w-100 field-micro-label">{tForms("when").toUpperCase()}</div>
+          <div className="w-100 field-micro-label">{tForms("when").toLocaleUpperCase()}</div>
           {
             filterDates.length > 0 && <Title headingType="p" headingStyle="Text-sm-Regular" color="--color-text-fg">
               {formatMultipleDates(filterDates, tForms("locale_code"))}

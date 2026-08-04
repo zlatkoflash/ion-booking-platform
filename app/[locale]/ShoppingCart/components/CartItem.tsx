@@ -10,6 +10,7 @@ import { IBookingPrice } from "@/redux/booking/bookingSlice";
 import ZIcon from "@/components/icons/ZIcon";
 import BookingGroupStats from "./BookingGroupStats";
 import { Dropdown } from "react-bootstrap";
+import { useTranslations } from "next-intl";
 
 
 
@@ -87,6 +88,9 @@ function CartItem(
     }
 ) {
 
+  const tCommon = useTranslations("Common");
+  const tForms = useTranslations("Forms");
+
   const X1Price = () => {
     if (guestType === "adult") return price.adult_x1_price;
     if (guestType === "child") return price.child_x1_price;
@@ -98,9 +102,9 @@ function CartItem(
     return [
       <IconText key="tour-date" text={`Tour date ${supabaseDateToDayOfWeekMonthDD(booking.date_tour_start)}, ${formatTo12HourTime(booking.time_tour_start_string)}`} type="icon-text-stat-for-booking-item" iconType="calendar-check-outline" />,
       <IconText key="guest-type" text={
-        `${guestType.charAt(0).toUpperCase() + guestType.slice(1)}`
+        `${guestType.charAt(0).toLocaleUpperCase() + guestType.slice(1)}`
       } type="icon-text-stat-for-booking-item" iconType="person" />,
-      <IconText key="date-reserved" text={`Reserved ${longDateTimeForBookingItem(booking.date_reserved as string)}`} type="icon-text-stat-for-booking-item" iconType="calendar-outline" />
+      <IconText key="date-reserved" text={`${tCommon("reserved")} ${longDateTimeForBookingItem(booking.date_reserved as string)}`} type="icon-text-stat-for-booking-item" iconType="calendar-outline" />
     ]
   }
 
@@ -116,7 +120,7 @@ function CartItem(
               <Title headingType="h3" headingStyle="Text-lg-Medium" color="--color-text-fg-on-accent">
                 {booking.tour_title}
               </Title>
-              <Title headingType="p" headingStyle="Text-xs-Regular" color="--color-text-fg-subtle" > Here we will put the tour description</Title>
+              <Title headingType="p" headingStyle="Text-xs-Regular" color="--color-text-fg-subtle" > {tour.description_short}</Title>
             </div>
 
 
@@ -134,13 +138,13 @@ function CartItem(
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#/edit">Edit</Dropdown.Item>
+                  <Dropdown.Item href="#/edit">{tForms("edit")}</Dropdown.Item>
                   {
                     // <Dropdown.Item href="#/archive">Archive</Dropdown.Item>
                   }
                   <Dropdown.Divider />
                   <Dropdown.Item href="#/delete" className="text-danger">
-                    Delete
+                    {tForms("delete")}
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

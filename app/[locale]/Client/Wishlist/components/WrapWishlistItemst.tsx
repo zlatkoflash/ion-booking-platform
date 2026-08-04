@@ -6,6 +6,7 @@ import CardExperienceLabels from "@/components/sliders/CardExperienceLabels";
 import Title from "@/components/typography/Title";
 import { IDBTourIncludeDetails } from "@/utils/interface-database"
 import { updateUrlParam } from "@/utils/navigation";
+import { useTranslations } from "next-intl";
 import { Col, Container, Row } from "react-bootstrap";
 
 export default function WrapWishlistItems(
@@ -19,6 +20,7 @@ export default function WrapWishlistItems(
 ) {
 
   const updateUrlParamFor = updateUrlParam();
+  const tCommon = useTranslations("Common");
 
   return <>
     <section className="wrap-wishlist-items">
@@ -27,7 +29,7 @@ export default function WrapWishlistItems(
           <Col>
 
             <div className="wrap-wishlist-heading">
-              <Title headingType="h4" headingStyle="Text-md-Regular" color="--color-text-fg" className="count-title">{`${experiences.length} saved experiences`}</Title>
+              <Title headingType="h4" headingStyle="Text-md-Regular" color="--color-text-fg" className="count-title">{`${experiences.length} ${tCommon("saved_experiences")}`}</Title>
 
               <div className="controls-inputs">
                 <CustomSelect
@@ -39,13 +41,13 @@ export default function WrapWishlistItems(
                   }}
                   size="size-small"
                   options={[
-                    { value: "recently-saved", label: "Recently saved" },
-                    { value: "price-ascending", label: "Price (ascending)" },
-                    { value: "price-descending", label: "Price (descending)" },
+                    { value: "recently-saved", label: tCommon('recently_saved') },
+                    { value: "price-ascending", label: tCommon('price_ascending') },
+                    { value: "price-descending", label: tCommon('price_descending') },
                     /*{ value: "rating-low-to-high", label: "Rating (low to high)" },
                     { value: "rating-high-to-low", label: "Rating (high to low)" },*/
                   ]}
-                  placeholder="Recently saved"
+                  placeholder={tCommon('recently_saved')}
                 />
               </div>
 

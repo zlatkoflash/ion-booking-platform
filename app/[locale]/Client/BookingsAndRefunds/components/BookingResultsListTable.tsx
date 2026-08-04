@@ -207,8 +207,8 @@ function BookingTableItem(
       <hr className="only-in-mobile" />
 
       <div className="price-content">
-        <PriceGroup price={item.amount100_paid / 100} text="Paid" type="booking-item" />
-        <PriceGroup price={(item.amount100_paid - item.amount100_refunded) / 100} text="Net" type="booking-item" />
+        <PriceGroup price={item.amount100_paid / 100} text={tCommon("paid")} type="booking-item" />
+        <PriceGroup price={(item.amount100_paid - item.amount100_refunded) / 100} text={tCommon("net")} type="booking-item" />
       </div>
       <div className="actions-content">
 

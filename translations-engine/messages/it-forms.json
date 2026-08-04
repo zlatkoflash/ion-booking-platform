@@ -153,5 +153,7 @@
     "child": "Bambino",
     "infants": "Neonati",
     "infant": "Neonato"
-  }
+  },
+  "edit": "Modifica",
+  "delete": "Elimina"
 }
