@@ -106,6 +106,8 @@ export default function PageComponentsUI() {
 
                       <IconText text="Cancellation policy" subText="Full refund: Get back 100% of what you paid." type="icon-text-cancellation-info" iconType="info-circle-outline" />
 
+                      <IconText type="icon-boxed-title-subttile-vertical" text="You’re all set!" subText="You’ll receive a confirmation email with all the details." iconType="calendar-outline" />
+
                     </Col>
                   </Row>
                   <Row>
@@ -260,6 +262,9 @@ export default function PageComponentsUI() {
                   <ZIcon type="hamburg" />
                   <ZIcon type="keyboard-arrow-left" />
                   <ZIcon type="x3-dots-actions" />
+                  <ZIcon type="import-contacts" />
+                  <ZIcon type="footprint" />
+                  <ZIcon type="handshake" />
                 </div>
               </CardBody>
             </Card>

@@ -1,0 +1,75 @@
+{
+  "heading_content": {
+    "badge": "Kontaktieren Sie uns",
+    "title": "Wir freuen uns, von Ihnen zu hören",
+    "paragraph": "Fragen zu einer Tour, einer Gruppenbuchung oder etwas anderem? Unser Team in Florenz antwortet in der Regel innerhalb von 24 Stunden."
+  },
+  "faqs_badge": "FAQ",
+  "faqs_title": "Häufig gestellte Fragen",
+  "faqs": [
+    {
+      "title": "Wie schnell erhalte ich eine Antwort?",
+      "content": "Unser Team in Florenz beantwortet Nachrichten, E-Mails und WhatsApp-Anfragen normalerweise innerhalb von 24 Stunden, während der Geschäftszeiten oft noch viel schneller."
+    },
+    {
+      "title": "Kann ich eine private oder maßgeschneiderte Tour anfragen?",
+      "content": "Ja – erwähnen Sie es einfach in Ihrer Nachricht und wir stellen einen privaten Rundgang zusammen, der genau auf Ihre Interessen, Gruppengröße und Ihren Zeitplan abgestimmt ist."
+    },
+    {
+      "title": "Wie lauten Ihre Stornierungsbedingungen?",
+      "content": "Die meisten Touren bieten eine kostenlose Stornierung bis zu 24 Stunden vor Beginn. Genauere Details finden Sie in der jeweiligen Tourbeschreibung."
+    },
+    {
+      "title": "Bieten Sie Gruppenrabatte an?",
+      "content": "Wir bieten Sonderkonditionen für größere Gruppen und Schulen. Senden Sie uns einfach Ihre Gruppengröße und die gewünschten Daten und wir erstellen Ihnen ein Angebot."
+    },
+    {
+      "title": "Welche Sprachen sprechen Ihre Guides?",
+      "content": "Unsere Guides führen Touren auf Englisch, Italienisch und in mehreren anderen Sprachen durch – teilen Sie uns bei Ihrer Anfrage einfach Ihre Präferenz mit."
+    }
+  ],
+  "send_us_a_message": "Senden Sie uns eine Nachricht",
+  "fill_out_the_form": "Füllen Sie das Formular aus und wir melden uns schnellstmöglich bei Ihnen – in der Regel innerhalb eines Werktags.",
+  "send_message": "Nachricht senden",
+  "contact_form_send_successfully": "Kontaktformular erfolgreich gesendet",
+  "contact_form_send_successfully_subtext": "Wir melden uns schnellstmöglich bei Ihnen – in der Regel innerhalb eines Werktags.",
+  "contact-items-title": "Direkt kontaktieren",
+  "contact-items": [
+    {
+      "icon": "call",
+      "title": "Rufen Sie uns an",
+      "link": {
+        "label": "+39 347 320 4889",
+        "link": "tel:+393473204889"
+      },
+      "description": "Mo–Sa, 9:00–19:00 Uhr MEZ"
+    },
+    {
+      "icon": "mail",
+      "title": "E-Mail schreiben",
+      "link": {
+        "label": "info@walkintown.com",
+        "link": "mailto:info@walkintown.com"
+      },
+      "description": "Wir antworten innerhalb von 24 Stunden"
+    },
+    {
+      "icon": "social-whatsapp",
+      "title": "WhatsApp",
+      "link": {
+        "label": "+39 347 320 4889",
+        "link": "https://wa.me/393473204889"
+      },
+      "description": "Für schnelle Anfragen"
+    },
+    {
+      "icon": "location-on-pin",
+      "title": "Besuchen Sie uns",
+      "link": {
+        "label": "Viale Giuseppe Mazzini, 40",
+        "link": "https://www.google.com/maps/place/Viale+Giuseppe+Mazzini,+40,+50136+Firenze+FI,+Italy/@43.774786,11.2705459,814m/data=!3m2!1e3!4b1!4m10!1m2!2m1!1sViale+Giuseppe+Mazzini,+40!3m6!1s0x132a540d673aaaab:0x39b91b96665f2a78!8m2!3d43.7747822!4d11.2731208!15sChpWaWFsZSBHaXVzZXBwZSBNYXp6aW5pLCA0MJIBCnN1YnByZW1pc2XgAQA!16s%2Fg%2F11q2x794bc?entry=ttu&g_ep=EgoyMDI2MDgxMi4wIKXMDSoASAFQAw%3D%3D"
+      },
+      "description": "50123 Florenz (FI), Italien"
+    }
+  ]
+}

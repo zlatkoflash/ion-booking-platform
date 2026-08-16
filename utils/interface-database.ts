@@ -269,6 +269,7 @@ export interface IDBBooking {
   date_confirmed: string;
   date_cancelled: string;
   initial_payment_is_done: boolean;
+  count_max_edits: number;
 }
 
 export interface IDBBookingDetails extends IDBBooking {

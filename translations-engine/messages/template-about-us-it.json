@@ -1,0 +1,106 @@
+{
+  "about_us_heading": {
+    "badge": "Chi siamo",
+    "title": "Trasformare ogni miglio in un sorriso",
+    "paragraph": "Walks in Town è nata da un'idea semplice: il modo migliore per conoscere una città è percorrerla a piedi insieme a qualcuno che la ama davvero. Siamo un team di guide locali, cantastorie e amanti della città con una missione: fare in modo che ogni viaggiatore si senta come a casa."
+  },
+  "content_photo": {
+    "badges_strings": [
+      "La nostra storia"
+    ],
+    "title": "Tutto è iniziato con una passeggiata a Firenze all'alba",
+    "paragraphs": [
+      "Walks in Town è iniziata nel 2021, quando il nostro fondatore ha iniziato a guidare piccole passeggiate mattutine per gli amici in visita a Firenze: niente copioni, niente grandi folle, solo storie locali genuine e le migliori viste prima dell'arrivo dei pullman turistici.",
+      "La voce si è sparsa velocemente. I viaggiatori continuavano a chiedere la stessa cosa: meno fretta, più significato. Così abbiamo creato un team di guide locali che condividono lo stesso amore per la loro città e abbiamo trasformato quelle passeggiate mattutine in ciò che Walks in Town è oggi."
+    ],
+    "blue_paragraph": "Persone vere. Luoghi veri. Storie vere.",
+    "button_details": {
+      "label": "Incontra le nostre guide"
+    }
+  },
+  "content_photo_our_mission": {
+    "badges_strings": [
+      "La nostra missione"
+    ],
+    "title": "Aiutare i viaggiatori a vivere ogni città come un locale",
+    "paragraphs": [
+      "La nostra missione è rendere ogni viaggio più personale, significativo e memorabile. Mettiamo in contatto i viaggiatori con guide locali appassionate che danno vita a ogni destinazione attraverso storie autentiche, luoghi nascosti e genuine esperienze culturali.",
+      "Crediamo che il modo migliore per scoprire una città non sia semplicemente vederne i monumenti, ma comprendere le persone, le tradizioni e i momenti che la rendono unica."
+    ],
+    "blue_paragraph": "Cammina più a fondo. Scopri di più. Sentiti a casa.",
+    "button_details": {
+      "label": "Esplora i nostri tour"
+    }
+  },
+  "trending_experiences": "Esperienze in primo piano",
+  "what_other_travelers_are_booking_this_week": "Cosa stanno prenotando gli altri viaggiatori questa settimana",
+  "x6_icons_texts": [
+    {
+      "title": "Scopri angoli nascosti",
+      "paragraph": "Vai oltre i monumenti principali ed esplora i luoghi che la maggior parte dei visitatori si perde.",
+      "icon": "location-on-pin"
+    },
+    {
+      "title": "Ascolta le vere storie della città",
+      "paragraph": "Scopri Firenze attraverso storie locali, tradizioni e vita quotidiana.",
+      "icon": "import-contacts"
+    },
+    {
+      "title": "Goditi un ritmo rilassato",
+      "paragraph": "Prenditi il tuo tempo, fai domande e vivi la città senza fretta.",
+      "icon": "footprint"
+    },
+    {
+      "title": "Incontra persone, non solo luoghi",
+      "paragraph": "Entra in contatto con guide locali amichevoli che rendono ogni tour personale.",
+      "icon": "handshake"
+    },
+    {
+      "title": "Scegli le esperienze adatte a te",
+      "paragraph": "Trova passeggiate culturali, tour gastronomici, gite di un giorno e attività per ogni stile di viaggio.",
+      "icon": "heart-outline"
+    },
+    {
+      "title": "Prenota con fiducia",
+      "paragraph": "Dettagli chiari, prenotazione semplice e supporto utile prima e durante il viaggio.",
+      "icon": "verified-shield-outline"
+    }
+  ],
+  "our_team": {
+    "badge_label": "Contattaci",
+    "title": "Incontra il nostro team",
+    "paragraph": "Incontra le persone che danno vita a ogni esperienza di Walks in Town, dalla narrazione locale e la pianificazione dei tour fino all'assistenza clienti e alle partnership.",
+    "people": [
+      {
+        "imageSrc": "",
+        "name": "Luca Moretti",
+        "role": "Fondatore e Amministratore Delegato"
+      },
+      {
+        "imageSrc": "",
+        "name": "Giulia Bianchi",
+        "role": "Responsabile delle Operazioni"
+      },
+      {
+        "imageSrc": "",
+        "name": "Marco Conti",
+        "role": "Guida Turistica Principale"
+      },
+      {
+        "imageSrc": "",
+        "name": "Sofia Romano",
+        "role": "Responsabile dell'Esperienza degli Ospiti"
+      },
+      {
+        "imageSrc": "",
+        "name": "Matteo Ricci",
+        "role": "Responsabile delle Partnership"
+      },
+      {
+        "imageSrc": "",
+        "name": "Elena Ferraro",
+        "role": "Responsabile Marketing e Contenuti"
+      }
+    ]
+  }
+}

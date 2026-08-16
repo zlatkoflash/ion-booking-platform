@@ -17,7 +17,7 @@ interface InputTextProps {
   id?: string;
   name?: string;
   label?: string | React.ReactNode;
-  type?: 'text' | 'password' | 'email' | 'tel' | 'url' | 'number';
+  type?: 'text' | 'password' | 'email' | 'tel' | 'url' | 'number' | 'textarea';
   placeholder?: string;
   disabled?: boolean;
   value: string;
@@ -58,7 +58,7 @@ export default function InputText({
   showLabel = false,
   className = "",
   showLabelIconText = false,
-  labelIconType = "approval",
+  labelIconType,
   stripeElement = undefined,
   inputIcon = undefined,
   inputIconPosition = 'icon-position-start',
@@ -127,7 +127,7 @@ export default function InputText({
     }
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: any) => {
     onChange(e);
     // If the user already interacted, validate dynamically on keystroke
     if (touched) {
@@ -135,7 +135,7 @@ export default function InputText({
     }
   };
 
-  const handleInputBlur = (e: FocusEvent<HTMLInputElement>) => {
+  const handleInputBlur = (e: any) => {
     setTouched(true);
     handleValidation(e.target.value);
 
@@ -173,7 +173,7 @@ export default function InputText({
       }
 
       {
-        showLabelIconText && <IconText type='icon-text-for-input-label' text={label} iconType={labelIconType || 'approval'} />
+        showLabelIconText && <IconText type='icon-text-for-input-label' text={label} iconType={labelIconType || "none"} />
       }
 
       <div className="input-wrap">
@@ -183,6 +183,19 @@ export default function InputText({
               return <div className="stripe-input-wrap">
                 {stripeElement}
               </div>;
+            if (type === "textarea")
+              return <textarea
+                id={id}
+                name={name}
+                className={inputClass}
+                placeholder={placeholder}
+                value={value}
+                onChange={handleInputChange}
+                onBlur={handleInputBlur}
+                onKeyDown={onKeyDown}
+                onPaste={onPaste}
+                disabled={disabled}
+              />;
             return <input
               id={id}
               name={name}

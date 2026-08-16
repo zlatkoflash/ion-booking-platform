@@ -6,6 +6,8 @@ import ModalCloseButton from "@/components/modals/ModalCloseButton";
 import Title from "@/components/typography/Title";
 import { IDBBookingDetails } from "@/utils/interface-database";
 import Modal from "react-bootstrap/Modal";
+import illustration_off from "@/assets/images/illustration-off.svg";
+import illustration_coffee from "@/assets/images/illustration-coffee.svg";
 
 
 export default function ModalCancelEdit(
@@ -18,6 +20,7 @@ export default function ModalCancelEdit(
     disable = false,
     title,
     description,
+    illustration_type = "none"
 
   }
     :
@@ -30,6 +33,8 @@ export default function ModalCancelEdit(
       disable?: boolean;
       title: string;
       description: string;
+
+      illustration_type?: "none" | "coffee" | "off"
     }
 ) {
 
@@ -47,10 +52,24 @@ export default function ModalCancelEdit(
         <ModalCloseButton onClick={() => {
           handleClose?.()
         }} />
+
         <Modal.Header>
-          <Title headingType="h4" headingStyle="Display-xs-Medium" color="--color-text-fg">{title}</Title>
-          <Title headingType="p" headingStyle="Text-lg-Regular" color="--color-text-fg-subtle">{description}</Title>
+          {
+            illustration_type === "off" && <img src={illustration_off.src} alt="WIT discount" />
+          }
+          {
+            illustration_type === "coffee" && <img src={illustration_coffee.src} alt="WIT coffee" />
+          }
+          {
+            title !== "" &&
+            <Title headingType="h4" headingStyle="Display-xs-Medium" color="--color-text-fg">{title}</Title>
+          }
+          {
+            description !== "" &&
+            <Title headingType="p" headingStyle="Text-lg-Regular" color="--color-text-fg-subtle">{description}</Title>
+          }
         </Modal.Header>
+
         <Modal.Body>
           {bodyContent}
         </Modal.Body>

@@ -46,8 +46,8 @@ export default function ConfirmHeading(
                 />
               </div>
 
-              <ButtonDefault label={tCommon("open_my_dashboard")} variant='primary' onClick={() => {
-                route.push("/Client/BookingsAndRefunds")
+              <ButtonDefault link={`/Client/ViewBookingTicket/${booking.id}/tour-detail`} label={tCommon("open_my_dashboard")} variant='primary' onClick={() => {
+                // route.push("/Client/BookingsAndRefunds")
               }} />
 
               <Title headingType='p' headingStyle='Text-xs-Regular' color="--color-text-fg-subtle">

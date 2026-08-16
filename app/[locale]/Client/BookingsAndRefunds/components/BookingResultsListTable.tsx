@@ -12,11 +12,14 @@ import { useSearchParams } from "next/navigation";
 import { formatTo12HourTime, longDateTimeForBookingItem, supabaseDateToDayOfWeekMonthDD } from "@/utils/dates-times";
 import { getTotalCountFromParticipantObject } from "@/utils/booking-client";
 import { useRouter } from "@/translations-engine/routing";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { getApiData } from "@/utils/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookingGroupStats from "@/app/[locale]/ShoppingCart/components/BookingGroupStats";
-import { useTranslations } from "use-intl";
+import { useLocale, useTranslations } from "use-intl";
+import ModalCancelEdit from "../../CancelTour/components/ModalCancelEdit";
+import { setShowModalForEarlyPayment } from "@/redux/controls/controlsSlice";
+import { IBookingPrice } from "@/redux/booking/bookingSlice";
 
 export default function BookingResultsListTable(
   {
@@ -35,6 +38,9 @@ export default function BookingResultsListTable(
     { index: 3 },
   ];*/
 
+  const [showModalPayEarly, setShowModalPayEarly] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState<IDBBookingDetails | null>(null);
+
   return <>
 
     <div className="booking-list-table">
@@ -44,6 +50,9 @@ export default function BookingResultsListTable(
         })
       }
     </div>
+
+
+    <BookingPayEarlyModal />
 
   </>
 }
@@ -69,7 +78,11 @@ function BookingTableItem(
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  const dispatch = useAppDispatch();
+
   const tCommon = useTranslations("Common");
+  const locale = useLocale();
+  // const [showModalForEarlyPayment, setShowModalForEarlyPayment] = useState(false);
 
   // 1. Define the split logic
   const getHighlightedTitle = (title: string, search: string) => {
@@ -93,7 +106,7 @@ function BookingTableItem(
     router.push(`/Client/ViewBookingTicket/${booking.id}/${window.innerWidth > 768 ? 'tour-detail' : 'booking-status'}`);
   }
 
-  const PayForTheConfirmedBooking = async () => {
+  /*const PayForTheConfirmedBooking = async () => {
 
     setBtnIsLoading(true);
     setErrorMessage("");
@@ -103,7 +116,10 @@ function BookingTableItem(
     const details = await getApiData<{
       ok: boolean,
       message: string
-    }>('/booking-client/pay-initital-payment-for-confirmed-booking', "POST", { booking_id: item.id }, "authorize", "application/json");
+    }>('/booking-client/pay-initital-payment-for-confirmed-booking', "POST", {
+      booking_id: item.id,
+      language: locale
+    }, "authorize", "application/json");
 
     if (!details.ok) {
       setErrorMessage(details.message);
@@ -116,7 +132,7 @@ function BookingTableItem(
 
     setBtnIsLoading(false);
 
-  }
+  }*/
 
   const bookingGroupStuffItems = (): React.ReactNode[] => {
     return [
@@ -240,7 +256,11 @@ function BookingTableItem(
 
               <ButtonDefault loading={btnIsLoading} variant="outline-primary" label={tCommon("pay")} onClick={() => {
                 // router.push(`/booking/${item.id}/details`);
-                PayForTheConfirmedBooking()
+                // PayForTheConfirmedBooking()
+                dispatch(setShowModalForEarlyPayment({
+                  show: true,
+                  booking: item
+                }))
               }} />
               <ButtonDefault variant="primary" label={tCommon("view")} className={`${user.user_metadata.role === "client" && 'w-100'}`} onClick={() => {
                 // router.push(`/Client/ViewBookingTicket/${item.id}/tour-detail`)
@@ -291,4 +311,141 @@ function BookingTableItem(
       </div>
     </div>
   </>
+}
+
+
+
+
+function BookingPayEarlyModal() {
+
+
+  const showModalForEarlyPayment = useAppSelector((state) => state.controls.showModalForEarlyPayment);
+  const dispatch = useAppDispatch();
+
+  const [bookingPrice, setBookingPrice] = useState<IBookingPrice | null>();
+  const [btnIsLoading, setBtnIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  // const [payingNow, setPayingNow] = useState(false);
+  const tForms = useTranslations("Forms");
+  const tCommon = useTranslations("Common");
+  const locale = useLocale();
+
+  const route = useRouter();
+
+  const PayForTheConfirmedBooking = async () => {
+
+    if (showModalForEarlyPayment.booking === null) return;
+
+    setBtnIsLoading(true);
+    setErrorMessage("");
+    setSuccessMessage("");
+
+    // router.push(`/booking/${item.id}/details`);
+    const details = await getApiData<{
+      ok: boolean,
+      message: string
+    }>('/booking-client/pay-initital-payment-for-confirmed-booking', "POST", {
+      booking_id: showModalForEarlyPayment.booking.id,
+      language: locale
+    }, "authorize", "application/json");
+
+    if (!details.ok) {
+      setErrorMessage(details.message);
+    }
+    if (details.ok) {
+      // setSuccessMessage("You will be redirected to the confirmation page. Thank you!");
+      dispatch(setShowModalForEarlyPayment({ show: false, booking: null }));
+      route.push(`/booking/${showModalForEarlyPayment.booking.id}/confirm`);
+    }
+    console.log(details);
+
+    setBtnIsLoading(false);
+
+  }
+
+  const LoadBookingPrice = async () => {
+    if (showModalForEarlyPayment.booking === null) { return; }
+
+    setBookingPrice(null);
+    setErrorMessage("");
+    setBtnIsLoading(true);
+
+    const apiData = await getApiData<{
+      ok: boolean,
+      message: string,
+      price: IBookingPrice
+    }>('/booking-client/get-booking-price-from-api', "POST", {
+      booking_id: showModalForEarlyPayment.booking.id,
+      language: locale
+    }, "authorize", "application/json");
+
+    console.log("apiData while loading the price:", apiData);
+
+    if (apiData.ok) {
+      setBookingPrice(apiData.price);
+    }
+    else {
+      setErrorMessage(apiData.message);
+      setBookingPrice(null);
+    }
+    setBtnIsLoading(false);
+  }
+
+  useEffect(() => {
+    if (showModalForEarlyPayment.booking === null) {
+      return;
+    }
+    setErrorMessage("");
+    setSuccessMessage("");
+
+    LoadBookingPrice()
+
+  }, [
+    showModalForEarlyPayment.booking
+  ]);
+
+
+  if (showModalForEarlyPayment.booking === null) {
+    return <></>
+  }
+
+  return (
+    <>
+
+      <ModalCancelEdit
+        disable={btnIsLoading}
+        title={tCommon("pay_early")}
+        description={tCommon("confirm_payment")}
+        // booking={booking}
+        show={showModalForEarlyPayment.show}
+        handleClose={() => { dispatch(setShowModalForEarlyPayment({ show: false, booking: showModalForEarlyPayment.booking })) }}
+        bodyContent={
+          <>
+            <Title headingType="h4" headingStyle="Text-xl-Medium" color="--color-text-fg-success">{tCommon("you_are_about_to_pay_early")} €{bookingPrice?.total_discount.toFixed(2)}.</Title>
+            <Title headingType="p" headingStyle="Text-lg-Regular" color="--color-text-fg-subtle">{tCommon("pay_early_info")}</Title>
+          </>
+        }
+        footerContent={<>
+          <ButtonDefault label={tCommon("pay_early")} variant="primary" onClick={() => {
+            PayForTheConfirmedBooking()
+          }} loading={btnIsLoading} />
+          {
+            errorMessage !== "" && <IconText
+              className="w-100" type="icon-text-label-solid" variation="warning-solid"
+              text={tCommon("error_while_paying_early")}
+              subText={errorMessage}
+              iconType="danger-outline" />
+          }
+          <ButtonDefault loading={btnIsLoading} label={tForms("cancel")} variant="light" onClick={() => {
+            dispatch(setShowModalForEarlyPayment({
+              show: false,
+              booking: showModalForEarlyPayment.booking
+            }))
+          }} />
+        </>}
+      />
+
+    </>
+  )
 }

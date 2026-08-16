@@ -16,7 +16,7 @@ export default function CancelBookingEvents(
 
   return <>
     <div className="cancel-booking-events">
-      <ButtonDefault label={tCommon("cancel_booking_action")} variant="outline-danger" className="w-100 d-flex" onClick={() => {
+      <ButtonDefault label={tCommon("cancel_booking")} variant="outline-danger" className="w-100 d-flex" onClick={() => {
         router.push(`/Client/CancelTour/${booking.id}`)
       }} />
     </div>

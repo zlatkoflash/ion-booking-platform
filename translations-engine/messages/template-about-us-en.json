@@ -1,0 +1,106 @@
+{
+  "about_us_heading": {
+    "badge": "About us",
+    "title": "Turning every mile into a smile",
+    "paragraph": "Walks in Town was founded on a simple idea: the best way to know a city is to walk it with someone who truly loves it. We're a team of local guides, storytellers, and city lovers on a mission to make every traveler feel like they belong."
+  },
+  "content_photo": {
+    "badges_strings": [
+      "Our Story"
+    ],
+    "title": "Started with one walk through Florence at sunrise",
+    "paragraphs": [
+      "Walks in Town began in 2021, when our founder started leading small morning walks for friends visiting Florence — no scripts, no big crowds, just honest local stories and the best views before the tour buses arrived.",
+      "Word spread fast. Travelers kept asking for the same thing: less rushing, more meaning. So we built a team of local guides who share that same love for their city, and turned those early-morning walks into what Walks in Town is today."
+    ],
+    "blue_paragraph": "Real people. Real places. Real stories.",
+    "button_details": {
+      "label": "Meet our guides"
+    }
+  },
+  "content_photo_our_mission": {
+    "badges_strings": [
+      "Our Mission"
+    ],
+    "title": "To help travelers experience each city like a local",
+    "paragraphs": [
+      "Our mission is to make every journey more personal, meaningful, and memorable. We connect travelers with passionate local guides who bring each destination to life through authentic stories, hidden places, and genuine cultural experiences.",
+      "We believe the best way to discover a city is not simply to see its landmarks, but to understand the people, traditions, and moments that make it unique."
+    ],
+    "blue_paragraph": "Walk deeper. Discover more. Feel at home.",
+    "button_details": {
+      "label": "Explore our tours"
+    }
+  },
+  "trending_experiences": "Trending experiences",
+  "what_other_travelers_are_booking_this_week": "What other travelers are booking this week",
+  "x6_icons_texts": [
+    {
+      "title": "Discover hidden corners",
+      "paragraph": "Go beyond the main landmarks and explore places most visitors miss.",
+      "icon": "location-on-pin"
+    },
+    {
+      "title": "Hear the city’s real stories",
+      "paragraph": "Learn about Florence through local stories, traditions, and everyday life.",
+      "icon": "import-contacts"
+    },
+    {
+      "title": "Enjoy a relaxed pace",
+      "paragraph": "Take your time, ask questions, and experience the city without rushing.",
+      "icon": "footprint"
+    },
+    {
+      "title": "Meet people, not just places",
+      "paragraph": "Connect with friendly local guides who make every tour feel personal.",
+      "icon": "handshake"
+    },
+    {
+      "title": "Choose experiences that fit you",
+      "paragraph": "Find cultural walks, food tours, day trips, and activities for every travel style.",
+      "icon": "heart-outline"
+    },
+    {
+      "title": "Book with confidence",
+      "paragraph": "Clear details, easy booking, and helpful support before and during your trip.",
+      "icon": "verified-shield-outline"
+    }
+  ],
+  "our_team": {
+    "badge_label": "Contact Us",
+    "title": "Meet our team",
+    "paragraph": "Meet the people who bring every Walks in Town experience to life — from local storytelling and tour planning to guest support and partnerships.",
+    "people": [
+      {
+        "imageSrc": "",
+        "name": "Luca Moretti",
+        "role": "Founder & Managing Director"
+      },
+      {
+        "imageSrc": "",
+        "name": "Giulia Bianchi",
+        "role": "Head of Operations"
+      },
+      {
+        "imageSrc": "",
+        "name": "Marco Conti",
+        "role": "Lead Tour Guide"
+      },
+      {
+        "imageSrc": "",
+        "name": "Sofia Romano",
+        "role": "Guest Experience Manager"
+      },
+      {
+        "imageSrc": "",
+        "name": "Matteo Ricci",
+        "role": "Partnerships Manager"
+      },
+      {
+        "imageSrc": "",
+        "name": "Elena Ferraro",
+        "role": "Marketing & Content Lead"
+      }
+    ]
+  }
+}

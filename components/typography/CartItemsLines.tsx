@@ -22,11 +22,19 @@ export default function CartItemsLines(
     }
 ) {
 
-  const participantsCount = participants !== null ? participants : useAppSelector((state) => state.booking.filters.participantsCount);
-  const bookingPrice = price !== null ? price : useAppSelector((state) => state.booking.price);
-  const tour = tourOut !== null ? tourOut : useAppSelector((state) => state.booking.tour);
-
   const tForms = useTranslations("Forms");
+
+  const participantsRedux = useAppSelector((state) => state.booking.filters.participantsCount);
+  const participantsCount = participants !== null ? participants : participantsRedux;
+  const priceRedux = useAppSelector((state) => state.booking.price);
+  const bookingPrice = price !== null ? price : priceRedux;
+  const tourRedux = useAppSelector((state) => state.booking.tour);
+  const tour = tourOut !== null ? tourOut : tourRedux;
+
+
+
+
+
 
   console.log("participantsCount:", participantsCount);
 

@@ -4,7 +4,7 @@ import { Dropdown } from "react-bootstrap";
 // import { useRouter, usePathname } from "next/navigation";
 import dropdownIcon from "@/assets/images/icon-arrow-menu-down.svg";
 import IconText from "../buttons/IconText";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 // import { usePathname, useRouter } from "@/translations-engine/routing";
 
 interface Language {
@@ -35,6 +35,8 @@ export default function LanguageSwitcher() {
   // 2. Identify the matching language right away, completely eliminating state delay jumps
   const currentLang = languages.find((lang) => lang.code === detectedLocale) || languages[0];
 
+  const searchParams = useSearchParams();
+
   const handleLanguageChange = (nextLocale: string) => {
     // Extract all valid language codes (e.g., ['en', 'de', 'it', 'fr'])
     const localeCodes = languages.map((lang) => lang.code);
@@ -47,7 +49,12 @@ export default function LanguageSwitcher() {
 
     // Build the new path with the target locale
     // If cleanPath is just "/" or empty, make it "/[nextLocale]"
-    const targetPath = `/${nextLocale}${cleanPath === "/" ? "" : cleanPath}`;
+    let targetPath = `/${nextLocale}${cleanPath === "/" ? "" : cleanPath}`;
+
+    const searchString = searchParams.toString();
+    if (searchString) {
+      targetPath = `${targetPath}?${searchString}`;
+    }
 
     console.log("Redirecting to:", targetPath);
     router.replace(targetPath);

@@ -155,5 +155,9 @@
     "infant": "Infant"
   },
   "edit": "Edit",
-  "delete": "Delete"
+  "delete": "Delete",
+  "subject": "Subject",
+  "booking_question_group_tour_feedback": "Booking question, group tour, feedback...",
+  "message": "Message",
+  "tell_us_how_we_can_help": "Tell us how we can help..."
 }

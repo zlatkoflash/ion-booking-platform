@@ -117,8 +117,8 @@ function DoCheckoutSubmit() {
 
 function BtnConfirmReservation() {
 
-  const bookingId = "97688570";
-  const confirmationCode = "WAL-97688570";
+  const bookingId = "100216230";
+  const confirmationCode = "WAL-100216230";
 
   const action = async () => {
     const result = await getApiData(`/administrator/test-confirm-reserved-with-checkout`, "POST", {
@@ -129,7 +129,7 @@ function BtnConfirmReservation() {
   }
 
   return <>
-    <ButtonDefault label="Confirm The Reservation" onClick={() => {
+    <ButtonDefault label={`Confirm The Reservation ${confirmationCode}`} onClick={() => {
       action();
     }} />
   </>

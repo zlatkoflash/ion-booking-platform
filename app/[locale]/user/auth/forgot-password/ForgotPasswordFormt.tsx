@@ -10,7 +10,7 @@ import ButtonDefault from "@/components/buttons/ButtonDefault";
 import { useState } from "react";
 import { getApiData } from "@/utils/api";
 import { AuthResponse, ISupabaseUser } from "@/utils/interface-auth";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import IconText from "@/components/buttons/IconText";
 import { createClient } from "@/utils/supabaseClient";
 import { useRouter } from "@/translations-engine/routing";
@@ -32,6 +32,8 @@ export default function ForgotPasswordForm() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const tValidation = useTranslations("Validation");
+  const tCommon = useTranslations("Common");
+  const locale = useLocale();
   const router = useRouter();
 
   const dispatch = useAppDispatch();
@@ -56,7 +58,8 @@ export default function ForgotPasswordForm() {
         token: string;
       };
     }>("/auth-public/send-code-for-resetting-password", "POST", {
-      email
+      email,
+      locale: locale
     }, "not-authorize", "application/json");
 
     console.log("result:", result);
@@ -102,6 +105,7 @@ export default function ForgotPasswordForm() {
       code: codeString,
       email
     }, "not-authorize", "application/json");
+
 
     console.log("result:", result);
     if (!result.ok) {
@@ -155,7 +159,8 @@ export default function ForgotPasswordForm() {
       token: activeToken,
       password: password,
       passwordRepeat: passwordRepeat,
-      email
+      email,
+      language: locale
     }, "not-authorize", "application/json");
 
     console.log("result:", result);
@@ -210,15 +215,15 @@ export default function ForgotPasswordForm() {
 
               {
                 stateForm === "set-passwords" ?
-                  <Title headingType="h1" headingStyle="Display-xs-Medium" color="--color-text-fg">Set new password</Title>
+                  <Title headingType="h1" headingStyle="Display-xs-Medium" color="--color-text-fg">{tCommon('set_new_password')}</Title>
                   :
                   <Title headingType="h1" headingStyle="Display-xs-Medium" color="--color-text-fg">{
-                    stateForm === "finished" ? "Password Reset" : "Forgot Password?"
+                    stateForm === "finished" ? tCommon("password_reset") : tCommon('forgot_password')
                   }</Title>
               }
               {
                 stateForm === "enter-email" && <Title headingType="p" headingStyle="Text-md-Regular" color="--color-text-fg-subtle">
-                  No problem! Just pop your email below, and we'll help you reset that password:
+                  {tCommon("no_problem_just_pop_your_email_below_and_well_help_you_reset_that_password")}
                 </Title>
               }
             </div>
@@ -228,19 +233,19 @@ export default function ForgotPasswordForm() {
 
               {
                 stateForm === "finished" && <Title headingType="p" headingStyle="Text-md-Regular" color="--color-text-fg-subtle" className="w-100 text-center">
-                  Your password has been reset successfully. You can now log in with your new password.
+                  {tCommon("your_password_has_been_reset_successfully_you_can_now_log_in_with_your_new_password")}
                 </Title>
               }
 
               {
                 stateForm === "enter-email" && <InputText
                   id=""
-                  label="Email Address"
+                  label={tCommon("email_address")}
                   type="email"
                   name=""
                   value={email}
                   className="w-100"
-                  placeholder="Enter your Email Address"
+                  placeholder={tCommon("subscribtionForm.inputPlaceholder")}
                   showLabelIconText={true}
                   labelIconType="mail"
                   onChange={(e) => setEmail(e.target.value)} />
@@ -250,23 +255,23 @@ export default function ForgotPasswordForm() {
                 stateForm === "set-passwords" && <>
                   <InputText
                     id=""
-                    label="Password"
+                    label={tCommon("password")}
                     type="password"
                     name=""
                     value={password}
                     className="w-100"
-                    placeholder="Enter your Password"
+                    placeholder={tCommon("enter_your_password")}
                     showLabelIconText={true}
                     labelIconType="key-outline"
                     onChange={(e) => setPassword(e.target.value)} />
                   <InputText
                     id=""
-                    label="Confirm Password"
+                    label={tCommon("confirm_password")}
                     type="password"
                     name=""
                     value={passwordRepeat}
                     className="w-100"
-                    placeholder="Confirm your Password"
+                    placeholder={tCommon("confirm_your_password")}
                     showLabelIconText={true}
                     labelIconType="key-outline"
                     onChange={(e) => setPasswordRepeat(e.target.value)} />
@@ -275,10 +280,10 @@ export default function ForgotPasswordForm() {
 
               {
                 stateForm === "enter-code" && <>
-                  <Title headingType="h2" headingStyle="Text-md-Medium" className="w-100">Complete Your Request</Title>
-                  <Title headingType="p" headingStyle="Text-sm-Regular" className="w-100">We sent a 6-digit activation code to <br />
+                  <Title headingType="h2" headingStyle="Text-md-Medium" className="w-100">{tCommon("complete_your_request")}</Title>
+                  <Title headingType="p" headingStyle="Text-sm-Regular" className="w-100">{tCommon("we_sent_a_6_digit_activation_code_to")} <br />
                     <strong className="text-dark">{email}</strong>.
-                    Please enter it below to continue.</Title>
+                    {tCommon("please_enter_it_below_to_continue")}</Title>
                   <X6Inputs
                     disabled={loading}
                     onComplete={(codeString: string, codeArray: string[]) => {
@@ -317,17 +322,17 @@ export default function ForgotPasswordForm() {
             <div className="auth-form-footer">
 
               {
-                stateForm === "enter-email" && <ButtonDefault label="Continue" loading={loading} onClick={() => {
+                stateForm === "enter-email" && <ButtonDefault label={tCommon("continue")} loading={loading} onClick={() => {
                   SendCodeForResettingPassword()
                 }} />
               }
               {
-                stateForm === "set-passwords" && <ButtonDefault label="Update Password" loading={loading} onClick={() => {
+                stateForm === "set-passwords" && <ButtonDefault label={tCommon("update_password")} loading={loading} onClick={() => {
                   UpdatePasswordFinally()
                 }} />
               }
               {
-                stateForm === "finished" && <ButtonDefault label="Login" loading={loading} link="/user/auth/login" onClick={(e) => {
+                stateForm === "finished" && <ButtonDefault label={tCommon("log_in")} loading={loading} link="/user/auth/login" onClick={(e) => {
 
                   if (modalAuth.show === true) {
                     e.preventDefault();
@@ -344,7 +349,7 @@ export default function ForgotPasswordForm() {
               }
 
               <div className="question-link">
-                <Title headingType="p" headingStyle="Text-sm-Regular" color="--color-text-fg-subtle">Already have an account? </Title>
+                <Title headingType="p" headingStyle="Text-sm-Regular" color="--color-text-fg-subtle">{tCommon("already_have_an_account")} </Title>
                 <Title headingType="a" headingStyle="Text-sm-Medium" color="--color-text-fg-subtle" href="/user/auth/login" onClick={(e) => {
                   if (modalAuth.show === true) {
                     e.preventDefault();
@@ -353,7 +358,7 @@ export default function ForgotPasswordForm() {
                       contentType: "login"
                     }));
                   }
-                }}>Sign In</Title>
+                }}>{tCommon("log_in")} </Title>
               </div>
             </div>
           </div>

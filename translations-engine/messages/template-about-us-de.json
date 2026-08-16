@@ -1,0 +1,106 @@
+{
+  "about_us_heading": {
+    "badge": "Über uns",
+    "title": "Jeden Kilometer in ein Lächeln verwandeln",
+    "paragraph": "Walks in Town wurde aus einer einfachen Idee heraus gegründet: Der beste Weg, eine Stadt kennenzulernen, ist, sie mit jemandem zu Fuß zu erkunden, der sie wirklich liebt. Wir sind ein Team aus lokalen Guides, Geschichtenerzählern und Stadtliebhabern mit der Mission, dass sich jeder Reisende willkommen fühlt."
+  },
+  "content_photo": {
+    "badges_strings": [
+      "Unsere Geschichte"
+    ],
+    "title": "Begann mit einem Spaziergang durch Florenz bei Sonnenaufgang",
+    "paragraphs": [
+      "Walks in Town begann 2021, als unser Gründer kleine Morgenspaziergänge für Freunde anbot, die Florenz besuchten – keine Skripte, keine großen Menschenmengen, nur ehrliche lokale Geschichten und die besten Ausblicke, bevor die Reisebusse ankamen.",
+      "Die Nachricht verbreitete sich schnell. Reisende fragten immer wieder nach demselben: weniger Eile, mehr Bedeutung. Also bauten wir ein Team aus lokalen Guides auf, die dieselbe Liebe zu ihrer Stadt teilen, und machten aus diesen frühen Morgenspaziergängen das, was Walks in Town heute ist."
+    ],
+    "blue_paragraph": "Echte Menschen. Echte Orte. Echte Geschichten.",
+    "button_details": {
+      "label": "Unsere Guides kennenlernen"
+    }
+  },
+  "content_photo_our_mission": {
+    "badges_strings": [
+      "Unsere Mission"
+    ],
+    "title": "Reisenden helfen, jede Stadt wie ein Einheimischer zu erleben",
+    "paragraphs": [
+      "Unsere Mission ist es, jede Reise persönlicher, bedeutungsvoller und unvergesslicher zu machen. Wir bringen Reisende mit leidenschaftlichen lokalen Guides zusammen, die jedes Reiseziel durch authentische Geschichten, versteckte Orte und echte kulturelle Erlebnisse zum Leben erwecken.",
+      "Wir glauben, dass der beste Weg, eine Stadt zu entdecken, nicht darin besteht, einfach ihre Sehenswürdigkeiten zu sehen, sondern die Menschen, Traditionen und Momente zu verstehen, die sie einzigartig machen."
+    ],
+    "blue_paragraph": "Tiefer gehen. Mehr entdecken. Sich wie zu Hause fühlen.",
+    "button_details": {
+      "label": "Unsere Touren erkunden"
+    }
+  },
+  "trending_experiences": "Beliebte Erlebnisse",
+  "what_other_travelers_are_booking_this_week": "Was andere Reisende diese Woche buchen",
+  "x6_icons_texts": [
+    {
+      "title": "Versteckte Ecken entdecken",
+      "paragraph": "Gehen Sie über die Hauptsehenswürdigkeiten hinaus und erkunden Sie Orte, die die meisten Besucher verpassen.",
+      "icon": "location-on-pin"
+    },
+    {
+      "title": "Die wahren Geschichten der Stadt hören",
+      "paragraph": "Lernen Sie Florenz durch lokale Geschichten, Traditionen und den Alltag kennen.",
+      "icon": "import-contacts"
+    },
+    {
+      "title": "Ein entspanntes Tempo genießen",
+      "paragraph": "Nehmen Sie sich Zeit, stellen Sie Fragen und erleben Sie die Stadt ohne Hektik.",
+      "icon": "footprint"
+    },
+    {
+      "title": "Menschen treffen, nicht nur Orte",
+      "paragraph": "Verbinden Sie sich mit freundlichen lokalen Guides, die jede Tour persönlich machen.",
+      "icon": "handshake"
+    },
+    {
+      "title": "Erlebnisse wählen, die zu Ihnen passen",
+      "paragraph": "Finden Sie Kulturspaziergänge, Food-Touren, Tagesausflüge und Aktivitäten für jeden Reisestil.",
+      "icon": "heart-outline"
+    },
+    {
+      "title": "Mit Zuversicht buchen",
+      "paragraph": "Klare Details, einfache Buchung und hilfreiche Unterstützung vor und während Ihrer Reise.",
+      "icon": "verified-shield-outline"
+    }
+  ],
+  "our_team": {
+    "badge_label": "Kontakt",
+    "title": "Treffen Sie unser Team",
+    "paragraph": "Lernen Sie die Menschen kennen, die jedes Walks in Town-Erlebnis zum Leben erwecken — von lokalen Geschichten und Tourenplanung bis hin zu Gästebetreuung und Partnerschaften.",
+    "people": [
+      {
+        "imageSrc": "",
+        "name": "Luca Moretti",
+        "role": "Gründer & Geschäftsführer"
+      },
+      {
+        "imageSrc": "",
+        "name": "Giulia Bianchi",
+        "role": "Leiterin des Betriebs"
+      },
+      {
+        "imageSrc": "",
+        "name": "Marco Conti",
+        "role": "Leitender Tourguide"
+      },
+      {
+        "imageSrc": "",
+        "name": "Sofia Romano",
+        "role": "Gästeerlebnis-Managerin"
+      },
+      {
+        "imageSrc": "",
+        "name": "Matteo Ricci",
+        "role": "Partnerschafts-Manager"
+      },
+      {
+        "imageSrc": "",
+        "name": "Elena Ferraro",
+        "role": "Marketing- & Content-Leiterin"
+      }
+    ]
+  }
+}

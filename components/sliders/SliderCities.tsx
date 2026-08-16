@@ -105,27 +105,6 @@ export default function SliderCities({ items = [], title = "Where will you walk 
                 }
               </SwiperSlide>
             ))
-            /*<SwiperSlide>
-              <CardCity />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardCityCommingSoon />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardCityCommingSoon />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardCityWhatIsComming />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardCity />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardCity />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardCity />
-            </SwiperSlide>*/
           }
           <SwiperSlide>
             <CardCityWhatIsComming />

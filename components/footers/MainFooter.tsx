@@ -30,22 +30,22 @@ export default function MainFooter() {
     return <>
       <ul className="footer-links">
         <li>
-          <Title headingType="a" headingStyle="Text-sm-Semibold" color="--color-text-fg-inverted" href="/about-us">
+          <Title headingType="a" headingStyle="Text-sm-Semibold" color="--color-text-fg-inverted" href="/AboutUs">
             {tCommon("about_us")}
           </Title>
         </li>
         <li>
-          <Title headingType="a" headingStyle="Text-sm-Semibold" color="--color-text-fg-inverted" href="/contact">
+          <Title headingType="a" headingStyle="Text-sm-Semibold" color="--color-text-fg-inverted" href="/Contact">
             {tCommon("contact")}
           </Title>
         </li>
         <li>
-          <Title headingType="a" headingStyle="Text-sm-Semibold" color="--color-text-fg-inverted" href="/terms-and-conditions">
+          <Title headingType="a" headingStyle="Text-sm-Semibold" color="--color-text-fg-inverted" href="/TermsAndConditions">
             {tCommon("terms_and_conditions")}
           </Title>
         </li>
         <li>
-          <Title headingType="a" headingStyle="Text-sm-Semibold" color="--color-text-fg-inverted" href="/privacy-policy">
+          <Title headingType="a" headingStyle="Text-sm-Semibold" color="--color-text-fg-inverted" href="/PrivacyPolicy">
             {tCommon("privacy_policy")}
           </Title>
         </li>
@@ -99,30 +99,7 @@ export default function MainFooter() {
               <div className="policies-section">
                 <Title headingType="h4" headingStyle="Text-lg-Regular" color="--color-text-fg-inverted">{tCommon('policies')}</Title>
 
-                {
-                  /*<ul className="footer-links">
-                  <li>
-                    <Title headingType="a" headingStyle="Text-sm-Semibold" color="--color-text-fg-inverted" href="/about-us">
-                      About us
-                    </Title>
-                  </li>
-                  <li>
-                    <Title headingType="a" headingStyle="Text-sm-Semibold" color="--color-text-fg-inverted" href="/contact">
-                      Contact
-                    </Title>
-                  </li>
-                  <li>
-                    <Title headingType="a" headingStyle="Text-sm-Semibold" color="--color-text-fg-inverted" href="/terms-and-conditions">
-                      Terms & Conditions
-                    </Title>
-                  </li>
-                  <li>
-                    <Title headingType="a" headingStyle="Text-sm-Semibold" color="--color-text-fg-inverted" href="/privacy-policy">
-                      Privacy Policy
-                    </Title>
-                  </li>
-                </ul>*/
-                }
+
                 {
                   contentMenu()
                 }

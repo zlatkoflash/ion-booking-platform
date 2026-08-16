@@ -9,6 +9,7 @@ export default function Title({
   color,
   className = "",
   href,
+  target = "_self",
   onClick
 }: {
   children: React.ReactNode;
@@ -23,9 +24,11 @@ export default function Title({
   | "Text-sm-Semibold"
   | "Display-sm-Medium"
   | "Display-xs-Medium"
+  | "Display-lg-Semibold"
   | "Text-md-Medium"
   | "Text-xs-CAPS"
   | "Text-sm-Medium"
+  | "Text-xl-Regular"
   | "Text-xs-Regular"
   | "Text-lg-Semibold"
   | "Text-md-Semibold"
@@ -37,9 +40,11 @@ export default function Title({
   | "--color-text-fg-inverted"
   | "--color-text-fg-muted"
   | "--color-text-fg-error"
-  | "--color-text-fg-success";
+  | "--color-text-fg-success"
+  | "--color-text-fg-info";
   className?: string;
   href?: string;
+  target?: "_blank" | "_self" | "_parent" | "_top";
   onClick?: (e: any) => void
 }) {
   const HeadingTagZ = headingType !== "paragraphs" ? headingType : "div";
@@ -52,9 +57,12 @@ export default function Title({
       : {}),
   };
   if (headingType === "a" && href !== undefined && href !== "") {
-    return <Link href={href} className={classes} style={style} onClick={(e) => {
-      onClick?.(e)
-    }}>
+    return <Link
+      href={href}
+      target={target}
+      className={classes} style={style} onClick={(e) => {
+        onClick?.(e)
+      }}>
       {children}
     </Link>
   }

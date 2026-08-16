@@ -155,5 +155,9 @@
     "infant": "Kleinkind"
   },
   "edit": "Bearbeiten",
-  "delete": "Löschen"
+  "delete": "Löschen",
+  "subject": "Betreff",
+  "booking_question_group_tour_feedback": "Buchungsanfrage, Gruppentour, Feedback...",
+  "message": "Mitteilung",
+  "tell_us_how_we_can_help": "Mitteilen, wie wir helfen können..."
 }

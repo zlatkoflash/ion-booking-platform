@@ -209,7 +209,11 @@ export default async function PageExperienceSearch({ searchParams }: PageProps) 
       pictureUrl={photo_people.src}
     />
 
-    <FAQs />
+    <FAQs
+      title={tCommon('plan_your_visit')}
+      subtitle={tCommon('frequently_asked_questions')}
+      items={tCommon.raw('faqs')}
+    />
 
     <SubscribeBanner />
 

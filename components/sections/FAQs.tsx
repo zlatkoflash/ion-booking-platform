@@ -5,14 +5,21 @@ import Title from "../typography/Title";
 import SectionContainerCards from "./SectionContainerCards";
 import ZIcon from "../icons/ZIcon";
 import { useTranslations } from "next-intl";
+import IconText from "../buttons/IconText";
 
 export default function FAQs({
-  items = []
+  items = [],
+  title,
+  subtitle,
+  badge
 }: {
   items?: {
     title: string,
     content: React.ReactNode | string
-  }[]
+  }[],
+  title?: string,
+  subtitle?: string,
+  badge?: string
 }) {
 
   const tCommon = useTranslations('Common');
@@ -30,17 +37,28 @@ export default function FAQs({
   return <>
     <div className="component faqs">
       <SectionContainerCards>
-        <div className="heading">
 
-          <Title headingType="h3" headingStyle="Display-md-Semibold" color="--color-text-fg">
-            Plan your visit
-          </Title>
+        {
+          (title !== undefined || subtitle !== undefined || badge !== undefined) && <div className="heading">
 
-          <Title headingType="p" headingStyle="Text-lg-Regular" color="--color-text-fg-subtle">
-            Frequently asked questions
-          </Title>
+            {
+              badge !== undefined && <IconText type="badge-style" text={badge} variation="primary" />
+            }
 
-        </div>
+            {
+              title !== undefined && <Title headingType="h3" headingStyle="Display-md-Semibold" color="--color-text-fg">
+                {title}
+              </Title>
+            }
+
+            {
+              subtitle !== undefined && <Title headingType="p" headingStyle="Text-lg-Regular" color="--color-text-fg-subtle">
+                {subtitle}
+              </Title>
+            }
+
+          </div>
+        }
 
         <Accordion defaultActiveKey="0" className="component">
           {

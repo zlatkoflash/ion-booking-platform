@@ -11,7 +11,9 @@ import ModalCancelEdit from "./ModalCancelEdit";
 import InputText from "@/components/forms/inputs/InputText";
 import { getApiData } from "@/utils/api";
 import IconText from "@/components/buttons/IconText";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { setGlobalToaster } from "@/redux/controls/controlsSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 export default function FormCancellation(
   {
@@ -25,7 +27,10 @@ export default function FormCancellation(
 
   const router = useRouter();
 
+  const dispatch = useAppDispatch();
+
   const tCommon = useTranslations("Common");
+  const locale = useLocale();
 
   const [wantToEditTheBooking, setWantToChangeTheBooking] = useState<boolean>(false);
   const [cancellingReason, setCancellingReason] = useState<EBookingCancellationReason | null>(null);
@@ -47,7 +52,8 @@ export default function FormCancellation(
     }>(`/booking-client/cancel-booking/`, "POST", {
       booking_id: booking.id,
       cancellation_reason: cancellingReason,
-      other_reason: otherReason
+      other_reason: otherReason,
+      language: locale
     }, "authorize", "application/json");
 
     console.log("details:", details);
@@ -56,8 +62,19 @@ export default function FormCancellation(
       setErrorWhileCancelling(details.message)
       // TODO: SHOW MESSAGE
     } else {
-      router.push(`/Client/ViewBookingTicket/${booking.id}/tour-detail`)
+      router.push(`/Client/ViewBookingTicket/${booking.id}/tour-detail`);
+      dispatch(setGlobalToaster(
+        {
+          show: true,
+          type: "info",
+          title: tCommon("booking_canceled_successfully"),
+          message: tCommon("refund_received_within_business_days")
+        }
+      ));
+      setCancellingBooking(false);
     }
+
+
 
     setCancellingBooking(false);
   }

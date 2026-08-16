@@ -25,6 +25,8 @@ import { getLoggedUser } from "@/utils/supabaseServer";
 import StoreProvider from "@/providers/StoreProvider";
 import { getApiData } from "@/utils/api";
 import ServerIsDown from "./ServerStatusScreens/ServerIsDown";
+import ZToasterGlobal from "@/components/toaster/ZToasterGlobal";
+import LogoutTimer from "@/components/LogoutTimer/LogoutTimer";
 
 /*const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,9 +49,9 @@ export const metadata: Metadata = {
   title: "Walks In Town",
   description: "Walks In Town",
   icons: {
-    icon: 'favicon.ico',
-    shortcut: 'android-chrome-512x512.png',
-    apple: 'apple-touch-icon.png',
+    icon: '/favicon.ico',
+    shortcut: '/android-chrome-512x512.png',
+    apple: '/apple-touch-icon.png',
   },
 };
 
@@ -114,6 +116,8 @@ export default async function RootLayout({
                   {children}
                 </AuthInitializer>
                 <ModalAuth />
+                <ZToasterGlobal />
+                <LogoutTimer />
               </StoreProvider>
             </>
           }

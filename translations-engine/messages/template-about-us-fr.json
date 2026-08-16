@@ -1,0 +1,106 @@
+{
+  "about_us_heading": {
+    "badge": "À propos de nous",
+    "title": "Transformer chaque kilomètre en sourire",
+    "paragraph": "Walks in Town est né d'une idée simple : la meilleure façon de connaître une ville est de la parcourir à pied avec quelqu'un qui l'aime vraiment. Nous sommes une équipe de guides locaux, de conteurs et d'amoureux de la ville dont la mission est de faire en sorte que chaque voyageur se sente chez lui."
+  },
+  "content_photo": {
+    "badges_strings": [
+      "Notre histoire"
+    ],
+    "title": "Tout a commencé par une promenade à Florence au lever du soleil",
+    "paragraphs": [
+      "Walks in Town a débuté en 2021, lorsque notre fondateur a commencé à guider de petites promenades matinales pour des amis en visite à Florence — pas de scripts, pas de grandes foules, juste des histoires locales sincères et les meilleurs panoramas avant l'arrivée des bus touristiques.",
+      "Le bouche-à-oreille a fonctionné rapidement. Les voyageurs n'arrêtaient pas de demander la même chose : moins de précipitation, plus de sens. Nous avons donc constitué une équipe de guides locaux qui partagent ce même amour pour leur ville et transformé ces promenades matinales en ce qu'est Walks in Town aujourd'hui."
+    ],
+    "blue_paragraph": "De vraies personnes. De vrais lieux. De vraies histoires.",
+    "button_details": {
+      "label": "Rencontrez nos guides"
+    }
+  },
+  "content_photo_our_mission": {
+    "badges_strings": [
+      "Notre mission"
+    ],
+    "title": "Aider les voyageurs à vivre chaque ville comme un local",
+    "paragraphs": [
+      "Notre mission est de rendre chaque voyage plus personnel, enrichissant et mémorable. Nous connectons les voyageurs avec des guides locaux passionnés qui donnent vie à chaque destination à travers des histoires authentiques, des lieux cachés et de véritables expériences culturelles.",
+      "Nous croyons que la meilleure façon de découvrir une ville n'est pas simplement d'en voir les monuments, mais de comprendre les personnes, les traditions et les moments qui la rendent unique."
+    ],
+    "blue_paragraph": "Marchez plus loin. Découvrez plus. Sentez-vous chez vous.",
+    "button_details": {
+      "label": "Explorez nos visites"
+    }
+  },
+  "trending_experiences": "Expériences tendances",
+  "what_other_travelers_are_booking_this_week": "Ce que les autres voyageurs réservent cette semaine",
+  "x6_icons_texts": [
+    {
+      "title": "Découvrez des coins cachés",
+      "paragraph": "Allez au-delà des principaux monuments et explorez les endroits que la plupart des visiteurs manquent.",
+      "icon": "location-on-pin"
+    },
+    {
+      "title": "Écoutez les vraies histoires de la ville",
+      "paragraph": "Découvrez Florence à travers des histoires locales, des traditions et la vie quotidienne.",
+      "icon": "import-contacts"
+    },
+    {
+      "title": "Profitez d'un rythme détendu",
+      "paragraph": "Prenez votre temps, posez des questions et découvrez la ville sans vous presser.",
+      "icon": "footprint"
+    },
+    {
+      "title": "Rencontrez des gens, pas seulement des lieux",
+      "paragraph": "Connectez-vous avec des guides locaux sympathiques qui font de chaque visite une expérience personnelle.",
+      "icon": "handshake"
+    },
+    {
+      "title": "Choisissez des expériences qui vous correspondent",
+      "paragraph": "Trouvez des balades culturelles, des visites gastronomiques, des excursions d'une journée et des activités pour chaque style de voyage.",
+      "icon": "heart-outline"
+    },
+    {
+      "title": "Réservez en toute confiance",
+      "paragraph": "Des détails clairs, une réservation facile et un support utile avant et pendant votre voyage.",
+      "icon": "verified-shield-outline"
+    }
+  ],
+  "our_team": {
+    "badge_label": "Contactez-nous",
+    "title": "Rencontrez notre équipe",
+    "paragraph": "Découvrez les personnes qui donnent vie à chaque expérience Walks in Town — de la narration locale et la planification de visites au support client et aux partenariats.",
+    "people": [
+      {
+        "imageSrc": "",
+        "name": "Luca Moretti",
+        "role": "Fondateur et Directeur Général"
+      },
+      {
+        "imageSrc": "",
+        "name": "Giulia Bianchi",
+        "role": "Responsable des Opérations"
+      },
+      {
+        "imageSrc": "",
+        "name": "Marco Conti",
+        "role": "Guide Touristique Principal"
+      },
+      {
+        "imageSrc": "",
+        "name": "Sofia Romano",
+        "role": "Responsable de l'Expérience Client"
+      },
+      {
+        "imageSrc": "",
+        "name": "Matteo Ricci",
+        "role": "Responsable des Partenariats"
+      },
+      {
+        "imageSrc": "",
+        "name": "Elena Ferraro",
+        "role": "Responsable Marketing et Contenu"
+      }
+    ]
+  }
+}

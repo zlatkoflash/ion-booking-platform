@@ -10,7 +10,7 @@ import Logo from "@/components/headers/Logo";
 import { useState } from "react";
 import { getApiData } from "@/utils/api";
 import IconText from "@/components/buttons/IconText";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import X6Inputs from "@/components/forms/inputs/X6Inputs";
 import { AuthResponse, ISupabaseUser } from "@/utils/interface-auth";
 import { createClient } from "@/utils/supabaseClient";
@@ -36,9 +36,12 @@ export default function SignupForm(
   const [token, setToken] = useState("");
 
   const tValidation = useTranslations("Validation");
+  const tCommon = useTranslations("Common");
 
   const dispatch = useAppDispatch();
   const stateModal = useAppSelector((state) => state.auth.modalAuth);
+
+  const locale = useLocale();
 
   const router = useRouter();
   // tValidation("")
@@ -68,7 +71,8 @@ export default function SignupForm(
       }
     }>("/auth-public/init-signup", "POST", {
       email: email,
-      password: password
+      password: password,
+      language: locale
     }, "not-authorize", "application/json");
 
     if (!results.ok) {
@@ -110,7 +114,8 @@ export default function SignupForm(
       // email: "zlatkoflashccc666@gmail.com",
       password: password,
       token: token,
-      code: code
+      code: code,
+      language: locale
     }, "not-authorize", "application/json");
 
     console.log("signupResult:", signupResult);
@@ -179,7 +184,7 @@ export default function SignupForm(
           </div>
 
           <div className="content-wrap">
-            <Title headingType="h1" headingStyle="Display-xs-Medium" color="--color-text-fg">Sign Up</Title>
+            <Title headingType="h1" headingStyle="Display-xs-Medium" color="--color-text-fg">{tCommon("sign_up")}</Title>
 
 
             <InputsGridForBooking>
@@ -189,12 +194,12 @@ export default function SignupForm(
                 !showX6CodeValidation && <>
                   <InputText
                     id=""
-                    label="Email Address"
+                    label={tCommon("email_address")}
                     type="email"
                     name=""
                     value={email}
                     className="w-100"
-                    placeholder="Enter your Email Address"
+                    placeholder={tCommon("subscribtionForm.inputPlaceholder")}
                     showLabelIconText={true}
                     labelIconType="mail"
                     onChange={(e) => {
@@ -202,12 +207,12 @@ export default function SignupForm(
                     }} />
                   <InputText
                     id=""
-                    label="Password"
+                    label={tCommon("password")}
                     name=""
                     type="password"
                     value={password}
                     className="w-100"
-                    placeholder="Enter your Password"
+                    placeholder={tCommon("enter_your_password")}
                     showLabelIconText={true}
                     labelIconType="key-outline"
                     onChange={(e) => {
@@ -215,12 +220,12 @@ export default function SignupForm(
                     }} />
                   <InputText
                     id=""
-                    label="Repeat Password"
+                    label={tCommon("repeat_password")}
                     name=""
                     type="password"
                     value={repeatPassword}
                     className="w-100"
-                    placeholder="Enter your Repeat Password"
+                    placeholder={tCommon("enter_your_repeat_password")}
                     showLabelIconText={true}
                     labelIconType="key-outline"
                     onChange={(e) => {
@@ -232,10 +237,10 @@ export default function SignupForm(
 
               {
                 showX6CodeValidation && <>
-                  <Title headingType="h2" headingStyle="Text-md-Medium" className="w-100">Complete Your Registration</Title>
-                  <Title headingType="p" headingStyle="Text-sm-Regular" className="w-100">We sent a 6-digit activation code to <br />
+                  <Title headingType="h2" headingStyle="Text-md-Medium" className="w-100">{tCommon('complete_your_registration')}</Title>
+                  <Title headingType="p" headingStyle="Text-sm-Regular" className="w-100">{tCommon("we_sent_a_6_digit_activation_code_to")} <br />
                     <strong className="text-dark">{email}</strong>.
-                    Please enter it below to complete your registration.</Title>
+                    {tCommon("please_enter_it_below_to_complete_your_registration")}</Title>
                   <X6Inputs
                     disabled={loading}
                     onComplete={(codeString: string, codeArray: string[]) => {
@@ -258,7 +263,7 @@ export default function SignupForm(
             <div className="auth-form-footer">
 
               {
-                !showX6CodeValidation && <ButtonDefault label="Sign Up" loading={loading} onClick={() => {
+                !showX6CodeValidation && <ButtonDefault label={tCommon('sign_up')} loading={loading} onClick={() => {
                   InitSignup()
                 }} />
               }
@@ -274,7 +279,7 @@ export default function SignupForm(
               }
 
               <div className="question-link">
-                <Title headingType="p" headingStyle="Text-sm-Regular" color="--color-text-fg-subtle">Do have an account? </Title>
+                <Title headingType="p" headingStyle="Text-sm-Regular" color="--color-text-fg-subtle">{tCommon('do_have_an_account')} </Title>
                 <Title headingType="a" headingStyle="Text-sm-Medium" color="--color-text-fg-subtle" href="/user/auth/login" onClick={(e) => {
                   if (stateModal.show === true) {
                     e.preventDefault();
@@ -283,7 +288,7 @@ export default function SignupForm(
                       contentType: "login"
                     }));
                   }
-                }}>Log In</Title>
+                }}>{tCommon('log_in')}</Title>
               </div>
             </div>
           </div>

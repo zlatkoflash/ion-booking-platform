@@ -49,7 +49,8 @@ export default async function ConfirmPage(
     experiences: IDBTourIncludeDetails[],
     booking: IDBBookingDetails,
     tour: IDBTour,
-    payments: IDBPaymentDetails[]
+    payments: IDBPaymentDetails[],
+    activityBookingId: number
   }>("/booking-public/data-after-booking-confirm", "POST", {
     booking_id
   }, user ? "authorize" : "not-authorize", "application/json")
@@ -93,7 +94,7 @@ export default async function ConfirmPage(
       <hr />
 
 
-      <TextIconButton />
+      <TextIconButton link={`/booking/activity/ViewTicket/${details.activityBookingId}`} target="_blank" />
 
 
     </ConfirmPanelForStats>
@@ -148,7 +149,7 @@ export default async function ConfirmPage(
 
               <div className="payment-history-item">
                 <IconText type="history-item" iconType="dashboard" text={tCommon("payment_pending")} subText={tCommon("payment_pending_subtitle")} />
-                <IconText type="badge-style" text={tForms("pending")} variation="warning" iconType="warning-shield" />
+                <IconText type="badge-style" text={tCommon("pending")} variation="warning" iconType="warning-shield" />
               </div>
 
             </>

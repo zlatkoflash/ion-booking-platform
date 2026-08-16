@@ -5,6 +5,7 @@ import {
   ISearchFilters,
   setActiveTimeSlot,
   setActiveTimeSlotAndTour,
+  setBooking,
   setFilters
 } from "@/redux/booking/bookingSlice";
 import { fetchLivePrice } from "@/redux/booking/bookingTunk";
@@ -51,6 +52,7 @@ export default function HidrateTheSystem(
       slotId: filters.timeSlot as string
     }));*/
     dispatch(fetchLivePrice());
+    dispatch(setBooking(null))
 
     return () => {
       // dispatch(doResetOfTheSlice());

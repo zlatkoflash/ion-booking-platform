@@ -43,7 +43,28 @@ export default function HeaderHome(
         <Container className="desktop-header-content">
           <Row>
             <Col className="content-holder">
-              <Logo />
+
+
+              <div className="left-content">
+                <Logo />
+                <ul className="desktop-pages-menu">
+                  <li>
+                    <Link href="/" className={`${pathName === "/" ? "active" : "not-active"}`}>
+                      <Title headingType="span" headingStyle="Text-md-Regular" color="--color-text-fg">{tCommon("home")}</Title>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/AboutUs" className={`${pathName === "/AboutUs" ? "active" : "not-active"}`}>
+                      <Title headingType="span" headingStyle="Text-md-Regular" color="--color-text-fg">{tCommon("about_us")}</Title>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/ContactUs" className={`${pathName === "/ContactUs" ? "active" : "not-active"}`}>
+                      <Title headingType="span" headingStyle="Text-md-Regular" color="--color-text-fg">{tCommon("contact")}</Title>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
 
               <div className="menu-navigation">
                 {
@@ -221,17 +242,17 @@ function MobileMenuScrollingContent() {
             <ul className="mobile-pages-menu">
               <li>
                 <Link href="/">
-                  <Title headingType="span" headingStyle="Text-lg-Regular" color="--color-text-fg">Home</Title>
+                  <Title headingType="span" headingStyle="Text-lg-Regular" color="--color-text-fg">{tCommon("home")}</Title>
                 </Link>
               </li>
               <li>
                 <Link href="/AboutUs">
-                  <Title headingType="span" headingStyle="Text-lg-Regular" color="--color-text-fg">About us</Title>
+                  <Title headingType="span" headingStyle="Text-lg-Regular" color="--color-text-fg">{tCommon("about_us")}</Title>
                 </Link>
               </li>
               <li>
                 <Link href="/ContactUs">
-                  <Title headingType="span" headingStyle="Text-lg-Regular" color="--color-text-fg">Contact</Title>
+                  <Title headingType="span" headingStyle="Text-lg-Regular" color="--color-text-fg">{tCommon("contact")}</Title>
                 </Link>
               </li>
             </ul>
@@ -300,6 +321,7 @@ function MobileMenuScrollingContent() {
 function ProfileButtonLink() {
 
   const userAuth = useAppSelector((state) => state.auth.user);
+  const tCommon = useTranslations("Common");
 
   if (userAuth === null) return <></>
 
@@ -308,7 +330,7 @@ function ProfileButtonLink() {
       <img src={profile_placeholder.src} alt={`${userAuth.email}`} />
       <div className="content-for">
         <Title headingType="p" headingStyle="Text-sm-Regular" color="--color-text-fg">{userAuth.email}</Title>
-        <Title headingType="p" headingStyle="Text-sm-Semibold" color="--color-text-fg-on-accent">View profile</Title>
+        <Title headingType="p" headingStyle="Text-sm-Semibold" color="--color-text-fg-on-accent">{tCommon("view_profile")}</Title>
       </div>
       <ZIcon type="keyboard-arrow-left" />
     </div>
@@ -320,6 +342,7 @@ function MobileMenuFooter() {
 
   const dispatch = useAppDispatch();
   const userAuth = useAppSelector((state) => state.auth.user);
+  const tCommon = useTranslations("Common");
 
   return <>
     <div className="mobile-menu-footer">
@@ -329,14 +352,14 @@ function MobileMenuFooter() {
             <div className="buttons-set">
               {
                 userAuth === null && <>
-                  <ButtonDefault label="Log in" variant="primary" onClick={() => {
+                  <ButtonDefault label={tCommon("log_in")} variant="primary" onClick={() => {
                     dispatch(setMobileMenuIsOpened(false));
                     dispatch(setShowModalAuth({
                       show: true,
                       contentType: "login"
                     }))
                   }} />
-                  <ButtonDefault label="Sign up" variant="outline-primary" onClick={() => {
+                  <ButtonDefault label={tCommon("sign_up")} variant="outline-primary" onClick={() => {
                     dispatch(setMobileMenuIsOpened(false));
                     dispatch(setShowModalAuth({
                       show: true,
@@ -347,7 +370,7 @@ function MobileMenuFooter() {
               }
               {
                 userAuth !== null && <>
-                  <ButtonDefault label="Log out" variant="outline-danger" onClick={() => {
+                  <ButtonDefault label={tCommon("log_out")} variant="outline-danger" onClick={() => {
                     dispatch(setMobileMenuIsOpened(false));
                     dispatch(logoutAction());
                   }} />

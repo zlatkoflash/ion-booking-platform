@@ -9,7 +9,7 @@ import { getApiData } from "@/utils/api";
 import { EBookingStatus } from "@/utils/interface-database";
 import { getStripeCustomerId_ByBooking } from "@/utils/stripe";
 import { CardCvcElement, CardExpiryElement, CardNumberElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
 export default function BookingCheckoutFooter() {
@@ -33,6 +33,7 @@ export default function BookingCheckoutFooter() {
 
   const tForms = useTranslations("Forms");
   const tValidations = useTranslations("Validation");
+  const locale = useLocale();
 
   const processPayment = async () => {
 
@@ -136,6 +137,7 @@ export default function BookingCheckoutFooter() {
       {
         booking_id: booking?.id,
         whenToPay: whenToPay,
+        language: locale
       },
       authUser !== null ? "authorize" : "not-authorize",
       "application/json"

@@ -14,6 +14,7 @@ export default function InputTextPhone(
     labelIconType,
     onChange,
     validation,
+    showLabelIconPhone = true
   }
     :
     {
@@ -27,6 +28,7 @@ export default function InputTextPhone(
       labelIconType?: string;
       onChange?: (phone_number: string) => void;
       validation?: any;
+      showLabelIconPhone?: boolean;
     }
 ) {
   /**/
@@ -56,7 +58,7 @@ export default function InputTextPhone(
         placeholder={placeholder}
         className={className}
         showLabelIconText={true}
-        labelIconType="call"
+        labelIconType={showLabelIconPhone === true ? "call" : "none"}
         onChange={(e) => {
           handlePhoneChange(e)
         }}

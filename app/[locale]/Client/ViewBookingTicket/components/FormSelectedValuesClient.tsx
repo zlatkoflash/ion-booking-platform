@@ -22,7 +22,8 @@ import ButtonDefault from "@/components/buttons/ButtonDefault";
 import PriceGroup from "@/components/typography/PriceGroup";
 import { getArrayOfParticipantsForUpdateTheBooking } from "@/utils/booking-client";
 import { useRouter } from "@/translations-engine/routing";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { setGlobalToaster } from "@/redux/controls/controlsSlice";
 
 export default function FormSelectedValuesClient(
   {
@@ -62,6 +63,8 @@ export default function FormSelectedValuesClient(
   const [temporaryPrice, setTemporaryPrice] = useState<IBookingPrice | null>(null);
 
   const tForms = useTranslations("Forms");
+  const tCommon = useTranslations("Common");
+  const locale = useLocale();
 
 
 
@@ -107,7 +110,8 @@ export default function FormSelectedValuesClient(
       date_tour_start_zone_0: slotDateTimeToSupabaseTimeZone00(
         finalDateStart, temporaryNewSelectedDateTime?.startTime as string
       ),
-      start_time_label: `${temporaryNewSelectedDateTime?.startTimeLabel}`
+      start_time_label: `${temporaryNewSelectedDateTime?.startTimeLabel}`,
+      language: locale
     };
     console.log("payload:", payload);
 
@@ -126,7 +130,13 @@ export default function FormSelectedValuesClient(
 
     if (result.ok && result.ok === true) {
       setShowModalForUpdatingDateTime(false);
-      updateUrlParamFor('refresh', (new Date()).valueOf())
+      updateUrlParamFor('dt', (new Date()).valueOf());
+      dispatch(setGlobalToaster({
+        show: true,
+        title: tCommon("booking_updated_successfully"),
+        message: tCommon("date_time_updated_successfully"),
+        type: "info"
+      }))
       // TODO: SHOW MESSAGE
     } else {
       // TODO: SHOW MESSAGE
@@ -182,7 +192,8 @@ export default function FormSelectedValuesClient(
         temporaryNewSelectedParticipants
       ),
       bookingId: booking.id,
-      participantsCounts: temporaryNewSelectedParticipants
+      participantsCounts: temporaryNewSelectedParticipants,
+      language: locale
     };
 
     const detailsAfterUpdateParticipants = await getApiData<
@@ -211,6 +222,15 @@ export default function FormSelectedValuesClient(
       // setTemporaryPrice(detailsAfterUpdateParticipants.price)
       router.push(`/Client/ViewBookingTicket/${booking.id}/payment-detail`);*/
 
+      updateUrlParamFor('pc', (new Date()).valueOf());
+      setShowModalForUpdatingParticipants(false);
+      setErrorUpdatingParticipants(null);
+      dispatch(setGlobalToaster({
+        show: true,
+        title: tCommon("booking_updated_successfully"),
+        message: tCommon("participants_updated_successfully"),
+        type: "info"
+      }))
     }
 
     setLoading(false);
@@ -318,7 +338,7 @@ export default function FormSelectedValuesClient(
               iconType="danger-outline" />
           }
 
-          <ButtonDefault label={tForms("cancel")} variant="light" onClick={() => {
+          <ButtonDefault loading={loading} label={tForms("cancel")} variant="light" onClick={() => {
             setShowModalForUpdatingDateTime(false)
           }} />
         </>
@@ -414,7 +434,7 @@ export default function FormSelectedValuesClient(
               iconType="danger-outline" />
           }
 
-          <ButtonDefault label={tForms("cancel")} variant="light" onClick={() => {
+          <ButtonDefault loading={loading} label={tForms("cancel")} variant="light" onClick={() => {
             setShowModalForUpdatingParticipants(false)
           }} />
         </>

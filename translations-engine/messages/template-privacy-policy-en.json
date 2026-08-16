@@ -1,0 +1,205 @@
+{
+  "privacy-policy-heading": {
+    "updated-date": "Last updated: 10.08.2026",
+    "title": "Privacy Policy",
+    "subtitle": "This Privacy Policy explains how Walks in Town Srl collects, uses, stores, and protects your personal information when you use our website, contact us, or book tours and travel experiences.<br/><br/>We process personal data in accordance with applicable Italian and European data protection laws, including the General Data Protection Regulation (GDPR)."
+  },
+  "heading-paragraph": "",
+  "content": [
+    {
+      "title": "Who We Are",
+      "subtitle": "Data Controller",
+      "paragraphs": [
+        "The company responsible for processing your personal information is:",
+        "Walks in Town Srl<br />Viale Giuseppe Mazzini,40<br />50123 Firenze (FI), Italy<br />VAT Number: IT 07264710489<br />Email: info@walkintown.com<br />Phone: +39 347 320 4889"
+      ]
+    },
+    {
+      "title": "Information We Collect",
+      "subtitle": "Information You Provide",
+      "paragraphs": [
+        "We may collect information you provide when you make a booking, contact us, subscribe to communications, or use our services.",
+        "This may include:",
+        {
+          "type": "list",
+          "items": [
+            "Name and contact details",
+            "Booking and participant information",
+            "Special requests or accessibility requirements",
+            "Customer support messages",
+            "Payment and transaction information"
+          ]
+        }
+      ],
+      "subcontent": {
+        "title": "Information Collected Automatically",
+        "paragraphs": [
+          "When you use our website, we may automatically collect technical information such as your IP address, browser type, device information, visited pages, and website activity.",
+          "Payment card details are processed securely by our payment providers and are not stored directly by Walks in Town."
+        ]
+      }
+    },
+    {
+      "title": "How We Use Your Information",
+      "subtitle": "Booking and Service Delivery",
+      "paragraphs": [
+        "We use your personal information to:",
+        {
+          "type": "list",
+          "items": [
+            "Process and manage bookings",
+            "Deliver tours and travel experiences",
+            "Send confirmations and important service updates",
+            "Process payments, cancellations, and refunds",
+            "Provide customer support"
+          ]
+        }
+      ],
+      "subcontent": {
+        "title": "Business and Legal Purposes",
+        "paragraphs": [
+          "We may also use personal information to prevent fraud, improve our website and services, maintain business records, and comply with legal obligations.",
+          "Marketing communications will only be sent where permitted by law or where you have provided consent."
+        ]
+      }
+    },
+    {
+      "title": "Legal Basis for Processing",
+      "subtitle": "Why We Are Allowed to Use Your Data",
+      "paragraphs": [
+        "We process personal information under one or more of the following legal grounds:",
+        {
+          "type": "list",
+          "items": [
+            "Performance of a contract",
+            "Steps taken before entering into a contract",
+            "Compliance with legal obligations",
+            "Legitimate business interests",
+            "Your consent, where required"
+          ]
+        },
+        "Where processing is based on consent, you may withdraw that consent at any time."
+      ]
+    },
+    {
+      "title": "Sharing Your Information",
+      "subtitle": "Travel and Service Partners",
+      "paragraphs": [
+        "We may share the information required to complete your booking with selected service providers, including:",
+        {
+          "type": "list",
+          "items": [
+            "Tour guides and activity providers",
+            "Transport providers",
+            "Attraction and venue operators",
+            "Payment processors",
+            "Booking and technology providers"
+          ]
+        },
+        "We do not sell your personal information."
+      ],
+      "subcontent": {
+        "title": "Legal Disclosures",
+        "paragraphs": [
+          "We may also disclose personal information where required by law, regulation, court order, or a competent public authority.",
+          "We only share information that is reasonably necessary for the relevant purpose."
+        ]
+      }
+    },
+    {
+      "title": "Data Retention and Security",
+      "subtitle": "How Long We Keep Your Data",
+      "paragraphs": [
+        "We retain personal information only for as long as necessary to provide our services, meet legal and accounting requirements, resolve disputes, and enforce agreements.",
+        "Retention periods may vary depending on the type of information and the purpose for which it was collected."
+      ],
+      "subcontent": {
+        "title": "How We Protect Your Data",
+        "paragraphs": [
+          "Walks in Town uses appropriate technical and organizational measures to protect personal data against unauthorized access, loss, misuse, alteration, or disclosure.",
+          "However, no electronic transmission or storage system can be guaranteed to be completely secure."
+        ]
+      }
+    },
+    {
+      "title": "Cookies and Website Data",
+      "subtitle": "How Cookies Are Used",
+      "paragraphs": [
+        "Our website may use cookies and similar technologies to:",
+        {
+          "type": "list",
+          "items": [
+            "Provide essential website functions",
+            "Remember user preferences",
+            "Analyze website performance",
+            "Improve the browsing experience",
+            "Support marketing activities, where consent is provided"
+          ]
+        }
+      ],
+      "subcontent": {
+        "title": "Managing Cookie Preferences",
+        "paragraphs": [
+          "Non-essential cookies will only be used where required consent has been obtained.",
+          "You can manage or withdraw your cookie preferences through the cookie settings available on the website. Additional information may be provided in our Cookie Policy."
+        ]
+      }
+    },
+    {
+      "title": "Your Privacy Rights",
+      "subtitle": "Your Rights Under GDPR",
+      "paragraphs": [
+        "Depending on the circumstances, you may have the right to:",
+        {
+          "type": "list",
+          "items": [
+            "Access your personal data",
+            "Correct inaccurate information",
+            "Request deletion of your data",
+            "Restrict the use of your data",
+            "Object to certain processing activities",
+            "Request data portability",
+            "Withdraw consent"
+          ]
+        }
+      ],
+      "subcontent": {
+        "title": "How to Exercise Your Rights",
+        "paragraphs": [
+          "To submit a privacy request, contact us at <a href=\"mailto:info@walkintown.com\">info@walkintown.com</a>.",
+          "We may ask you to verify your identity before completing the request. You also have the right to lodge a complaint with the competent data protection authority."
+        ]
+      }
+    },
+    {
+      "title": "International Data Transfers",
+      "paragraphs": [
+        "Some technology or service providers may process personal information outside the European Economic Area.",
+        "Where personal data is transferred internationally, Walks in Town uses appropriate legal safeguards, such as adequacy decisions, standard contractual clauses, or other recognized data protection mechanisms."
+      ]
+    },
+    {
+      "title": "Children’s Privacy",
+      "paragraphs": [
+        "Our services are intended to be booked by adults or by individuals legally authorized to make a booking.",
+        "We do not knowingly collect personal information directly from children without appropriate authorization from a parent or legal guardian.",
+        "Where information about a minor is required for a booking, it should be provided by the responsible adult."
+      ]
+    },
+    {
+      "title": "Policy Updates",
+      "paragraphs": [
+        "We may update this Privacy Policy to reflect changes in our services, website, technology, or legal requirements.",
+        "The most recent version will be published on our website with the updated revision date."
+      ]
+    },
+    {
+      "title": "Contact Us",
+      "paragraphs": [
+        "For questions about this Privacy Policy or the use of your personal information, contact:",
+        "Walks in Town Srl<br />Viale Giuseppe Mazzini, 40<br />50123 Firenze (FI), Italy",
+        "Email: info@walkintown.com<br />Phone: +39 347 320 4889<br />WhatsApp: +39 347 320 4889"
+      ]
+    }
+  ]
+}

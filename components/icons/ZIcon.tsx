@@ -70,6 +70,9 @@ import ZIconQuiz from "./ZIconQuiz";
 import ZIconTrashOutline from "./ZIconTrashOutline";
 import ZIconHamburg from "./ZIconHamburg";
 import ZIconX3DotsActions from "./ZIconX3DotsActions";
+import ZIconImportContacts from "./ZIconImportContacts";
+import ZIconFootprint from "./ZIconFootprint";
+import ZIconHandshake from "./ZIconHandshake";
 // import ZIconCalendar from "./ZIconCalendar"; // Import your clean component
 
 // 1. Explicitly define your strict string options
@@ -139,6 +142,10 @@ export type ZIconType =
   | "trash-outline"
   | "hamburg"
   | "x3-dots-actions"
+  | "import-contacts"
+  | "footprint"
+  | "handshake"
+  | "none"
   // | 'close-big';
   ;
 
@@ -232,7 +239,11 @@ export default function ZIcon({
     "quiz": ZIconQuiz,
     "trash-outline": ZIconTrashOutline,
     "hamburg": ZIconHamburg,
-    "x3-dots-actions": ZIconX3DotsActions
+    "x3-dots-actions": ZIconX3DotsActions,
+    "import-contacts": ZIconImportContacts,
+    "footprint": ZIconFootprint,
+    "handshake": ZIconHandshake,
+    "none": () => null,
   };
 
   // 3. Extract the functional component reference from the dictionary
@@ -241,6 +252,10 @@ export default function ZIcon({
   // 4. Runtime protection fallback
   if (!SelectedIconComponent) {
     console.warn(`Icon type "${type}" was not found in the ZIcon registry.`);
+    return null;
+  }
+
+  if (type === "none") {
     return null;
   }
 

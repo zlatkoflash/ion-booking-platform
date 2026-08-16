@@ -17,7 +17,8 @@ export default function HeaderSubNavigationClient(
         url?: string,
         label: string,
         urlParam?: { name: string, value: string },
-        mobileSectionVisible?: string
+        mobileSectionVisible?: string,
+        mobileOnlyVisible?: boolean
       }[]
     }
 ) {
@@ -42,17 +43,18 @@ export default function HeaderSubNavigationClient(
             <ul>
               {
                 links.map((link, index) => (
-                  <li key={index}>
+                  <li key={index} className={
+                    `${link.mobileOnlyVisible ? "mobile-only-visible" : ""}`
+                  }>
                     <Link
                       href={link.url ? link.url : "#"}
                       title={link.label}
-                      className={
-                        pathname === link.url
-                          ||
-                          (link.urlParam && searchParams.get(link.urlParam.name) === link.urlParam.value)
-                          ||
-                          link.mobileSectionVisible === mobileSelectedSection
-                          ? "active" : ""}
+                      className={pathname === link.url
+                        ||
+                        (link.urlParam && searchParams.get(link.urlParam.name) === link.urlParam.value)
+                        ||
+                        link.mobileSectionVisible === mobileSelectedSection
+                        ? "active" : ""}
                       data-url-param={link.urlParam ? link.urlParam.name : ""}
                       onClick={(e) => {
                         if (!link.url || link.url === "") {

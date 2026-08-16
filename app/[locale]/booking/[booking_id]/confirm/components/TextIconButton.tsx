@@ -7,7 +7,11 @@ import { useTranslations } from "next-intl";
 // it must be so the template will be generated
 // import html2canvas from "html2canvas"; // 1. Import explicitly
 
-export default function TextIconButton() {
+export default function TextIconButton(
+  { link = '', target = "_blank" }
+    :
+    { link?: string, target?: "_blank" | "_self" | "_parent" | "_top" }
+) {
 
   const tForms = useTranslations("Common");
 
@@ -16,10 +20,14 @@ export default function TextIconButton() {
 
       <IconText iconType="ticket" text={`3 ${3 > 1 ? tForms("tickets") : tForms("ticket")} · ${tForms("ready_to_download")}`} type="tickets-style" />
 
-      <ButtonDefault label={tForms("download_tickets")} iconType="download" variant="outline-primary"
+      <ButtonDefault
+        link={link}
+        target={target}
+        label={tForms("download_tickets")}
+        iconType="download" variant="outline-primary"
         // link="" target="_blank" 
         onClick={() => {
-          handleDownload()
+          // handleDownload()
         }} />
     </div>
   </>

@@ -156,5 +156,9 @@
     "infant": "Nourrisson"
   },
   "edit": "Modifier",
-  "delete": "Supprimer"
+  "delete": "Supprimer",
+  "subject": "Sujet",
+  "booking_question_group_tour_feedback": "Demande de réservation, visite de groupe, commentaires...",
+  "message": "Message",
+  "tell_us_how_we_can_help": "Dites-nous comment nous pouvons vous aider..."
 }

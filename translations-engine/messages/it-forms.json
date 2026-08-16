@@ -155,5 +155,9 @@
     "infant": "Neonato"
   },
   "edit": "Modifica",
-  "delete": "Elimina"
+  "delete": "Elimina",
+  "subject": "Soggetto",
+  "booking_question_group_tour_feedback": "Richiesta di prenotazione, tour di gruppo, feedback...",
+  "message": "Messaggio",
+  "tell_us_how_we_can_help": "Dicci come possiamo aiutarti..."
 }

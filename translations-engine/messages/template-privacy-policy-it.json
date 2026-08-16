@@ -1,0 +1,205 @@
+{
+  "privacy-policy-heading": {
+    "updated-date": "Ultimo aggiornamento: 10.08.2026",
+    "title": "Informativa sulla Privacy",
+    "subtitle": "La presente Informativa sulla Privacy spiega come Walks in Town Srl raccoglie, utilizza, conserva e protegge le vostre informazioni personali quando utilizzate il nostro sito web, ci contattate o prenotate tour ed esperienze di viaggio.<br/><br/>Trattiamo i dati personali in conformità con le leggi applicabili in materia di protezione dei dati italiane ed europee, incluso il Regolamento Generale sulla Protezione dei Dati (GDPR)."
+  },
+  "heading-paragraph": "",
+  "content": [
+    {
+      "title": "Chi Siamo",
+      "subtitle": "Titolare del Trattamento",
+      "paragraphs": [
+        "La società responsabile del trattamento delle vostre informazioni personali è:",
+        "Walks in Town Srl<br />Viale Giuseppe Mazzini, 40<br />50123 Firenze (FI), Italia<br />Partita IVA: IT 07264710489<br />Email: info@walkintown.com<br />Telefono: +39 347 320 4889"
+      ]
+    },
+    {
+      "title": "Informazioni che Raccogliamo",
+      "subtitle": "Informazioni fornite da voi",
+      "paragraphs": [
+        "Potremmo raccogliere le informazioni da voi fornite quando effettuate una prenotazione, ci contattate, vi iscrivete a comunicazioni o utilizzate i nostri servizi.",
+        "Ciò può includere:",
+        {
+          "type": "list",
+          "items": [
+            "Nome e dettagli di contatto",
+            "Informazioni sulla prenotazione e sui partecipanti",
+            "Richieste speciali o esigenze di accessibilità",
+            "Messaggi di assistenza clienti",
+            "Informazioni di pagamento e transazione"
+          ]
+        }
+      ],
+      "subcontent": {
+        "title": "Informazioni raccolte automaticamente",
+        "paragraphs": [
+          "Quando utilizzate il nostro sito web, potremmo raccogliere automaticamente informazioni tecniche come il vostro indirizzo IP, il tipo di browser, informazioni sul dispositivo, pagine visitate e attività sul sito web.",
+          "I dettagli della carta di pagamento vengono elaborati in modo sicuro dai nostri fornitori di servizi di pagamento e non vengono memorizzati direttamente da Walks in Town."
+        ]
+      }
+    },
+    {
+      "title": "Come Utilizziamo le Vostre Informazioni",
+      "subtitle": "Prenotazione ed Erogazione del Servizio",
+      "paragraphs": [
+        "Utilizziamo le vostre informazioni personali per:",
+        {
+          "type": "list",
+          "items": [
+            "Elaborare e gestire le prenotazioni",
+            "Fornire tour ed esperienze di viaggio",
+            "Inviare conferme e importanti aggiornamenti di servizio",
+            "Elaborare pagamenti, cancellazioni e rimborsi",
+            "Fornire assistenza clienti"
+          ]
+        }
+      ],
+      "subcontent": {
+        "title": "Finalità commerciali e legali",
+        "paragraphs": [
+          "Potremmo anche utilizzare le informazioni personali per prevenire frodi, migliorare il nostro sito web e i nostri servizi, mantenere registri aziendali e rispettare gli obblighi legali.",
+          "Le comunicazioni di marketing saranno inviate solo ove consentito dalla legge o previo vostro consenso."
+        ]
+      }
+    },
+    {
+      "title": "Base Giuridica del Trattamento",
+      "subtitle": "Perché ci è consentito utilizzare i vostri dati",
+      "paragraphs": [
+        "Trattiamo le informazioni personali in base a una o più delle seguenti condizioni giuridiche:",
+        {
+          "type": "list",
+          "items": [
+            "Esecuzione di un contratto",
+            "Misure precontrattuali adottate su richiesta dell'interessato",
+            "Adempimento di obblighi legali",
+            "Legittimi interessi commerciali",
+            "Il vostro consenso, ove richiesto"
+          ]
+        },
+        "Ove il trattamento sia basato sul consenso, potrete revocare tale consenso in qualsiasi momento."
+      ]
+    },
+    {
+      "title": "Condivisione delle Vostre Informazioni",
+      "subtitle": "Partner di Viaggio e di Servizio",
+      "paragraphs": [
+        "Potremmo condividere le informazioni necessarie per completare la vostra prenotazione con fornitori di servizi selezionati, tra cui:",
+        {
+          "type": "list",
+          "items": [
+            "Guide turistiche e fornitori di attività",
+            "Fornitori di servizi di trasporto",
+            "Operatori di attrazioni e luoghi di interesse",
+            "Fornitori di servizi di pagamento",
+            "Fornitori di servizi di prenotazione e tecnologia"
+          ]
+        },
+        "Non vendiamo le vostre informazioni personali."
+      ],
+      "subcontent": {
+        "title": "Comunicazioni per obblighi di legge",
+        "paragraphs": [
+          "Potremmo inoltre divulgare informazioni personali ove richiesto dalla legge, da regolamenti, da un ordine del tribunale o da un'autorità pubblica competente.",
+          "Condividiamo solo le informazioni ragionevolmente necessarie per la finalità pertinente."
+        ]
+      }
+    },
+    {
+      "title": "Conservazione e Sicurezza dei Dati",
+      "subtitle": "Per quanto tempo conserviamo i vostri dati",
+      "paragraphs": [
+        "Conserviamo le informazioni personali solo per il tempo necessario a fornire i nostri servizi, soddisfare requisiti legali e contabili, risolvere controversie e far rispettare gli accordi.",
+        "I periodi di conservazione possono variare a seconda del tipo di informazioni e dello scopo per cui sono state raccolte."
+      ],
+      "subcontent": {
+        "title": "Come proteggiamo i vostri dati",
+        "paragraphs": [
+          "Walks in Town utilizza misure tecniche e organizzative appropriate per proteggere i dati personali contro l'accesso non autorizzato, la perdita, l'uso improprio, l'alterazione o la divulgazione.",
+          "Tuttavia, nessun sistema di trasmissione o archiviazione elettronica può essere garantito come completamente sicuro."
+        ]
+      }
+    },
+    {
+      "title": "Cookie e Dati del Sito Web",
+      "subtitle": "Come vengono utilizzati i cookie",
+      "paragraphs": [
+        "Il nostro sito web può utilizzare cookie e tecnologie simili per:",
+        {
+          "type": "list",
+          "items": [
+            "Fornire funzioni essenziali del sito web",
+            "Ricordare le preferenze dell'utente",
+            "Analizzare le prestazioni del sito web",
+            "Migliorare l'esperienza di navigazione",
+            "Supportare attività di marketing, ove venga fornito il consenso"
+          ]
+        }
+      ],
+      "subcontent": {
+        "title": "Gestione delle preferenze sui cookie",
+        "paragraphs": [
+          "I cookie non essenziali saranno utilizzati solo previo ottenimento del consenso richiesto.",
+          "Potete gestire o revocare le vostre preferenze sui cookie attraverso le impostazioni dei cookie disponibili sul sito web. Ulteriori informazioni possono essere fornite nella nostra Politica sui Cookie."
+        ]
+      }
+    },
+    {
+      "title": "I Vostri Diritti in materia di Privacy",
+      "subtitle": "I vostri diritti ai sensi del GDPR",
+      "paragraphs": [
+        "A seconda delle circostanze, potreste avere il diritto di:",
+        {
+          "type": "list",
+          "items": [
+            "Accedere ai vostri dati personali",
+            "Rettificare informazioni inesatte",
+            "Richiedere la cancellazione dei vostri dati",
+            "Limitare l'uso dei vostri dati",
+            "Opporvi a determinate attività di trattamento",
+            "Richiedere la portabilità dei dati",
+            "Revocare il consenso"
+          ]
+        }
+      ],
+      "subcontent": {
+        "title": "Come esercitare i vostri diritti",
+        "paragraphs": [
+          "Per inviare una richiesta relativa alla privacy, contattateci all'indirizzo <a href=\"mailto:info@walkintown.com\">info@walkintown.com</a>.",
+          "Potremmo chiedervi di verificare la vostra identità prima di completare la richiesta. Avete inoltre il diritto di presentare un reclamo all'autorità di controllo competente per la protezione dei dati."
+        ]
+      }
+    },
+    {
+      "title": "Trasferimenti Internazionali di Dati",
+      "paragraphs": [
+        "Alcuni fornitori di servizi o di tecnologia potrebbero elaborare informazioni personali al di fuori dello Spazio Economico Europeo.",
+        "Ove i dati personali vengano trasferiti a livello internazionale, Walks in Town utilizza adeguate garanzie legali, quali decisioni di adeguatezza, clausole contrattuali standard o altri meccanismi di protezione dei dati riconosciuti."
+      ]
+    },
+    {
+      "title": "Privacy dei Minori",
+      "paragraphs": [
+        "I nostri servizi sono destinati ad essere prenotati da adulti o da persone legalmente autorizzate a effettuare una prenotazione.",
+        "Non raccogliamo consapevolmente informazioni personali direttamente da minori senza l'autorizzazione appropriata di un genitore o di un tutore legale.",
+        "Ove siano necessarie informazioni su un minore per una prenotazione, queste devono essere fornite dall'adulto responsabile."
+      ]
+    },
+    {
+      "title": "Aggiornamenti dell'Informativa",
+      "paragraphs": [
+        "Potremmo aggiornare la presente Informativa sulla Privacy per riflettere modifiche nei nostri servizi, nel sito web, nella tecnologia o nei requisiti legali.",
+        "La versione più recente sarà pubblicata sul nostro sito web con la data di revisione aggiornata."
+      ]
+    },
+    {
+      "title": "Contattaci",
+      "paragraphs": [
+        "Per domande su questa Informativa sulla Privacy o sull'utilizzo delle vostre informazioni personali, contattate:",
+        "Walks in Town Srl<br />Viale Giuseppe Mazzini, 40<br />50123 Firenze (FI), Italia",
+        "Email: info@walkintown.com<br />Telefono: +39 347 320 4889<br />WhatsApp: +39 347 320 4889"
+      ]
+    }
+  ]
+}

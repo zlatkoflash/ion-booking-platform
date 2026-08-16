@@ -258,6 +258,12 @@ export function PopOverParticipants(
       <ButtonDefault label={tForms("cancel")} variant="outline-primary" onClick={() => {
         setIsOpen(false)
       }} />
+      {
+        // `countLocalTotal(): ${countLocalTotal()}`
+      }
+      {
+        // `countBookedActual: ${countBookedActual}, countLocalTotal():${countLocalTotal()}`
+      }
       <ButtonDefault
         disabled={countIsEqual() || countLocalTotal() <= 0}
         label={

@@ -1,0 +1,75 @@
+{
+  "heading_content": {
+    "badge": "Contattaci",
+    "title": "Saremmo felici di sentirti",
+    "paragraph": "Domande su un tour, una prenotazione di gruppo o altro? Il nostro team con sede a Firenze risponde solitamente entro 24 ore."
+  },
+  "faqs_badge": "FAQ",
+  "faqs_title": "Domande frequenti",
+  "faqs": [
+    {
+      "title": "Sous quel délai obtiendrai-je une réponse ?",
+      "content": "Notre équipe basée à Florence répond généralement aux messages, aux e-mails et à WhatsApp dans les 24 heures, et souvent bien plus rapidement pendant les heures de bureau."
+    },
+    {
+      "title": "Puis-je demander une visite privée ou personnalisée ?",
+      "content": "Oui — mentionnez-le dans votre message et nous concevrons une promenade privée adaptée à vos centres d'intérêt, à la taille de votre groupe et à votre emploi du temps."
+    },
+    {
+      "title": "Quelle est votre politique d'annulation ?",
+      "content": "La plupart des visites offrent une annulation gratuite jusqu'à 24 heures avant l'heure de départ. Consultez la description de votre visite spécifique pour tous les détails."
+    },
+    {
+      "title": "Proposez-vous des réductions pour les groupes ?",
+      "content": "Nous proposons des tarifs spéciaux pour les grands groupes et les écoles. Envoyez-nous la taille de votre groupe et vos dates, et nous vous recontacterons avec un devis."
+    },
+    {
+      "title": "Quelles langues parlent vos guides ?",
+      "content": "Nos guides dirigent des visites en anglais, en italien et dans plusieurs autres langues — faites-nous part de votre préférence lors de votre prise de contact."
+    }
+  ],
+  "send_us_a_message": "Inviaci un messaggio",
+  "fill_out_the_form": "Compila il modulo e ti risponderemo il prima possibile, solitamente entro un giorno lavorativo.",
+  "send_message": "Invia messaggio",
+  "contact_form_send_successfully": "Modulo di contatto inviato con successo",
+  "contact_form_send_successfully_subtext": "Ti risponderemo il prima possibile, solitamente entro un giorno lavorativo.",
+  "contact-items-title": "Contattaci direttamente",
+  "contact-items": [
+    {
+      "icon": "call",
+      "title": "Chiamaci",
+      "link": {
+        "label": "+39 347 320 4889",
+        "link": "tel:+39 347 320 4889"
+      },
+      "description": "Lun–Sab, 9:00–19:00 CET"
+    },
+    {
+      "icon": "mail",
+      "title": "Inviaci un'email",
+      "link": {
+        "label": "info@walkintown.com",
+        "link": "mailto:info@walkintown.com"
+      },
+      "description": "Rispondiamo entro 24 ore"
+    },
+    {
+      "icon": "social-whatsapp",
+      "title": "WhatsApp",
+      "link": {
+        "label": "+39 347 320 4889",
+        "link": "https://wa.me/393473204889"
+      },
+      "description": "Per richieste rapide"
+    },
+    {
+      "icon": "location-on-pin",
+      "title": "Vieni a trovarci",
+      "link": {
+        "label": "Viale Giuseppe Mazzini, 40",
+        "link": "https://www.google.com/maps/place/Viale+Giuseppe+Mazzini,+40,+50136+Firenze+FI,+Italy/@43.774786,11.2705459,814m/data=!3m2!1e3!4b1!4m10!1m2!2m1!1sViale+Giuseppe+Mazzini,+40!3m6!1s0x132a540d673aaaab:0x39b91b96665f2a78!8m2!3d43.7747822!4d11.2731208!15sChpWaWFsZSBHaXVzZXBwZSBNYXp6aW5pLCA0MJIBCnN1YnByZW1pc2XgAQA!16s%2Fg%2F11q2x794bc?entry=ttu&g_ep=EgoyMDI2MDgxMi4wIKXMDSoASAFQAw%3D%3D"
+      },
+      "description": "50123 Firenze (FI), Italia"
+    }
+  ]
+}

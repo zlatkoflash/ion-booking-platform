@@ -52,6 +52,7 @@ export default function IconText({
   | "booking-whats-next"
   | "history-item"
   | "icon-text-cancellation-info"
+  | "icon-boxed-title-subttile-vertical"
   ;
   type2?: "header-link-mobile" | "type2-default";
   variation?: "warning" | "primary" | "secondary" | "danger" | "success" | "info" | "warning-solid" | "light";
@@ -79,6 +80,7 @@ export default function IconText({
       || type === "history-item"
       || type === "icon-text-cancellation-info"
       || type === "icon-text-alert"
+      || type === "icon-boxed-title-subttile-vertical"
     ) {
       return (
         <>

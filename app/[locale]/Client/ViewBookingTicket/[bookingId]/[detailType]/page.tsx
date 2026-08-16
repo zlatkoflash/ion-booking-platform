@@ -123,7 +123,8 @@ export default async function PageViewBookingTicket(
       <HeaderSubNavigationClient links={[
         {
           url: `/Client/ViewBookingTicket/${details.booking.id}/booking-status`,
-          label: tCommon("booking_status")
+          label: tCommon("booking_status"),
+          mobileOnlyVisible: true
         },
         {
           url: `/Client/ViewBookingTicket/${details.booking.id}/tour-detail`,

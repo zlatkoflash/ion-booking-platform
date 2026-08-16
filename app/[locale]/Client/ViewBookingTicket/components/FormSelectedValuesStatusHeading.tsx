@@ -25,7 +25,7 @@ export default function FormSelectedValuesStatusHeading(
       }
       {
         booking?.status !== EBookingStatus.CONFIRMED &&
-        <IconText text={booking?.status && (booking?.status as string) !== "" ? tCommon(booking.status as string) : "undefined status"} type="badge-style-item-booking-boxed" variation="danger" />
+        <IconText text={booking?.status && (booking?.status as string) !== "" ? tCommon(booking.status.toLocaleLowerCase() as string) : "undefined status"} type="badge-style-item-booking-boxed" variation="danger" />
       }
     </div>
   </>

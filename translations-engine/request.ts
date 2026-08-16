@@ -13,7 +13,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
     // home, 
     common, forms, validation, tour,
     templateHome,
-    templateSearch
+    templateSearch,
+    templateAboutUs,
+    templateTermsAndConditions,
+    templatePrivacyPolicy,
+    templateContact,
   ] = await Promise.all([
     // import(`@/translations-engine/messages/${locale}-home.json`).then((m) => m.default),
     import(`@/translations-engine/messages/${locale}-common.json`).then((m) => m.default),
@@ -23,6 +27,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
     import(`@/translations-engine/messages/${locale}-template-home.json`).then((m) => m.default),
     import(`@/translations-engine/messages/${locale}-template-search.json`).then((m) => m.default),
+    import(`@/translations-engine/messages/template-about-us-${locale}.json`).then((m) => m.default),
+    import(`@/translations-engine/messages/tempalte-terms-and-conditions-${locale}.json`).then((m) => m.default),
+    import(`@/translations-engine/messages/template-privacy-policy-${locale}.json`).then((m) => m.default),
+
+    import(`@/translations-engine/messages/template-contact-${locale}.json`).then((m) => m.default),
 
   ]);
 
@@ -37,6 +46,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
       TemplateHome: templateHome,
       TemplateSearch: templateSearch,
+
+      TemplateAboutUs: templateAboutUs,
+      TemplateTermsAndConditions: templateTermsAndConditions,
+      TemplatePrivacyPolicy: templatePrivacyPolicy,
+      TemplateContact: templateContact,
     }
   };
 });

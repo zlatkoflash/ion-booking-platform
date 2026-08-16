@@ -1,0 +1,205 @@
+{
+  "privacy-policy-heading": {
+    "updated-date": "Zuletzt aktualisiert: 10.08.2026",
+    "title": "Datenschutzrichtlinie",
+    "subtitle": "Diese Datenschutzrichtlinie erläutert, wie Walks in Town Srl Ihre personenbezogenen Daten erhebt, verwendet, speichert und schützt, wenn Sie unsere Website nutzen, uns kontaktieren oder Touren und Reiseerlebnisse buchen.<br/><br/>Wir verarbeiten personenbezogene Daten gemäß den geltenden italienischen und europäischen Datenschutzgesetzen, einschließlich der Datenschutz-Grundverordnung (DSGVO)."
+  },
+  "heading-paragraph": "",
+  "content": [
+    {
+      "title": "Wer wir sind",
+      "subtitle": "Verantwortlicher für die Datenverarbeitung",
+      "paragraphs": [
+        "Das für die Verarbeitung Ihrer personenbezogenen Daten verantwortliche Unternehmen ist:",
+        "Walks in Town Srl<br />Viale Giuseppe Mazzini, 40<br />50123 Florenz (FI), Italien<br />Umsatzsteuer-Identifikationsnummer: IT 07264710489<br />E-Mail: info@walkintown.com<br />Telefon: +39 347 320 4889"
+      ]
+    },
+    {
+      "title": "Informationen, die wir sammeln",
+      "subtitle": "Von Ihnen bereitgestellte Informationen",
+      "paragraphs": [
+        "Wir können Informationen sammeln, die Sie uns zur Verfügung stellen, wenn Sie eine Buchung vornehmen, uns kontaktieren, Mitteilungen abonnieren oder unsere Dienste nutzen.",
+        "Dies kann umfassen:",
+        {
+          "type": "list",
+          "items": [
+            "Name und Kontaktdaten",
+            "Buchungs- und Teilnehmerinformationen",
+            "Besondere Anfragen oder Anforderungen an die Barrierefreiheit",
+            "Kundensupport-Nachrichten",
+            "Zahlungs- und Transaktionsinformationen"
+          ]
+        }
+      ],
+      "subcontent": {
+        "title": "Automatisch gesammelte Informationen",
+        "paragraphs": [
+          "Wenn Sie unsere Website nutzen, können wir automatisch technische Informationen sammeln, wie z. B. Ihre IP-Adresse, Browsertyp, Geräteinformationen, besuchte Seiten und Website-Aktivitäten.",
+          "Zahlungskartendaten werden sicher von unseren Zahlungsdienstleistern verarbeitet und nicht direkt von Walks in Town gespeichert."
+        ]
+      }
+    },
+    {
+      "title": "Wie wir Ihre Informationen verwenden",
+      "subtitle": "Buchung und Leistungserbringung",
+      "paragraphs": [
+        "Wir verwenden Ihre personenbezogenen Daten, um:",
+        {
+          "type": "list",
+          "items": [
+            "Buchungen zu verarbeiten und zu verwalten",
+            "Touren und Reiseerlebnisse durchzuführen",
+            "Bestätigungen und wichtige Service-Updates zu versenden",
+            "Zahlungen, Stornierungen und Rückerstattungen zu bearbeiten",
+            "Kundensupport bereitzustellen"
+          ]
+        }
+      ],
+      "subcontent": {
+        "title": "Geschäftliche und rechtliche Zwecke",
+        "paragraphs": [
+          "Wir können personenbezogene Daten auch verwenden, um Betrug zu verhindern, unsere Website und Dienste zu verbessern, Geschäftsbücher zu führen und rechtliche Verpflichtungen zu erfüllen.",
+          "Marketingmitteilungen werden nur versandt, wenn dies gesetzlich zulässig ist oder Sie Ihre Einwilligung gegeben haben."
+        ]
+      }
+    },
+    {
+      "title": "Rechtsgrundlage der Verarbeitung",
+      "subtitle": "Warum wir Ihre Daten verwenden dürfen",
+      "paragraphs": [
+        "Wir verarbeiten personenbezogene Daten auf der Grundlage einer oder mehrerer der folgenden Rechtsgrundlagen:",
+        {
+          "type": "list",
+          "items": [
+            "Erfüllung eines Vertrags",
+            "Vorvertragliche Maßnahmen, die auf Anfrage der betroffenen Person erfolgen",
+            "Erfüllung rechtlicher Verpflichtungen",
+            "Berechtigte geschäftliche Interessen",
+            "Ihre Einwilligung, sofern erforderlich"
+          ]
+        },
+        "Wenn die Verarbeitung auf einer Einwilligung beruht, können Sie diese jederzeit widerrufen."
+      ]
+    },
+    {
+      "title": "Weitergabe Ihrer Informationen",
+      "subtitle": "Reise- und Servicepartner",
+      "paragraphs": [
+        "Wir können Informationen, die zur Abwicklung Ihrer Buchung erforderlich sind, an ausgewählte Dienstleister weitergeben, darunter:",
+        {
+          "type": "list",
+          "items": [
+            "Reiseleiter und Anbieter von Aktivitäten",
+            "Transportdienstleister",
+            "Betreiber von Sehenswürdigkeiten und Veranstaltungsorten",
+            "Zahlungsabwickler",
+            "Buchungs- und Technologieanbieter"
+          ]
+        },
+        "Wir verkaufen Ihre personenbezogenen Daten nicht."
+      ],
+      "subcontent": {
+        "title": "Gesetzlich vorgeschriebene Offenlegung",
+        "paragraphs": [
+          "Wir können personenbezogene Daten auch offenlegen, wenn dies durch Gesetz, Vorschriften, gerichtliche Anordnungen oder zuständige Behörden erforderlich ist.",
+          "Wir geben nur Informationen weiter, die für den jeweiligen Zweck vernünftigerweise erforderlich sind."
+        ]
+      }
+    },
+    {
+      "title": "Datenspeicherung und Sicherheit",
+      "subtitle": "Wie lange wir Ihre Daten aufbewahren",
+      "paragraphs": [
+        "Wir bewahren personenbezogene Daten nur so lange auf, wie es für die Erbringung unserer Dienste, die Erfüllung rechtlicher und buchhalterischer Anforderungen, die Beilegung von Streitigkeiten und die Durchsetzung von Vereinbarungen erforderlich ist.",
+        "Die Aufbewahrungsfristen können je nach Art der Daten und dem Zweck der Erhebung variieren."
+      ],
+      "subcontent": {
+        "title": "Wie wir Ihre Daten schützen",
+        "paragraphs": [
+          "Walks in Town setzt angemessene technische und organisatorische Maßnahmen ein, um personenbezogene Daten vor unbefugtem Zugriff, Verlust, Missbrauch, Änderung oder Offenlegung zu schützen.",
+          "Dennoch kann kein elektronisches Übertragungs- oder Speichersystem als vollständig sicher garantiert werden."
+        ]
+      }
+    },
+    {
+      "title": "Cookies und Website-Daten",
+      "subtitle": "Wie Cookies verwendet werden",
+      "paragraphs": [
+        "Unsere Website kann Cookies und ähnliche Technologien verwenden, um:",
+        {
+          "type": "list",
+          "items": [
+            "Wesentliche Website-Funktionen bereitzustellen",
+            "Benutzereinstellungen zu speichern",
+            "Die Leistung der Website zu analysieren",
+            "Das Surf-Erlebnis zu verbessern",
+            "Marketingaktivitäten zu unterstützen, sofern eine Einwilligung vorliegt"
+          ]
+        }
+      ],
+      "subcontent": {
+        "title": "Verwaltung von Cookie-Einstellungen",
+        "paragraphs": [
+          "Nicht unbedingt erforderliche Cookies werden nur nach Einholung der erforderlichen Zustimmung verwendet.",
+          "Sie können Ihre Cookie-Einstellungen über die auf der Website verfügbaren Cookie-Einstellungen verwalten oder widerrufen. Weitere Informationen finden Sie in unserer Cookie-Richtlinie."
+        ]
+      }
+    },
+    {
+      "title": "Ihre Datenschutzrechte",
+      "subtitle": "Ihre Rechte gemäß DSGVO",
+      "paragraphs": [
+        "Je nach den Umständen haben Sie möglicherweise das Recht:",
+        {
+          "type": "list",
+          "items": [
+            "Auf Ihre personenbezogenen Daten zuzugreifen",
+            "Unrichtige Informationen zu korrigieren",
+            "Die Löschung Ihrer Daten zu verlangen",
+            "Die Nutzung Ihrer Daten einzuschränken",
+            "Bestimmten Verarbeitungstätigkeiten zu widersprechen",
+            "Datenübertragbarkeit zu verlangen",
+            "Ihre Einwilligung zu widerrufen"
+          ]
+        }
+      ],
+      "subcontent": {
+        "title": "Wie Sie Ihre Rechte ausüben können",
+        "paragraphs": [
+          "Um eine Datenschutzanfrage einzureichen, kontaktieren Sie uns bitte unter <a href=\"mailto:info@walkintown.com\">info@walkintown.com</a>.",
+          "Wir können Sie bitten, Ihre Identität zu verifizieren, bevor wir die Anfrage bearbeiten. Sie haben zudem das Recht, eine Beschwerde bei der zuständigen Datenschutzaufsichtsbehörde einzureichen."
+        ]
+      }
+    },
+    {
+      "title": "Internationale Datenübertragungen",
+      "paragraphs": [
+        "Einige Technologie- oder Dienstleister könnten personenbezogene Daten außerhalb des Europäischen Wirtschaftsraums verarbeiten.",
+        "Wenn personenbezogene Daten international übermittelt werden, verwendet Walks in Town angemessene rechtliche Schutzmaßnahmen, wie Angemessenheitsbeschlüsse, Standardvertragsklauseln oder andere anerkannte Datenschutzmechanismen."
+      ]
+    },
+    {
+      "title": "Datenschutz von Minderjährigen",
+      "paragraphs": [
+        "Unsere Dienste sind für Buchungen durch Erwachsene oder Personen bestimmt, die rechtlich zur Buchung befugt sind.",
+        "Wir sammeln nicht wissentlich personenbezogene Daten direkt von Minderjährigen ohne die entsprechende Genehmigung eines Elternteils oder Erziehungsberechtigten.",
+        "Wenn für eine Buchung Informationen über einen Minderjährigen erforderlich sind, müssen diese vom verantwortlichen Erwachsenen bereitgestellt werden."
+      ]
+    },
+    {
+      "title": "Aktualisierungen der Richtlinie",
+      "paragraphs": [
+        "Wir können diese Datenschutzrichtlinie aktualisieren, um Änderungen an unseren Diensten, unserer Website, unserer Technologie oder gesetzlichen Anforderungen widerzuspiegeln.",
+        "Die aktuellste Version wird auf unserer Website mit dem aktualisierten Revisionsdatum veröffentlicht."
+      ]
+    },
+    {
+      "title": "Kontaktieren Sie uns",
+      "paragraphs": [
+        "Bei Fragen zu dieser Datenschutzrichtlinie oder der Verwendung Ihrer personenbezogenen Daten kontaktieren Sie bitte:",
+        "Walks in Town Srl<br />Viale Giuseppe Mazzini, 40<br />50123 Florenz (FI), Italien",
+        "E-Mail: info@walkintown.com<br />Telefon: +39 347 320 4889<br />WhatsApp: +39 347 320 4889"
+      ]
+    }
+  ]
+}

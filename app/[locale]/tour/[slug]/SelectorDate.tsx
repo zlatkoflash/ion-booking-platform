@@ -65,13 +65,6 @@ export default function SelectorDate(
                 setDatesString(formatMultipleDates(dates, tForms("locale_code")))
 
                 onUpdateDates?.(dates)
-                // updateUrlParam("selectedDates", dates);
-                /*updateUrlParamFor("selectedDates", dates, [
-                  //'participantsCount', 
-                  'timeSlot'
-                ]);
-                dispatch(setPriceLoading(true));
-                // updateUrlParamFor("")*/
 
               }}
             />
@@ -79,7 +72,7 @@ export default function SelectorDate(
         }
       >
         <div>
-          <TourPageSelector icon="calendar-check-outline" placeholder={datesString} haveValue={selectedDates.length > 0} active={isOpen} />
+          <TourPageSelector icon="calendar-check-outline" placeholder={`${datesString}`} haveValue={selectedDates.length > 0} active={isOpen} />
         </div>
       </OverlayTrigger>
     </div>

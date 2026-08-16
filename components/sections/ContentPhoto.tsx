@@ -24,7 +24,8 @@ export default function ContentPhoto({
     link: "https://website.com",
     addArrowOnTheEnd: true
   },
-  pictureUrl = photo_people.src
+  pictureUrl = photo_people.src,
+  desktopRowReverse = false
 }: {
   type?: "type-default" | "type-blue"
   badgesStrings?: string[]
@@ -36,12 +37,13 @@ export default function ContentPhoto({
     link: string,
     addArrowOnTheEnd: boolean
   } | "do-not-show",
-  pictureUrl?: string
+  pictureUrl?: string,
+  desktopRowReverse?: boolean
 }) {
   return <>
     <div className={`component content-photo ${type}`}>
       <SectionContainerCards>
-        <div className="content-wrap">
+        <div className={`content-wrap ${desktopRowReverse ? "desktop-row-reverse" : ""}`}>
           <div className="left-content">
 
             <HeadingContentWidgets

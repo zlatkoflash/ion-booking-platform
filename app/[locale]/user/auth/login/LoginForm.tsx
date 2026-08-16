@@ -32,6 +32,7 @@ export default function LoginForm(
   const [errorMessage, setErrorMessage] = useState("");
 
   const tValidation = useTranslations("Validation");
+  const tCommon = useTranslations("Common");
   const router = useRouter();
 
   const dispatch = useAppDispatch();
@@ -122,28 +123,28 @@ export default function LoginForm(
           </div>
 
           <div className="content-wrap">
-            <Title headingType="h1" headingStyle="Display-xs-Medium" color="--color-text-fg">Log In</Title>
+            <Title headingType="h1" headingStyle="Display-xs-Medium" color="--color-text-fg">{tCommon("log_in")}</Title>
 
             <InputsGridForBooking>
               <InputText
                 id=""
-                label="Email Address"
+                label={tCommon("email_address")}
                 type="email"
                 name=""
                 value={email}
                 className="w-100"
-                placeholder="Enter your Email Address"
+                placeholder={tCommon("subscribtionForm.inputPlaceholder")}
                 showLabelIconText={true}
                 labelIconType="mail"
                 onChange={(e) => setEmail(e.target.value)} />
               <InputText
                 id=""
-                label="Password"
+                label={tCommon("password")}
                 type="password"
                 name=""
                 value={password}
                 className="w-100"
-                placeholder="Enter your Password"
+                placeholder={tCommon("enter_your_password")}
                 showLabelIconText={true}
                 labelIconType="key-outline"
                 onChange={(e) => setPassword(e.target.value)} />
@@ -158,13 +159,13 @@ export default function LoginForm(
                       contentType: "forgot-password"
                     }));
                   }
-                }}>Forgot Password?</Title>
+                }}>{tCommon("forgot_password")}</Title>
               </div>
 
             </InputsGridForBooking>
 
             <div className="auth-form-footer">
-              <ButtonDefault label="Log in" loading={loading} onClick={() => {
+              <ButtonDefault label={tCommon('log_in')} loading={loading} onClick={() => {
                 TryLogin();
               }} />
 
@@ -175,7 +176,7 @@ export default function LoginForm(
               }
 
               <div className="question-link">
-                <Title headingType="p" headingStyle="Text-sm-Regular" color="--color-text-fg-subtle">Don`t have an account? </Title>
+                <Title headingType="p" headingStyle="Text-sm-Regular" color="--color-text-fg-subtle">{tCommon("dont_have_an_account")}? </Title>
                 <Title headingType="a" headingStyle="Text-sm-Medium" color="--color-text-fg-subtle" href="/user/auth/signup" onClick={(e) => {
                   if (modalAuth.show === true) {
                     e.preventDefault();
@@ -184,7 +185,7 @@ export default function LoginForm(
                       contentType: "signup"
                     }));
                   }
-                }}>Sign Up</Title>
+                }}>{tCommon("sign_up")}</Title>
               </div>
             </div>
           </div>
