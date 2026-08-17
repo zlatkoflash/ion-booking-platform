@@ -55,6 +55,8 @@ export default function BookingCheckoutFooter() {
     // getting stripe customer id
     const stripeCustomerId_details = await getStripeCustomerId_ByBooking(booking?.id as string);
 
+    console.log("stripeCustomerId_details:", stripeCustomerId_details);
+
     const cardElement = elements.getElement(CardNumberElement);
     // const cvcElement = elements.getElement(CardCvcElement);
     // const expiryElement = elements.getElement(CardExpiryElement);

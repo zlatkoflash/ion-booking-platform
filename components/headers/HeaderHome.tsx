@@ -59,7 +59,7 @@ export default function HeaderHome(
                     </Link>
                   </li>
                   <li>
-                    <Link href="/ContactUs" className={`${pathName === "/ContactUs" ? "active" : "not-active"}`}>
+                    <Link href="/Contact" className={`${pathName === "/Contact" ? "active" : "not-active"}`}>
                       <Title headingType="span" headingStyle="Text-md-Regular" color="--color-text-fg">{tCommon("contact")}</Title>
                     </Link>
                   </li>
@@ -251,7 +251,7 @@ function MobileMenuScrollingContent() {
                 </Link>
               </li>
               <li>
-                <Link href="/ContactUs">
+                <Link href="/Contact">
                   <Title headingType="span" headingStyle="Text-lg-Regular" color="--color-text-fg">{tCommon("contact")}</Title>
                 </Link>
               </li>
