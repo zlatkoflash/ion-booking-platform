@@ -137,6 +137,7 @@
   "email": "Email",
   "pay_with": "Paga con",
   "apple_pay": "Apple Pay",
+  "express_checkout": "Pagamento Express",
   "debit_credit_card": "Carta di credito/debito",
   "paypal": "PayPal",
   "pay_price_securely": "Paga {price} in sicurezza",
@@ -159,5 +160,8 @@
   "subject": "Soggetto",
   "booking_question_group_tour_feedback": "Richiesta di prenotazione, tour di gruppo, feedback...",
   "message": "Messaggio",
-  "tell_us_how_we_can_help": "Dicci come possiamo aiutarti..."
+  "tell_us_how_we_can_help": "Dicci come possiamo aiutarti...",
+  "processing_booking": "Elaborazione della prenotazione...",
+  "processing_booking_description": "Attendere mentre confermiamo i dettagli del pagamento e finalizziamo la prenotazione. Non chiudere o aggiornare questa pagina.",
+  "add_to_cart": "Aggiungi al carrello"
 }

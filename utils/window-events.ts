@@ -1,0 +1,1 @@
+export const ON_CART_UPDATED = "on-cart-updated";

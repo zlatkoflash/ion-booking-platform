@@ -17,7 +17,7 @@ export default function SelectorParticipants(
     :
     {
       isForExistingBooking?: boolean,
-      max_participants?: number,
+      max_participants: number,
       onUpdateParticipants?: (value: IBookingParticipants) => void
     }
 ) {
@@ -66,6 +66,7 @@ export default function SelectorParticipants(
               isForExistingBooking={isForExistingBooking}
               adults={participants.adults}
               childrenCount={participants.children}
+              infantsCount={participants.infants}
               // setAdults={() => { }}
               // setChildrenCount={() => { }}
               setIsOpen={setIsOpen}

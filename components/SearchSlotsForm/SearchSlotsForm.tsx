@@ -67,9 +67,11 @@ export default function SearchSlotsForm(
         <CalendardInputPopover onChange={() => {
           AfterChangeAnyFilter?.()
         }} />
-        <ParticipantsCountPopover onChange={() => {
-          AfterChangeAnyFilter?.()
-        }} />
+        <ParticipantsCountPopover
+          max_participants={999}
+          onChange={() => {
+            AfterChangeAnyFilter?.()
+          }} />
         <ButtonSearch
           className="btn-search-show-on-desktop"
           onClick={() => {

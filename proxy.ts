@@ -3,6 +3,7 @@ import createMiddleware from 'next-intl/middleware'
 import { routing } from '@/translations-engine/routing'
 import { createServerSupabase, getLoggedUser } from './utils/supabaseServer'
 import { ISupabaseUser } from './utils/interface-auth'
+import { BOOKING_CART_SESSION_COOKIE } from './utils/cart'
 
 // 1. Initialize the next-intl middleware handler
 const intlMiddleware = createMiddleware(routing)
@@ -68,9 +69,40 @@ export default async function proxy(request: NextRequest) {
     }
   }
 
+  ensureBokunCartSession(request, response)
+
   // 7. Hand back the modified localization + cookie updated response
   return response
 }
+
+
+
+
+/**
+* Ensures a Bókun cart session cookie exists on the response.
+* If it already exists in the request, it leaves it alone.
+* If it's missing, it generates a new UUID and sets it on the response cookies.
+*/
+export function ensureBokunCartSession(request: NextRequest, response: NextResponse): string {
+  let sessionId = request.cookies.get(BOOKING_CART_SESSION_COOKIE)?.value;
+
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+
+    response.cookies.set({
+      name: BOOKING_CART_SESSION_COOKIE,
+      value: sessionId,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 1 * 60 * 60 * 24 * 7, // 1 week
+    });
+  }
+
+  return sessionId;
+}
+
 
 
 // 8. Consolidated Optimization Matcher

@@ -33,7 +33,7 @@ export default function GalleryTour(
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
-  console.log("Gallery items:", photos);
+  // console.log("Gallery items:", photos);
 
   if (photos.length < 4) {
     return <>Gallery should have at least 4 images</>

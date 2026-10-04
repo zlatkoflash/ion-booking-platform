@@ -58,8 +58,8 @@ export default async function PageTourView(
     locale: locale
   }, loggedUser === null ? "not-authorize" : "authorize", "application/json");
 
-  console.log("Page details: ", details);
-  console.log("details.tour.agenda_items:", details.tour?.agenda_items);
+  // console.log("Page details: ", details);
+  // console.log("details.tour.agenda_items:", details.tour?.agenda_items);
 
   if (!details.ok || !details.tour) {
     return <>

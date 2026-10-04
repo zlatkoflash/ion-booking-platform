@@ -5,16 +5,22 @@ import PaymentFlowSectionContainer from "./PaymentFlowSectionContainer";
 import PaymentFormX3Options from "./PaymentFormX3Options";
 import RadioSlidingPanels from "./RadioSlidingPanels";
 import { useAppDispatch } from "@/redux/hooks";
-import { setWhenToPay } from "@/redux/booking/bookingSlice";
+import { IBookedOrderPrice, setWhenToPay } from "@/redux/booking/bookingSlice";
 import BookingCheckoutFooter from "./BookingCheckoutFooter";
 import IconText from "@/components/buttons/IconText";
 import { useTranslations } from "next-intl";
+import { IDBBookingDetails } from "@/utils/interface-database";
 
-export default function PaymentFlowSectionPayment() {
+export default function PaymentFlowSectionPayment(
+  { price_booking, parentBooking }
+    :
+    { price_booking: IBookedOrderPrice, parentBooking: IDBBookingDetails }
+) {
 
   const whenToPay = useAppSelector((state) => state.booking.whenToPay);
+  const payWith = useAppSelector((state) => state.booking.payWith);
   const dispatch = useAppDispatch();
-  const price = useAppSelector((state) => state.booking.price);
+  // const price = useAppSelector((state) => state.booking.price_booking);
   const userAuth = useAppSelector((state) => state.auth.user);
   const tForms = useTranslations("Forms");
 
@@ -27,35 +33,37 @@ export default function PaymentFlowSectionPayment() {
         userAuth === null && <IconText type="icon-text-alert" iconType="power-solid" variation="warning" text={tForms("login_or_signup")} />
       }
     >
-      <RadioSlidingPanels
-        panelId="payment-types"
-        title={tForms("choose_when_to_pay")}
-        activeRadio={whenToPay}
-        afterChange={(slug) => {
-          dispatch(setWhenToPay(slug))
-        }}
-        panels={[
-          {
-            slug: "payment-type-pay-now",
-            leftTitle: tForms("pay_now"),
-            // leftSubtitle:"Pay the full amount today",
-            // content:"Pay now",
-            rightTitle: `€${price.total_discount.toFixed(2)}`
-          },
-          {
-            slug: "payment-later-reserve-now",
-            leftTitle: tForms("reserve_now_and_pay_later"),
-            leftSubtitle: tForms("no_extra_fees_you_ll_be_charged", { price: price.total_discount.toFixed(2), date: "Apr 8" }),
-            rightTitle: "€0.00",
-            rightSubtitle: tForms("now"),
-            // content:"Reserve now, pay later",
+      {
+        payWith !== "apple-pay" && <RadioSlidingPanels
+          panelId="payment-types"
+          title={tForms("choose_when_to_pay")}
+          activeRadio={whenToPay}
+          afterChange={(slug) => {
+            dispatch(setWhenToPay(slug))
+          }}
+          panels={[
+            {
+              slug: "payment-type-pay-now",
+              leftTitle: tForms("pay_now"),
+              // leftSubtitle:"Pay the full amount today",
+              // content:"Pay now",
+              rightTitle: `€${price_booking.total.toFixed(2)}`
+            },
+            {
+              slug: "payment-later-reserve-now",
+              leftTitle: tForms("reserve_now_and_pay_later"),
+              leftSubtitle: tForms("no_extra_fees_you_ll_be_charged", { price: price_booking.total.toFixed(2), date: "Apr 8" }),
+              rightTitle: "€0.00",
+              rightSubtitle: tForms("now"),
+              // content:"Reserve now, pay later",
 
-          }
-        ]} />
+            }
+          ]} />
+      }
 
       {
         // whenToPay === "payment-type-pay-now" && 
-        <PaymentFormX3Options />
+        <PaymentFormX3Options price_booking={price_booking} parentBooking={parentBooking} />
       }
 
 

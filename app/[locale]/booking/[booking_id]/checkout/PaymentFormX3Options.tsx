@@ -7,16 +7,23 @@ import PaymentFormApplePay from "./PaymentFormApplePay";
 import PaymentFormCreditCards from "./PaymentFormCreditCards";
 import PaymentFormPaypal from "./PaymentFormPaypal";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { bookingSlice, setPayWith } from "@/redux/booking/bookingSlice";
+import { bookingSlice, IBookedOrderPrice, setPayWith } from "@/redux/booking/bookingSlice";
 import BookingCheckoutFooter from "./BookingCheckoutFooter";
 import { useTranslations } from "next-intl";
+import { IDBBookingDetails } from "@/utils/interface-database";
 
 // 2. Initialize Stripe outside of your component render tree
 // This ensures you don't recreate the Stripe instance on every state refresh
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PK!);
 
-export default function PaymentFormX3Options() {
+export default function PaymentFormX3Options(
+  { price_booking, parentBooking }
+    :
+    { price_booking: IBookedOrderPrice, parentBooking: IDBBookingDetails }
+) {
 
+
+  // const priceDetails = useAppSelector((state) => state.booking.price_active_product);
 
   const stripeOptions = {
     mode: "payment" as const,
@@ -24,6 +31,24 @@ export default function PaymentFormX3Options() {
     amount: 1099,
     payment_method_types: [
       "card", "paypal",
+      // "apple_pay"
+    ],
+  };
+  const stripeOptionsPaypal = {
+    mode: "payment" as const,
+    currency: "eur",
+    amount: 1099,
+    payment_method_types: [
+      "paypal"
+    ],
+  };
+
+  const stripeOptionsApplePay = {
+    mode: "payment" as const,
+    currency: "eur",
+    amount: Math.round(price_booking.total * 100),
+    payment_method_types: [
+      "card",
       // "apple_pay"
     ],
   };
@@ -38,36 +63,105 @@ export default function PaymentFormX3Options() {
   return (
     <>
 
-      <Elements stripe={stripePromise} options={stripeOptions}>
-        <RadioSlidingPanels
-          panelId="payment-forms"
-          title={tForms("pay_with")}
-          activeRadio={payWith}
-          afterChange={(slug: string) => {
-            dispatch(setPayWith(slug))
-          }}
-          panels={[
-            {
-              slug: "apple-pay",
-              leftTitle: tForms("apple_pay"),
-              content: payWith === "apple-pay" ? <PaymentFormApplePay /> : null
-            },
-            {
-              slug: "debit-credit-card",
-              leftTitle: tForms("debit_credit_card"),
-              content: payWith === "debit-credit-card" ? <PaymentFormCreditCards /> : null
-            },
-            {
-              slug: "paypal",
-              leftTitle: tForms("paypal"),
-              content: payWith === "paypal" ? <PaymentFormPaypal /> : null
-            }
-          ]} />
+      {
+        payWith === "apple-pay" && <Elements stripe={stripePromise} options={stripeOptionsApplePay}>
+          <RadioSlidingPanels
+            panelId="payment-forms"
+            title={tForms("pay_with")}
+            activeRadio={payWith}
+            afterChange={(slug: string) => {
+              dispatch(setPayWith(slug))
+            }}
+            panels={[
+              {
+                slug: "apple-pay",
+                // leftTitle: tForms("apple_pay"),
+                leftTitle: tForms("express_checkout"),
+                content: payWith === "apple-pay" ? <PaymentFormApplePay /> : null
+              },
+              {
+                slug: "debit-credit-card",
+                leftTitle: tForms("debit_credit_card"),
+                content: null
+              },
+              {
+                slug: "paypal",
+                leftTitle: tForms("paypal"),
+                content: null
+              }
+            ]} />
 
 
-        <BookingCheckoutFooter />
+          <BookingCheckoutFooter price_booking={price_booking} parentBooking={parentBooking} />
 
-      </Elements>
+        </Elements>
+      }
+      {
+        payWith === "debit-credit-card" && <Elements stripe={stripePromise} options={stripeOptions}>
+          <RadioSlidingPanels
+            panelId="payment-forms"
+            title={tForms("pay_with")}
+            activeRadio={payWith}
+            afterChange={(slug: string) => {
+              dispatch(setPayWith(slug))
+            }}
+            panels={[
+              {
+                slug: "apple-pay",
+                leftTitle: tForms("express_checkout"),
+                content: null
+              },
+              {
+                slug: "debit-credit-card",
+                leftTitle: tForms("debit_credit_card"),
+                content: payWith === "debit-credit-card" ? <PaymentFormCreditCards /> : null
+              },
+              {
+                slug: "paypal",
+                leftTitle: tForms("paypal"),
+                content: null
+              }
+            ]} />
+
+
+          <BookingCheckoutFooter price_booking={price_booking} parentBooking={parentBooking} />
+
+        </Elements>
+      }
+      {
+        payWith === "paypal" && <Elements stripe={stripePromise} options={stripeOptionsPaypal}>
+          <RadioSlidingPanels
+            panelId="payment-forms"
+            title={tForms("pay_with")}
+            activeRadio={payWith}
+            afterChange={(slug: string) => {
+              dispatch(setPayWith(slug))
+            }}
+            panels={[
+              {
+                slug: "apple-pay",
+                leftTitle: tForms("express_checkout"),
+                content: null
+              },
+              {
+                slug: "debit-credit-card",
+                leftTitle: tForms("debit_credit_card"),
+                content: null
+              },
+              {
+                slug: "paypal",
+                leftTitle: tForms("paypal"),
+                content: payWith === "paypal" ? <PaymentFormPaypal /> : null
+              }
+            ]} />
+
+
+          <BookingCheckoutFooter price_booking={price_booking} parentBooking={parentBooking} />
+
+        </Elements>
+      }
+
+
 
     </>
   )

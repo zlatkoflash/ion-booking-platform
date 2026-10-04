@@ -43,14 +43,9 @@ export default function HidrateTheSystem(
         filters
       }
     ));
+
     console.log("slots.find((slot) => slot.id === filters.timeSlot) ?? null:", slots.find((slot) => slot.id === filters.timeSlot) ?? null, "filters.timeSlot:", filters.timeSlot, "slots:", slots, "filters:", filters);
 
-    /*dispatch(fetchLivePrice({
-      tourId: tour.id,
-      startDate: filters.selectedDates.length > 0 ? filters.selectedDates[0] : "",
-      participants: filters.participantsCount,
-      slotId: filters.timeSlot as string
-    }));*/
     dispatch(fetchLivePrice());
     dispatch(setBooking(null))
 

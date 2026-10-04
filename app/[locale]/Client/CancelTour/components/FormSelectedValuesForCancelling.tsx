@@ -25,11 +25,11 @@ export default function FormSelectedValuesForCancelling(
     }
 ) {
 
-  const price = useAppSelector((state) => state.booking.price);
+  const price = useAppSelector((state) => state.booking.price_active_product);
   const dates = useAppSelector((state) => state.booking.filters.selectedDates);
   const timeSlot = useAppSelector((state) => state.booking.activeTimeSlot);
   const filters = useAppSelector((state) => state.booking.filters);
-  const booking = useAppSelector((state) => state.booking.booking);
+  const booking = useAppSelector((state) => state.booking.booked_product);
   const dispatch = useAppDispatch();
   const updateUrlParamFor = updateUrlParam();
 

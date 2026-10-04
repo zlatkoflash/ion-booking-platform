@@ -8,10 +8,10 @@ import SelectorParticipants from "./SelectorParticipants";
 import CartItemsLines from "@/components/typography/CartItemsLines";
 import TourFormSubmitButtons from "./TourFormSubmitButtons";
 import FormSectionChecksItems from "./FormSectionChecksItemst";
-import { IDBTourIncludeDetails } from "@/utils/interface-database";
+import { EBookingStatus, IDBTourIncludeDetails } from "@/utils/interface-database";
 import { IBookingTimeActivitySlot } from "@/utils/interface-booking";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { getPriceForCategory } from "@/utils/booking-client";
+import { getPriceForCategory, getTotalCountFromParticipantObject } from "@/utils/booking-client";
 import AvailableSlotsLabel from "./AvailableSlotsLabel";
 import { updateUrlParam } from "@/utils/navigation";
 import { setActiveTimeSlot, setFilterParticipantsCount, setPriceLoading } from "@/redux/booking/bookingSlice";
@@ -47,15 +47,29 @@ export default function FormSelectionTourDetails(
 
 
   const startTimeSlot = useAppSelector((state) => state.booking.activeTimeSlot);
+  const booked_product = useAppSelector((state) => state.booking.booked_product);
 
 
   let max_participants = 999;
-  if (tour !== null && startTimeSlot !== null) {
-    max_participants = startTimeSlot.availabilityCount - tour.occupied_spots_count;
+  if (
+    startTimeSlot !== null && booked_product !== null && booked_product.time_slot_id === startTimeSlot.startTimeId
+    && (
+      booked_product.status === EBookingStatus.RESERVED ||
+      booked_product.status === EBookingStatus.CONFIRMED
+    )
+  ) {
+    max_participants = startTimeSlot.availabilityCount + getTotalCountFromParticipantObject(booked_product.count_participants);
+  }
+  else if (startTimeSlot !== null) {
+    // max_participants = startTimeSlot.availabilityCount - tour.occupied_spots_count;
+    max_participants = startTimeSlot.availabilityCount;
   }
   if (max_participants < 0) {
     max_participants = 0;
   }
+
+  console.log("max_participants:::", max_participants);
+
 
 
   if (tour === null) {
@@ -70,7 +84,9 @@ export default function FormSelectionTourDetails(
 
     <form className="form-booking-selection">
 
-      <PriceGroup price={tour.price as number} discountPercent={tour.discount} currencySign="€" type="price-group-for-tour-page" />
+      <PriceGroup price={tour.price as number}
+        // discountPercent={tour.discount} 
+        currencySign="€" type="price-group-for-tour-page" />
 
 
 

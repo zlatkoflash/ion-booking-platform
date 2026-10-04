@@ -281,7 +281,7 @@
   "price_descending": "Prezzo (decr)",
   "wishlist_empty_title": "La tua lista dei desideri è vuota",
   "wishlist_empty_subtitle": "Inizia a salvare le esperienze che ami per trovarle qui più tardi.",
-  "shipping_cart": "Carrello di spedizione",
+  "shopping_cart": "Carrello di spedizione",
   "your_cart_is_empty": "Il tuo carrello è vuoto",
   "looks_like_you_havent_added_anything_yet": "Sembra che tu non abbia ancora aggiunto nulla.",
   "discounted_rates_for_kids": "Tariffe ridotte per bambini",
@@ -325,5 +325,17 @@
   "date_time_updated_successfully": "La data e l'ora sono state aggiornate con successo",
   "participants_updated_successfully": "Il numero di partecipanti è stato aggiornato con successo",
   "booking_canceled_successfully": "Prenotazione cancellata con successo",
-  "refund_received_within_business_days": "Riceverai il rimborso entro 3–5 giorni lavorativi."
+  "refund_received_within_business_days": "Riceverai il rimborso entro 3–5 giorni lavorativi.",
+  "not_found": {
+    "title": "404 Non Trovato",
+    "title2": "Sembra che non riusciamo a trovare la pagina che stai cercando.",
+    "paragraph": "Controlla l'URL o prova a cercare quello che ti serve.",
+    "button": "Torna alla Home"
+  },
+  "error_page": {
+    "title": "Si è verificato un errore",
+    "title2": "Si è verificato un errore imprevisto",
+    "paragraph": "Abbiamo riscontrato un problema durante il caricamento di questa pagina. Riprova o torna alla home page.",
+    "button": "Clicca qui per ricaricare la pagina"
+  }
 }

@@ -43,7 +43,7 @@ export default async function BookingsAndRefunds(
   }, "authorize", "application/json");
   // console.log("bookingItemsDetails:", details);
 
-  console.log("Booking and refunds page");
+  console.log("Booking and refunds page details:::", details);
 
   return <>
 

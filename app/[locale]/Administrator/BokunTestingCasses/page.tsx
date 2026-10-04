@@ -7,6 +7,8 @@ import BtnBookingEdit from "./actions-cart/BtnBookingEdit";
 import BtnsBooking from "./actions-cart/BtnsBookings";
 import ButtonsForStripeTesting from "./actions-cart/ButtonsForStripeTesting";
 import BtnActivityFunctions from "./actions-cart/BtnActivityFunctions";
+import BtnShoppingCartGetContent from "./actions-cart/BtnShoppingCartGetContent";
+import BtnsProcessesFunctions from "./actions/BtnProcessesFunctions";
 
 export default function BokunTestingCassesPage() {
   return <>
@@ -36,13 +38,24 @@ export default function BokunTestingCassesPage() {
       <Row>
         <Col className="">
 
+          <h3>Processes functions</h3>
+
+          <div className="p-5 d-flex align-items-center flex-wrap gap-2">
+
+            <BtnsProcessesFunctions />
+          </div>
+
+        </Col>
+      </Row>
+      <Row>
+        <Col className="">
+
           <h3>activity functions</h3>
 
           <div className="p-5 d-flex align-items-center flex-wrap gap-2">
 
             <BtnActivityFunctions />
           </div>
-
 
         </Col>
       </Row>
@@ -54,6 +67,19 @@ export default function BokunTestingCassesPage() {
           <div className="p-5 d-flex align-items-center flex-wrap gap-2">
 
             <BtnCartGetContent />
+          </div>
+
+
+        </Col>
+      </Row>
+      <Row>
+        <Col className="">
+
+          <h3>shopping cart functions</h3>
+
+          <div className="p-5 d-flex align-items-center flex-wrap gap-2">
+
+            <BtnShoppingCartGetContent />
           </div>
 
 

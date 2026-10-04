@@ -19,7 +19,7 @@ import BookingGroupStats from "@/app/[locale]/ShoppingCart/components/BookingGro
 import { useLocale, useTranslations } from "use-intl";
 import ModalCancelEdit from "../../CancelTour/components/ModalCancelEdit";
 import { setShowModalForEarlyPayment } from "@/redux/controls/controlsSlice";
-import { IBookingPrice } from "@/redux/booking/bookingSlice";
+import { ISingleActivityPrice } from "@/redux/booking/bookingSlice";
 
 export default function BookingResultsListTable(
   {
@@ -103,7 +103,7 @@ function BookingTableItem(
   const totalCountParticipants = getTotalCountFromParticipantObject(item.count_participants);
 
   const redirectToBookingPage = (booking: IDBBookingDetails) => {
-    router.push(`/Client/ViewBookingTicket/${booking.id}/${window.innerWidth > 768 ? 'tour-detail' : 'booking-status'}`);
+    router.push(`/Client/ViewBookingTicket/${booking.id}/${window.innerWidth > 768 ? 'tour-detail' : 'booking-status'}?productCode=${booking.confirmation_code_product}`);
   }
 
   /*const PayForTheConfirmedBooking = async () => {
@@ -142,7 +142,7 @@ function BookingTableItem(
 
       } type="icon-text-stat-for-booking-item" iconType="people" />,
       [
-        EBookingStatus.PENDING_HOLD, EBookingStatus.EXPIRED, EBookingStatus.FORBIDDEN_BY_USER
+        EBookingStatus.PENDING_HOLD, EBookingStatus.TIMEOUT, EBookingStatus.FORBIDDEN_BY_USER
       ].includes(item.status!) ? <IconText key="created" text={`${tCommon("created")} ${longDateTimeForBookingItem(item.date_created as string)}`} type="icon-text-stat-for-booking-item" iconType="calendar-outline" /> : null,
       item.status === EBookingStatus.CONFIRMED ? <IconText key="confirmed" text={`${tCommon("confirmed")} ${longDateTimeForBookingItem(item.date_confirmed as string)}`} type="icon-text-stat-for-booking-item" iconType="calendar-outline" /> : null,
       (item.status === EBookingStatus.RESERVED && !item.is_expired) ? <IconText key="reserved" text={`${tCommon("reserved")} ${longDateTimeForBookingItem(item.date_reserved as string)}`} type="icon-text-stat-for-booking-item" iconType="calendar-outline" /> : null,
@@ -235,7 +235,6 @@ function BookingTableItem(
                 user.user_metadata.role === "administrator" && <ButtonDefault variant="outline-primary" label={tCommon("refund")} />
               }
               <ButtonDefault variant="primary" label={tCommon("view")} className={`${user.user_metadata.role === "client" && 'w-100'}`} onClick={() => {
-                // router.push(`/Client/ViewBookingTicket/${item.id}/tour-detail`)
                 redirectToBookingPage(item)
               }} />
             </div>
@@ -263,7 +262,7 @@ function BookingTableItem(
                 }))
               }} />
               <ButtonDefault variant="primary" label={tCommon("view")} className={`${user.user_metadata.role === "client" && 'w-100'}`} onClick={() => {
-                // router.push(`/Client/ViewBookingTicket/${item.id}/tour-detail`)
+
                 redirectToBookingPage(item)
               }} />
             </div>
@@ -302,7 +301,6 @@ function BookingTableItem(
         {
           (item.status === EBookingStatus.CANCELLED) && <div className="buttons w-100">
             <ButtonDefault label={tCommon("view")} variant="primary" className="w-100" onClick={() => {
-              // router.push(`/Client/ViewBookingTicket/${item.id}/tour-detail`)
               redirectToBookingPage(item)
             }} />
           </div>
@@ -322,7 +320,7 @@ function BookingPayEarlyModal() {
   const showModalForEarlyPayment = useAppSelector((state) => state.controls.showModalForEarlyPayment);
   const dispatch = useAppDispatch();
 
-  const [bookingPrice, setBookingPrice] = useState<IBookingPrice | null>();
+  const [bookingPrice, setBookingPrice] = useState<ISingleActivityPrice | null>();
   const [btnIsLoading, setBtnIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -374,7 +372,7 @@ function BookingPayEarlyModal() {
     const apiData = await getApiData<{
       ok: boolean,
       message: string,
-      price: IBookingPrice
+      price: ISingleActivityPrice
     }>('/booking-client/get-booking-price-from-api', "POST", {
       booking_id: showModalForEarlyPayment.booking.id,
       language: locale
@@ -422,7 +420,7 @@ function BookingPayEarlyModal() {
         handleClose={() => { dispatch(setShowModalForEarlyPayment({ show: false, booking: showModalForEarlyPayment.booking })) }}
         bodyContent={
           <>
-            <Title headingType="h4" headingStyle="Text-xl-Medium" color="--color-text-fg-success">{tCommon("you_are_about_to_pay_early")} €{bookingPrice?.total_discount.toFixed(2)}.</Title>
+            <Title headingType="h4" headingStyle="Text-xl-Medium" color="--color-text-fg-success">{tCommon("you_are_about_to_pay_early")} €{bookingPrice?.total.toFixed(2)}.</Title>
             <Title headingType="p" headingStyle="Text-lg-Regular" color="--color-text-fg-subtle">{tCommon("pay_early_info")}</Title>
           </>
         }

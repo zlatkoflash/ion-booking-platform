@@ -1,6 +1,6 @@
 "use client";
 
-import { IBookingParticipants, IBookingPrice, setActiveTimeSlot, setBooking, setFilterParticipantsCount, setInitialHydratingData, setPrice, setTour } from "@/redux/booking/bookingSlice";
+import { IBookingParticipants, ISingleActivityPrice, setActiveTimeSlot, setBooking, setFilterParticipantsCount, setInitialHydratingData, setPrice, setTour } from "@/redux/booking/bookingSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { IBookingTimeActivitySlot } from "@/utils/interface-booking"
 import { IDBBooking, IDBBookingDetails, IDBTourIncludeDetails } from "@/utils/interface-database"
@@ -20,7 +20,7 @@ export default function BookingDetailsHidration(
       children: React.ReactNode;
       tour: IDBTourIncludeDetails;
       timeSlotStart: IBookingTimeActivitySlot;
-      price: IBookingPrice,
+      price: ISingleActivityPrice,
       participants: IBookingParticipants,
       booking: IDBBookingDetails
     }
@@ -31,6 +31,7 @@ export default function BookingDetailsHidration(
   const [isHydrated, setIsHydrated] = useState(false);
 
   useLayoutEffect(() => {
+
     /*dispatch(setTour(tour));
     dispatch(setActiveTimeSlot(timeSlotStart));
     dispatch(setPrice(price));
@@ -46,6 +47,8 @@ export default function BookingDetailsHidration(
     }));
 
     setIsHydrated(true);
+
+    console.log("BookingDetailsHidration....");
 
   }, [dispatch, tour, timeSlotStart, price, participants, booking]);
 

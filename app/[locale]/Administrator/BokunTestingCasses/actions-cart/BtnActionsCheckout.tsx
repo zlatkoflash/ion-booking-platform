@@ -1,7 +1,9 @@
 "use client";
 
 import ButtonDefault from "@/components/buttons/ButtonDefault";
+import { useAppSelector } from "@/redux/hooks";
 import { getApiData } from "@/utils/api";
+// import { getCartSessionId } from "@/utils/cart-server";
 import { IBokunCheckoutOptions } from "@/utils/interface-booking";
 
 export default function BtnActionsCheckout() {
@@ -20,14 +22,19 @@ export default function BtnActionsCheckout() {
 
 
 function BtnGetCheckoutOptions() {
+
+
+  const cart = useAppSelector((state) => state.booking.cart)
+
+
   const action = async () => {
     const result = await getApiData(`/administrator/test-get-checkout-options`, "POST", {
-      sessionId: "Example"
+      sessionId: cart.cart_session_id
     }, "authorize", "application/json");
     console.log("result: ", result);
   }
   return <>
-    <ButtonDefault label="Get Checkout Options" onClick={() => {
+    <ButtonDefault label="Get Checkout Shopping Cart Options" onClick={() => {
       action();
     }} />
   </>

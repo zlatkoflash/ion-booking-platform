@@ -32,5 +32,6 @@ export function updateUrlParam() {
 
     // Updates the URL and fetches server data quietly in the background
     router.replace(newUrl, { scroll: false });
+    // router.refresh();
   };
 }

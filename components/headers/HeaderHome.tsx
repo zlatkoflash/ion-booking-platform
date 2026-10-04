@@ -87,7 +87,8 @@ export default function HeaderHome(
                         className={`${pathName === "/Client/BookingsAndRefunds" ? "active" : "not-active"
                           }`}
                       />
-                      <IconText
+                      {
+                        /*<IconText
                         type="header-link"
                         text={tCommon("cart")}
                         // iconSrc={iconCart.src}
@@ -95,7 +96,9 @@ export default function HeaderHome(
                         href={`/ShoppingCart?session=${browser_id}`}
                         className={`${pathName === "/ShoppingCart" ? "active" : "not-active"
                           }`}
-                      />
+                      />*/
+                      }
+                      <CartButton type="desktop" />
                     </div>
                     <div className="separator"></div>
                     <div className="container-language-and-profile">
@@ -201,9 +204,12 @@ function MobileMenuHeader() {
 
             <div className="mobile-right-content">
               <LanguageSwitcher />
-              <Link className="cart-button" href={`/ShoppingCart?session=${browser_id}`}>
+              {
+                /*<Link className="cart-button" href={`/ShoppingCart?session=${browser_id}`}>
                 <ZIcon type="cart" count={7} />
-              </Link>
+              </Link>*/
+              }
+              <CartButton type="mobile" />
               <div className="hamburg-button-close">
                 <ZIcon type={
                   mobile_menu_is_opened ? "close" : "hamburg"
@@ -226,6 +232,7 @@ import Title from "../typography/Title";
 import { logoutAction } from "@/redux/auth/authThunks";
 import { setShowModalAuth } from "@/redux/auth/authSlice";
 import { useTranslations } from "next-intl";
+import CartButton from "./CartButton";
 function MobileMenuScrollingContent() {
 
   const pathName = usePathname();
@@ -289,7 +296,7 @@ function MobileMenuScrollingContent() {
                 </Link>
               </li>
               <li>
-                <Link href={`/ShoppingCart?session=${browser_id}`}>
+                <Link href={`/ShoppingCart`}>
                   <IconText
                     type="header-link"
                     type2="header-link-mobile"

@@ -14,11 +14,13 @@ import { OverlayTrigger, Popover, Button } from "react-bootstrap";
 
 export default function ParticipantsCountPopover(
   {
-    onChange
+    onChange,
+    max_participants
   }
     :
     {
-      onChange?: () => void
+      onChange?: () => void,
+      max_participants: number
     }
 ) {
   // const [adults, setAdults] = useState(0);
@@ -60,6 +62,8 @@ export default function ParticipantsCountPopover(
               {...props}
               adults={filterParticipants.adults}
               childrenCount={filterParticipants.children}
+              infantsCount={filterParticipants.infants}
+              max_participants={max_participants}
               /*setAdults={(countAdults) => {
                 // setAdults(countAdults)
                 dispatch(setFilterParticipantCountAdults(countAdults))
@@ -68,6 +72,8 @@ export default function ParticipantsCountPopover(
                 // setChildrenCount(countChildren)
                 dispatch(setFilterParticipantCountChildren(countChildren))
               }}*/
+
+
               setParticipants={(participants) => {
                 dispatch(setFilterParticipantsCount(participants))
               }}
@@ -104,6 +110,7 @@ export function PopOverParticipants(
     isForExistingBooking = false,
     adults,
     childrenCount,
+    infantsCount,
     // setAdults,
     // setChildrenCount,
     setIsOpen,
@@ -126,12 +133,13 @@ export function PopOverParticipants(
       isForExistingBooking?: boolean;
       adults: number;
       childrenCount: number;
+      infantsCount: number;
       // setAdults: (value: number) => void;
       // setChildrenCount: (value: number) => void;
       setParticipants?: (value: IBookingParticipants) => void;
       setIsOpen: (value: boolean) => void;
       onApply?: () => void;
-      max_participants?: number;
+      max_participants: number;
       label_adults?: string;
       label_children?: string;
       label_infants?: string;
@@ -142,8 +150,8 @@ export function PopOverParticipants(
 ) {
 
 
-  const booking = useAppSelector((state) => state.booking.booking);
-  const countBookedActual = (booking === null ? 0 : getTotalCountFromParticipantObject(booking.count_participants));
+  // const booking = useAppSelector((state) => state.booking.booked_product);
+  // const countBookedActual = (booking === null ? 0 : getTotalCountFromParticipantObject(booking.count_participants));
 
   const [localCountAdults, setLocalCountAdults] = useState(adults);
   const [localCountChildren, setLocalCountChildren] = useState(childrenCount);
@@ -154,36 +162,21 @@ export function PopOverParticipants(
   }
 
   const countIsEqual = (): boolean => {
-    return countBookedActual === countLocalTotal();
+    // return countBookedActual === countLocalTotal();
+    return max_participants === countLocalTotal();
   }
 
   const tForms = useTranslations("Forms");
 
-  /*let max_participants = 999;
-
-  if (tour !== null && startTimeSlot !== null) {
-    max_participants = startTimeSlot.availabilityCount - tour.occupied_spots_count;
-  }*/
 
   return <Popover
     {...props}
     // id="participants-widget-popover"
     className="component custom-participants-popover border-0 shadow"
   >
-    {/* Top Header Banner with Close Button */}
-    {
-      /*<div className="popover-widget-header d-flex align-items-center justify-content-between border-bottom">
-      <span className="popover-header-title m-0">Guests</span>
-      <button
-        type="button"
-        className="btn-close custom-close-btn"
-        aria-label="Close"
-        onClick={() => setIsOpen(false)}
-      ></button>
-    </div>*/
-    }
 
-    <Popover.Body className="who-counter-panel component">
+
+    <Popover.Body className="who-counter-panel component" data-ref="participants-count-popover">
       {/* Row 1: Adults Counter Component */}
       <div className="d-flex plus-minus-item align-items-center justify-content-between gap-5">
         <div>
@@ -258,12 +251,7 @@ export function PopOverParticipants(
       <ButtonDefault label={tForms("cancel")} variant="outline-primary" onClick={() => {
         setIsOpen(false)
       }} />
-      {
-        // `countLocalTotal(): ${countLocalTotal()}`
-      }
-      {
-        // `countBookedActual: ${countBookedActual}, countLocalTotal():${countLocalTotal()}`
-      }
+
       <ButtonDefault
         disabled={countIsEqual() || countLocalTotal() <= 0}
         label={

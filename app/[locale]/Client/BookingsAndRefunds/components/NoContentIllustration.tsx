@@ -9,6 +9,8 @@ import ButtonDefault from "@/components/buttons/ButtonDefault";
 import { useRouter } from "@/translations-engine/routing";
 import illustration_no_items_in_cart from '@/assets/images/illustration-no-items-in-cart.svg'
 import illustration_wishlist_empty from '@/assets/images/illustration-empty-wishlist.svg'
+import ZIcon from "@/components/icons/ZIcon";
+// import icon_error from '@/assets/images/icons/icon-danger-outline.svg';
 
 export default function NoContentIllustration(
   {
@@ -20,7 +22,7 @@ export default function NoContentIllustration(
   }
     :
     {
-      type: "items-not-found" | "no-items-after-searching" | "no-items-in-cart" | "page-not-found" | "wishlist-empty",
+      type: "items-not-found" | "no-items-after-searching" | "no-items-in-cart" | "page-not-found" | "wishlist-empty" | "error",
       title: string,
       paragraph: string,
       // doRefresh?: boolean
@@ -63,6 +65,11 @@ export default function NoContentIllustration(
               {
                 type === "wishlist-empty" && <>
                   <Image alt="Wishlist empty" src={illustration_wishlist_empty} width={400} height={400} />
+                </>
+              }
+              {
+                type === "error" && <>
+                  <ZIcon type="danger-outline" />
                 </>
               }
               <div className="texts-wrap">

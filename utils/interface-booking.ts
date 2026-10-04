@@ -1,3 +1,5 @@
+import { IBookingParticipants } from "@/redux/booking/bookingSlice";
+
 export interface ICancellationPenaltyRule {
   id: number;
   cutoffHours: number;
@@ -156,4 +158,18 @@ export interface IBokunCheckoutOptions {
       dropoffAnswers: any[],
     }[]
   }
+}
+
+
+
+
+export interface IBookedItems {
+  title: string;
+  description: string;
+  photo: string;
+  experience_api_id: number;
+  total_price: number;
+  productConfirmationCode: string;
+  participants: IBookingParticipants;
+  dateString: string;
 }

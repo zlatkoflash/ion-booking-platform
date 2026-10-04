@@ -4,7 +4,7 @@ import { capitalizeFirstLetter } from "@/utils/strings";
 
 export default function PriceGroup({
   price,
-  discountPercent = 0,
+  // discountPercent = 0,
   currencySign = '€',
   type = 'standard',
   // originalValue,
@@ -14,7 +14,7 @@ export default function PriceGroup({
   className = ""
 }: {
   price: number;
-  discountPercent?: number;
+  // discountPercent?: number;
   currencySign?: string;
   type?: 'standard' | 'discount' | 'per-person' | 'price-group-for-tour-page' | "cart-item" | "booking-item" | "shopping-cart-item";
   // originalValue?: number | string;
@@ -23,6 +23,10 @@ export default function PriceGroup({
   badgeText?: string;
   className?: string;
 }) {
+
+  // this is temporary, here if there is another price you should include that another price not like this
+  const discountPercent = 0; // so this discount percent should be excluded and you need to add another price if it is there
+
   const formattedOriginalPrice = Number(price).toFixed(2);
   const formattedDiscountedPrice = discountPercent > 0 ? Number(Number(price) * (1 - discountPercent / 100)).toFixed(2) : null;
 

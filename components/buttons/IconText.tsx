@@ -16,7 +16,8 @@ export default function IconText({
   type2 = "type2-default",
   hideTextOnMobile = false,
   showOnlyOnMobile = false,
-  showOnlyOnDesktop = false
+  showOnlyOnDesktop = false,
+  count
 }: {
   type:
   | "header-link"
@@ -68,6 +69,7 @@ export default function IconText({
   hideTextOnMobile?: boolean;
   showOnlyOnMobile?: boolean;
   showOnlyOnDesktop?: boolean;
+  count?: number;
 }) {
   const Content = () => {
     if (
@@ -95,7 +97,7 @@ export default function IconText({
     }
     return (
       <>
-        {iconType && <ZIcon type={iconType} />}
+        {iconType && <ZIcon type={iconType} count={count} />}
         {iconSrc && <img src={iconSrc} alt={typeof text === 'string' ? text : 'Icon Booking Platform'} />}
         {
           typeof text === "string" && <span className="title" dangerouslySetInnerHTML={{ __html: text }} />

@@ -11,11 +11,24 @@ import { useAppSelector } from "@/redux/hooks";
 import { getApiData } from "@/utils/api";
 import { useRouter } from "@/translations-engine/routing";
 import { useTranslations } from "next-intl";
+import { IBookedOrderPrice } from "@/redux/booking/bookingSlice";
+import { IDBBookingDetails } from "@/utils/interface-database";
+import { AddCustomerBookingDetails } from "@/utils/booking-client";
 
-export default function PaymentFlowSectionDetails() {
+export default function PaymentFlowSectionDetails(
+  {
+    price_booking,
+    booking_order
+  }
+    :
+    {
+      price_booking: IBookedOrderPrice,
+      booking_order: IDBBookingDetails
+    }
+) {
 
   // const state = useAppSelector((state) => state);
-  const booking = useAppSelector((state) => state.booking.booking);
+  // const booking = useAppSelector((state) => state.booking.booked_product);
 
   const tForms = useTranslations("Forms");
 
@@ -32,21 +45,22 @@ export default function PaymentFlowSectionDetails() {
   const [city, set_city] = useState("");
 
   useEffect(() => {
-    if (booking !== null && booking.customer_details.first_name !== "guest") {
+    if (booking_order !== null && booking_order.customer_details.first_name !== "guest") {
       console.log("Adding the data from database...");
-      set_first_name(booking.customer_details.first_name);
-      set_second_name(booking.customer_details.second_name);
-      set_email_address(booking.customer_details.email_address);
-      set_phone_number(booking.customer_details.phone_number);
-      set_address(booking.customer_details.address);
-      set_country(booking.customer_details.country);
-      set_city(booking.customer_details.city);
+      set_first_name(booking_order.customer_details.first_name);
+      set_second_name(booking_order.customer_details.second_name);
+      set_email_address(booking_order.customer_details.email_address);
+      set_phone_number(booking_order.customer_details.phone_number);
+      set_address(booking_order.customer_details.address);
+      set_country(booking_order.customer_details.country);
+      set_city(booking_order.customer_details.city);
     }
-  }, [booking]);
+  }, [booking_order]);
 
   const userAuth = useAppSelector((state) => state.auth.user);
   console.log("userAuth:::::::::::::", userAuth);
-  const price = useAppSelector((state) => state.booking.price);
+  // const price = useAppSelector((state) => state.booking.price_active_product);
+  // const price_booking = useAppSelector((state) => state.booking.price_booking);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -57,7 +71,7 @@ export default function PaymentFlowSectionDetails() {
     setLoading(true);
     setErrorMessage("")
 
-    const result = await getApiData<{
+    /*const result = await getApiData<{
       ok: boolean;
       message: string;
     }>("/booking-public/add-customer-booking-details", "POST",
@@ -71,17 +85,32 @@ export default function PaymentFlowSectionDetails() {
           city,
           country,
         },
-        booking_id: booking?.id
+        booking_id: booking_order?.id
       },
       userAuth === null ? "not-authorize" : "authorize",
-      "application/json");
+      "application/json");*/
+    const result = await AddCustomerBookingDetails(
+      {
+        first_name,
+        second_name,
+        email_address,
+        phone_number,
+        address,
+        city,
+        country,
+      },
+      booking_order?.id,
+      userAuth
+    );
+
     console.log("results after saving:", result);
+
     if (!result.ok) {
       setErrorMessage(result.message);
       setLoading(false);
     }
     else {
-      router.push(`/booking/${booking?.id}/checkout`);
+      router.push(`/booking/${booking_order?.id}/checkout`);
       setLoading(false);
     }
 
@@ -221,9 +250,9 @@ export default function PaymentFlowSectionDetails() {
         />
       </InputsGridForBooking>
 
-      <ButtonDefault label={`${tForms("continue_to_payment")} €${price.total_discount.toFixed(2)}`} className="w-100" onClick={(e) => {
+      <ButtonDefault label={`${tForms("continue_to_payment")} €${price_booking.total.toFixed(2)}`} className="w-100" onClick={(e) => {
         SaveContactDetailsAndContinueToPayment()
-      }} loading={loading} disabled={booking?.is_expired} />
+      }} loading={loading} disabled={booking_order?.is_expired} />
 
       {
         errorMessage !== "" && <IconText

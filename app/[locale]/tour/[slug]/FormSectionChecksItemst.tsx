@@ -1,6 +1,7 @@
 "use client";
 
 import IconText from "@/components/buttons/IconText";
+import { IBookedOrderPrice } from "@/redux/booking/bookingSlice";
 import { useAppSelector } from "@/redux/hooks";
 import { useTranslations } from "next-intl";
 
@@ -8,19 +9,21 @@ export default function FormSectionChecksItems(
   {
     showStrict = false,
     hideInMobile = false,
-    hideInDesktop = false
+    hideInDesktop = false,
+    // price_booking
   }
     :
     {
       showStrict?: boolean,
       hideInMobile?: boolean,
-      hideInDesktop?: boolean
+      hideInDesktop?: boolean;
+      // price_booking: IBookedOrderPrice
     }
 ) {
 
   const tForms = useTranslations("Forms");
-  const bookingPrice = useAppSelector((state) => state.booking.price)
-  if (bookingPrice.total === 0 && !showStrict) return <></>
+  // const bookingPrice = useAppSelector((state) => state.booking.price_active_product)
+  // if (bookingPrice.total === 0 && !showStrict) return <></>
 
   return (
     <div className={`form-section-checks-items ${hideInMobile ? 'hide-in-mobile' : ''} ${hideInDesktop ? 'hide-in-desktop' : ''}  `}>

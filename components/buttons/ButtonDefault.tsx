@@ -34,7 +34,7 @@ export default function ButtonDefault({
       <Link
         href={link}
         target={target}
-        className={`component btn btn-${variant} ${disabled ? "disabled" : ""}`}
+        className={`component btn btn-${variant} ${disabled ? "disabled" : ""} ${className}`}
         onClick={(e) => {
           onClick?.(e);
         }}>

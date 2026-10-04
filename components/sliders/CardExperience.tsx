@@ -98,7 +98,7 @@ export default function CardExperience({ details = {
             leftChildren={<>
               <PriceGroup
                 price={details.priceFrom as number}
-                discountPercent={details.discountPercent}
+                // discountPercent={details.discountPercent}
                 type="standard"
               />
             </>}

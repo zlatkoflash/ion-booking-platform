@@ -25,8 +25,8 @@ export default function SmallDescriptionForTheTour(
 
   const tour = useAppSelector((state) => state.booking.tour);
   const activeTimeSlot = useAppSelector((state) => state.booking.activeTimeSlot);
-  const booking = useAppSelector((state) => state.booking.booking);
-  const price = useAppSelector((state) => state.booking.price)
+  const booking = useAppSelector((state) => state.booking.booked_product);
+  const price = useAppSelector((state) => state.booking.price_active_product)
 
   const tForms = useTranslations("Forms")
 
@@ -52,7 +52,7 @@ export default function SmallDescriptionForTheTour(
           booking !== null && <Title headingType="h3" headingStyle="Text-md-Semibold" color="--color-text-fg" className="price-title">
             TOTAL (<Title headingType="span" headingStyle="Text-md-Regular">{
               getParticipantsLabel(booking?.count_participants, tForms.raw("participantsObjectTranslation"))
-            }</Title>) €{price.total_discount.toFixed(2)}
+            }</Title>) €{price.total.toFixed(2)}
           </Title>
         }
       </div>
@@ -62,7 +62,7 @@ export default function SmallDescriptionForTheTour(
   return <>
     <div className="small-description-for-tour">
       <ZPicture pictureUrl={example_city_3.src} alt={tour.title as string} width={300} height={300} />
-      <div className="small-description-content">
+      <div className="small-description-content" data-type="small-description-about-availability">
         {/*<ZBadge label="Only 3 sport left" type="form-badge" variant="warning" />*/}
         {
           includeSlotsAvailability &&

@@ -3,7 +3,7 @@
 import ButtonDefault from "@/components/buttons/ButtonDefault";
 import CartItemsLines from "@/components/typography/CartItemsLines";
 import Title from "@/components/typography/Title";
-import { IBookingParticipants, IBookingPrice } from "@/redux/booking/bookingSlice";
+import { IBookingParticipants, ISingleActivityPrice } from "@/redux/booking/bookingSlice";
 import { useRouter } from "@/translations-engine/routing";
 import { IDBBookingDetails, IDBTourIncludeDetails } from "@/utils/interface-database";
 import { useTranslations } from "next-intl";
@@ -18,7 +18,7 @@ export default function BookingFormTotalPanel(
     :
     {
       participants: IBookingParticipants,
-      price: IBookingPrice,
+      price: ISingleActivityPrice,
       tour: IDBTourIncludeDetails,
       booking: IDBBookingDetails
     }

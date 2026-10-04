@@ -22,6 +22,8 @@ import { formatTo12HourTime, supabaseDateToDayOfWeekMonthDD } from "@/utils/date
 import { generateGoogleMapLink } from "@/utils/maps";
 import MainIconsInfo from "./components/MainIconsInfo";
 import { getTranslations } from "next-intl/server";
+import { IBokunBooking } from "@/utils/interface-bokun";
+import { Fragment } from "react/jsx-runtime";
 
 export default async function ConfirmPage(
   {
@@ -48,12 +50,16 @@ export default async function ConfirmPage(
     message: string,
     experiences: IDBTourIncludeDetails[],
     booking: IDBBookingDetails,
-    tour: IDBTour,
+    // tour: IDBTour,
     payments: IDBPaymentDetails[],
-    activityBookingId: number
+    bokunBooking: IBokunBooking
+    // activityBookingId: number
   }>("/booking-public/data-after-booking-confirm", "POST", {
     booking_id
   }, user ? "authorize" : "not-authorize", "application/json")
+
+  // console.log("details:::: confirm page", details);
+  console.log("details:::: confirm page bokun booking", details.bokunBooking);
 
   if (details.booking === null) {
     return <>
@@ -89,12 +95,30 @@ export default async function ConfirmPage(
     >
 
 
-      <MainIconsInfo tour={details.tour} booking={details.booking} />
-
-      <hr />
 
 
-      <TextIconButton link={`/booking/activity/ViewTicket/${details.activityBookingId}`} target="_blank" />
+      {
+        details.bokunBooking.activityBookings.map((activityBooking) => {
+
+          console.log("activityBooking::::", activityBooking);
+
+          return (
+            <div key={`activityBooking-${activityBooking.bookingId}`} className="mb-5">
+
+              <MainIconsInfo
+                // tour={details.tour} 
+                booking={details.booking}
+                bookedActivity={activityBooking}
+              />
+
+
+              <TextIconButton link={`/booking/activity/ViewTicket/${activityBooking.bookingId}`} target="_blank" bookingParent={details.booking} bookedActivity={activityBooking} />
+              <hr />
+
+            </div>
+          )
+        })
+      }
 
 
     </ConfirmPanelForStats>

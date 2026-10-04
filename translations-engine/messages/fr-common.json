@@ -281,7 +281,7 @@
   "price_descending": "Prix (décroissant)",
   "wishlist_empty_title": "Votre liste de souhaits est vide",
   "wishlist_empty_subtitle": "Commencez à sauvegarder les expériences que vous aimez pour les retrouver ici plus tard.",
-  "shipping_cart": "Panier",
+  "shopping_cart": "Panier",
   "your_cart_is_empty": "Votre panier est vide",
   "looks_like_you_havent_added_anything_yet": "Il semble que vous n'ayez rien ajouté pour le moment.",
   "discounted_rates_for_kids": "Tarifs réduits pour enfants",
@@ -325,5 +325,17 @@
   "date_time_updated_successfully": "La date et l'heure ont été mises à jour avec succès",
   "participants_updated_successfully": "Le nombre de participants a été mis à jour avec succès",
   "booking_canceled_successfully": "Réservation annulée avec succès",
-  "refund_received_within_business_days": "Vous recevrez votre remboursement sous 3 à 5 jours ouvrables."
+  "refund_received_within_business_days": "Vous recevrez votre remboursement sous 3 à 5 jours ouvrables.",
+  "not_found": {
+    "title": "404 Not Found",
+    "title2": "We can't seem to find the page you're looking for.",
+    "paragraph": "Please check the URL or try searching for what you need.",
+    "button": "Back to Home"
+  },
+  "error_page": {
+    "title": "Something Went Wrong",
+    "title2": "An unexpected error occurred",
+    "paragraph": "We hit a snag loading this page. Please try again or head back home.",
+    "button": "Click Here To Reload Page"
+  }
 }

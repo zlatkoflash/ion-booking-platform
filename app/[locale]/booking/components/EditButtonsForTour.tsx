@@ -12,6 +12,7 @@ import SelectorParticipants from "@/app/[locale]/tour/[slug]/SelectorParticipant
 import { getTotalCountFromParticipantObject } from "@/utils/booking-client";
 import { IBookingParticipants } from "@/redux/booking/bookingSlice";
 import { useTranslations } from "next-intl";
+import { EBookingStatus } from "@/utils/interface-database";
 
 export default function EditButtonsForTour(
   {
@@ -32,15 +33,17 @@ export default function EditButtonsForTour(
 ) {
 
   // if (timeSlot === null) return <></>
-  const booking = useAppSelector((state) => state.booking.booking);
+  const booked_product = useAppSelector((state) => state.booking.booked_product);
   const activeTimeSlot = useAppSelector((state) => state.booking.activeTimeSlot);
   const tour = useAppSelector((state) => state.booking.tour);
   const participants = useAppSelector((state) => state.booking.filters.participantsCount);
 
   const tForms = useTranslations("Forms");
 
-  const [showDateTimeSelectors, set_showDateTimeSelectors] = useState(false);
-  const [showParticiantsEditor, set_showParticiantsEditor] = useState(false);
+  /*const [showDateTimeSelectors, set_showDateTimeSelectors] = useState(false);
+  const [showParticiantsEditor, set_showParticiantsEditor] = useState(false);*/
+  const [showTheSelectors, setShowTheSelectors] = useState(false);
+
 
   const arrayStringsParticipants = () => {
     const arrayStrings = [];
@@ -60,33 +63,44 @@ export default function EditButtonsForTour(
   // console.log("activeTimeSlot:::", activeTimeSlot);
 
   let max_participants = 999;
-  if (activeTimeSlot !== null) {
-    max_participants = activeTimeSlot.availabilityCount;
+
+  console.log("booked_product.time_slot_id:", booked_product?.time_slot_id, "activeTimeSlot.startTimeId:", activeTimeSlot?.startTimeId);
+
+  if (
+    activeTimeSlot !== null
+    && booked_product !== null
+    && booked_product.time_slot_id === activeTimeSlot.startTimeId
+    && (
+      booked_product.status === EBookingStatus.RESERVED ||
+      booked_product.status === EBookingStatus.CONFIRMED
+    )) {
+    max_participants = activeTimeSlot.availabilityCount + getTotalCountFromParticipantObject(booked_product.count_participants);
   }
-  if (activeTimeSlot !== null && booking !== null && booking.time_slot_id === activeTimeSlot.id) {
-    max_participants = activeTimeSlot.availabilityCount
-      + getTotalCountFromParticipantObject(booking?.count_participants);
+  else if (activeTimeSlot !== null) {
+    max_participants = activeTimeSlot.availabilityCount;
   }
   if (max_participants < 0) {
     max_participants = 0;
   }
+
+  if (tour === null) return <></>
 
   return <>
 
     <div className="edit-buttons-for-tour">
 
       {
-        !showDateTimeSelectors && <div className="item-edit">
+        !showTheSelectors && <div className="item-edit">
           <IconText iconType="calendar-check-outline" type="for-tour-stat-booking" text={tForms("date")} subText={
             <>
 
               {
-                booking !== null ? formatLongDate(booking.date_tour_start, tForms("locale_code")) : "Saturday, Mar 21, 2026"
+                booked_product !== null ? formatLongDate(booked_product.date_tour_start, tForms("locale_code")) : "Saturday, Mar 21, 2026"
               }
               <br />
               {
-                booking !== null && tour !== null ? formatDateStart_plus_duration(
-                  booking.time_tour_start_string,
+                booked_product !== null ? formatDateStart_plus_duration(
+                  booked_product.time_tour_start_string,
                   tour.duration
                 ) : "10:30 AM - 12:30 PM"
               }
@@ -97,7 +111,7 @@ export default function EditButtonsForTour(
           {
             includeEditsButtons && <ZIcon type="pencil-outline" onClick={() => {
               console.log("It is working");
-              set_showDateTimeSelectors(true)
+              setShowTheSelectors(true);
               console.log('is true');
             }} />
           }
@@ -110,13 +124,13 @@ export default function EditButtonsForTour(
 
 
       {
-        showDateTimeSelectors === true && <>
+        showTheSelectors === true && <>
           <SelectorDate initialSelectedDates={
-            booking?.date_tour_start
+            booked_product?.date_tour_start
               ?
               [
                 supabaseDateToYYYMMDD(
-                  booking.date_tour_start
+                  booked_product.date_tour_start
                 )
               ]
               :
@@ -137,13 +151,13 @@ export default function EditButtonsForTour(
 
 
       {
-        !showParticiantsEditor && <div className="item-edit">
+        !showTheSelectors && <div className="item-edit">
           <IconText iconType="people" type="for-tour-stat-booking" text={tForms("participants")} subText={<>
             {arrayStringsParticipants().length > 0 ? <span dangerouslySetInnerHTML={{ __html: arrayStringsParticipants().join("<br />") }} /> : ""}
           </>} />
           {
             includeEditsButtons && <ZIcon type="pencil-outline" onClick={() => {
-              set_showParticiantsEditor(true);
+              setShowTheSelectors(true);
             }} />
           }
         </div>
@@ -151,7 +165,7 @@ export default function EditButtonsForTour(
 
 
       {
-        showParticiantsEditor && <SelectorParticipants
+        showTheSelectors && <SelectorParticipants
           isForExistingBooking={true}
           max_participants={max_participants}
           onUpdateParticipants={(participants: IBookingParticipants) => {

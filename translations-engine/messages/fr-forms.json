@@ -138,8 +138,10 @@
   "email": "E-mail",
   "pay_with": "Payer avec",
   "apple_pay": "Apple Pay",
+  "express_checkout": "Paiement Express",
   "debit_credit_card": "Carte de débit/crédit",
   "paypal": "PayPal",
+  "add_to_cart": "Ajouter au panier",
   "pay_price_securely": "Payer {price} en toute sécurité",
   "confirm_your_spot": "Confirmer votre place",
   "your_booking_will_be_confirmed": "Votre réservation sera confirmée. Le solde restant sera réglé automatiquement 72 heures avant l'événement.",
@@ -160,5 +162,7 @@
   "subject": "Sujet",
   "booking_question_group_tour_feedback": "Demande de réservation, visite de groupe, commentaires...",
   "message": "Message",
-  "tell_us_how_we_can_help": "Dites-nous comment nous pouvons vous aider..."
+  "tell_us_how_we_can_help": "Dites-nous comment nous pouvons vous aider...",
+  "processing_booking": "Traitement de votre réservation...",
+  "processing_booking_description": "Veuillez patienter pendant que nous confirmons les détails de votre paiement et finalisons votre réservation. Ne fermez pas ou n'actualisez pas cette page."
 }

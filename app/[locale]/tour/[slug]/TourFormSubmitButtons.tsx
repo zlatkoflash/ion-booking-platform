@@ -10,17 +10,20 @@ import { IDBBooking } from "@/utils/interface-database";
 import { updateUrlParam } from "@/utils/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
+import BtnAddToCart from "./BtnAddToCart";
 
 export default function TourFormSubmitButtons() {
 
-  const price = useAppSelector((state) => state.booking.price);
+  const price = useAppSelector((state) => state.booking.price_active_product);
   const authUser = useAppSelector((state) => state.auth.user);
   const browserGuestId = useAppSelector((state) => state.auth.browser_user_id);
 
-  const [loading, setLoading] = useState(false);
   const tour = useAppSelector((state) => state.booking.tour);
   const timeSlot = useAppSelector((state) => state.booking.activeTimeSlot);
   const bookingFilters = useAppSelector((state) => state.booking.filters);
+
+  const [loading, setLoading] = useState(false);
+
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
   const locale = useLocale();
@@ -75,10 +78,14 @@ export default function TourFormSubmitButtons() {
 
   }
 
+
   if (price.total === 0) return <></>
 
   return <>
     <div className="tour-form-submit-buttons">
+
+      <BtnAddToCart />
+
       <ButtonDefault
         label={tForms("reserve_now_and_pay_later")}
         variant="outline-primary"
@@ -89,7 +96,7 @@ export default function TourFormSubmitButtons() {
         }}
       />
       <ButtonDefault
-        label={tForms("book_tour_for", { price: `€${price.total_discount.toFixed(2)}` })}
+        label={tForms("book_tour_for", { price: `€${price.total.toFixed(2)}` })}
         loading={price.loading || loading}
         disabled={price.total === 0}
         onClick={(e) => {

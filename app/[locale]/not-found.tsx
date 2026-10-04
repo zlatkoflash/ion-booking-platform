@@ -1,17 +1,23 @@
+"use client";
+
 import HeaderHome from "@/components/headers/HeaderHome";
 import BookingAndRefundsHeading from "@/app/[locale]/Client/BookingsAndRefunds/components/BookingAndRefundsHeading";
 import NoContentIllustration from "@/app/[locale]/Client/BookingsAndRefunds/components/NoContentIllustration";
+import { useTranslations } from "next-intl";
 
 export default function NotFound() {
+
+  const tCommon = useTranslations("Common");
+
   return <>
 
     <HeaderHome />
 
-    <BookingAndRefundsHeading title="404 Not Found" />
+    <BookingAndRefundsHeading title={tCommon("not_found.title")} />
     <NoContentIllustration
       type="page-not-found"
-      title="The page you are looking for does not exist"
-      paragraph="Please check the URL or try searching for what you need."
+      title={tCommon("not_found.title2")}
+      paragraph={tCommon("not_found.paragraph")}
 
     />
 

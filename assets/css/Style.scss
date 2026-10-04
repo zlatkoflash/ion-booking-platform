@@ -1094,7 +1094,7 @@ footer {
 
     &:hover {
       svg {
-        @include scale(1.2);
+        // @include scale(1.2);
       }
     }
 
@@ -3409,7 +3409,7 @@ footer {
 
     border: solid 1px var(--color-background-bg-default);
     background-color: var(--color-foreground-fg-brand-primary);
-    color: var(--color-text-fg-inverted);
+    color: var(--color-text-fg-inverted) !important;
     @include radius(50%);
     line-height: 1;
 
@@ -6394,6 +6394,8 @@ footer {
     >.small-description-content {
       flex: 1;
 
+      padding-right: 2.4rem;
+
       p {
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -7730,13 +7732,20 @@ footer {
     margin-inline: auto;
     max-width: 34rem;
 
-    >img {
+    >img,
+    .z-icon svg {
       display: block;
       @include media-fit(contain, center);
       margin-inline: auto;
       width: 21rem;
       height: 15rem;
       margin-bottom: 3.2rem;
+    }
+
+    .z-icon svg {
+      path {
+        fill: var(--color-primary-500);
+      }
     }
 
     >.texts-wrap {

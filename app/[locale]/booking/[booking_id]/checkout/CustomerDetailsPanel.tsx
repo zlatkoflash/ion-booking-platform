@@ -12,7 +12,7 @@ export default function CustomerDetailsPanel(
     { hideInMobile?: boolean }
 ) {
 
-  const booking = useAppSelector((state) => state.booking.booking);
+  const booking = useAppSelector((state) => state.booking.booked_product);
   const router = useRouter();
   const tForms = useTranslations("Forms");
 

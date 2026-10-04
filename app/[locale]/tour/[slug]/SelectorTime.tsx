@@ -102,7 +102,7 @@ function PopoverTime(
   const activeTimeSlot = useAppSelector((state) => state.booking.activeTimeSlot);
   // const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>("");
   const [activeSlot, setActiveSlot] = useState<IBookingTimeActivitySlot | null>(activeTimeSlot);
-  const booking = useAppSelector((state) => state.booking.booking);
+  const booking = useAppSelector((state) => state.booking.booked_product);
   const tCommon = useTranslations("Common");
 
   // const dispatch = useAppDispatch();
@@ -174,7 +174,7 @@ export function TimeSlotSelector({
 
   const [selectedSlot, setSelectedSlot] = useState<IBookingTimeActivitySlot | null>(null);
   const activeTimeSlot = useAppSelector((state) => state.booking.activeTimeSlot);
-  const booking = useAppSelector((state) => state.booking.booking);
+  const booking = useAppSelector((state) => state.booking.booked_product);
 
 
   const handleSlotClick = (slot: IBookingTimeActivitySlot) => {
@@ -216,7 +216,7 @@ export function TimeSlotSelector({
           if (isSelected) {
             btnVariant = "primary";          // State 2: Selected / Solid Fill
           }
-          if (booking !== null && booking?.time_slot_id === slot.id) {
+          if (booking !== null && booking?.time_slot_id === slot.startTimeId) {
             btnVariant = "success";
           }
 
@@ -249,7 +249,7 @@ export function TimeSlotSelector({
                   /*activeTimeSlot === null
                   ||*/
                   (
-                    booking.time_slot_id !== slot.id
+                    booking.time_slot_id !== slot.startTimeId
                   )
                 ) && <span className={`count-slots ${slot.availabilityCount > 5 ? "success" : "warning"}`}>
                   {

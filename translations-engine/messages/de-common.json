@@ -281,7 +281,7 @@
   "price_descending": "Preis (absteigend)",
   "wishlist_empty_title": "Deine Wunschliste ist leer",
   "wishlist_empty_subtitle": "Beginne, Erlebnisse zu speichern, die dir gefallen, um sie später hier zu finden.",
-  "shipping_cart": "Warenkorb",
+  "shopping_cart": "Warenkorb",
   "your_cart_is_empty": "Dein Warenkorb ist leer",
   "looks_like_you_havent_added_anything_yet": "Es sieht so aus, als ob du noch nichts hinzugefügt hast.",
   "discounted_rates_for_kids": "Ermäßigte Tarife für Kinder",
@@ -325,5 +325,17 @@
   "date_time_updated_successfully": "Datum und Uhrzeit erfolgreich aktualisiert",
   "participants_updated_successfully": "Teilnehmer erfolgreich aktualisiert",
   "booking_canceled_successfully": "Buchung erfolgreich storniert",
-  "refund_received_within_business_days": "Rückerstattung innerhalb von 3–5 Werktagen erhalten"
+  "refund_received_within_business_days": "Rückerstattung innerhalb von 3–5 Werktagen erhalten",
+  "not_found": {
+    "title": "404 Nicht Gefunden",
+    "title2": "Wir konnten die gesuchte Seite nicht finden.",
+    "paragraph": "Bitte überprüfe die URL oder versuche, nach dem zu suchen, was du brauchst.",
+    "button": "Zurück zur Startseite"
+  },
+  "error_page": {
+    "title": "Ein Fehler ist aufgetreten",
+    "title2": "Ein unerwarteter Fehler ist aufgetreten",
+    "paragraph": "Wir hatten Schwierigkeiten, diese Seite zu laden. Bitte versuche es erneut oder gehe zurück zur Startseite.",
+    "button": "Klicke hier, um die Seite neu zu laden"
+  }
 }

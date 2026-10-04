@@ -18,64 +18,82 @@ import BookingPaymentDetails from "@/app/[locale]/Client/ViewBookingTicket/compo
 import FormSelectedValuesClient from "@/app/[locale]/Client/ViewBookingTicket/components/FormSelectedValuesClient";
 import BookingDetailsHidration from "@/app/[locale]/booking/[booking_id]/details/BookingDetailsHidration";
 import { IBookingTimeActivitySlot } from "@/utils/interface-booking";
-import { IBookingPrice } from "@/redux/booking/bookingSlice";
+import { IBookingParticipants, ISingleActivityPrice } from "@/redux/booking/bookingSlice";
 import CancelBookingEvents from "@/app/[locale]/Client/ViewBookingTicket/components/CancelBookingEvents";
 import { Fragment } from "react/jsx-runtime";
 import { getTranslations } from "next-intl/server";
 
 export default async function PageViewBookingTicket(
-  { params }: {
-    params: Promise<{ bookingId: string, detailType: "tour-detail" | "payment-detail" | "booking-status" }>
+  { params, searchParams }: {
+    params: Promise<{ bookingId: string, detailType: "tour-detail" | "payment-detail" | "booking-status" }>,
+    searchParams: Promise<{
+      productCode?: string
+    }>
   }
 ) {
   const { bookingId, detailType } = await params;
+  const { productCode } = await searchParams;
+
   const tCommon = await getTranslations("Common");
+
 
   const details = await getApiData<{
     ok: boolean,
     message: string,
-    booking: IDBBookingDetails | null,
+    // booking: IDBBookingDetails | null,
+    // parentBooking: IDBBookingDetails | null,
+    productBooking: IDBBookingDetails | null,
+    bookedProductPrice: ISingleActivityPrice;
     tour: IDBTourIncludeDetails | null,
     payments: IDBPaymentDetails[],
     refunds: IDBRefundDetails[],
     timeSlot: IBookingTimeActivitySlot,
-    price: IBookingPrice,
-    slots: IBookingTimeActivitySlot[]
+    // price: ISingleActivityPrice,
+    slots: IBookingTimeActivitySlot[],
+    participantCountsBooked: IBookingParticipants
   }>("/booking-client/get-booking-ticket-details", "POST", {
-    booking_id: bookingId
+    booking_id: bookingId,
+    bookedProductCode: productCode
   }, "authorize", "application/json");
 
   // console.log("details:", details);
   // console.log("details.tour:", details.tour);
 
   const contentRightChildren = () => {
-    if (details.booking === null) return <> </>
+    if (details.productBooking === null) return <> </>
 
     return <>
       <FormSelectedValuesClient
         key={'form-selected-values-client'}
         slots={details.slots}
+        bookedParticipants={details.participantCountsBooked}
+        bookedProductPrice={details.bookedProductPrice}
+        productConfirmationCode={productCode as string}
+        productBooking={details.productBooking}
       />
       {
         (
           (
-            details.booking.x24_hours_period_expired
+            details.productBooking?.x24_hours_period_expired
             ||
-            details.booking.status !== EBookingStatus.CONFIRMED
+            details.productBooking?.status !== EBookingStatus.CONFIRMED
           )
             ?
             null
             :
-            <CancelBookingEvents key={'cancel-booking-events'} booking={details.booking} />
+            <CancelBookingEvents key={'cancel-booking-events'}
+              booking_product={details.productBooking}
+            // booking_parent={details.parentBooking}
+            />
 
         )
       }
 
       {
         (
-          details.booking.x24_hours_period_expired
+          details.productBooking.x24_hours_period_expired
             ||
-            details.booking.status !== EBookingStatus.CONFIRMED
+            details.productBooking.status !== EBookingStatus.CONFIRMED
             ? null :
             <IconText key={'info-about-the-cancel-booking'} type="icon-text-alert" variation="light" text={tCommon("cancellation_or_modification_info_is_allowed_within_24_hours")} iconType="info-circle-outline" className="mt-4" />
 
@@ -85,7 +103,8 @@ export default async function PageViewBookingTicket(
   }
 
   if (
-    details.booking === null
+    details.productBooking === null
+    // || details.parentBooking === null
     || details.tour === null
     || details.ok === false
   ) {
@@ -106,9 +125,9 @@ export default async function PageViewBookingTicket(
     <BookingDetailsHidration
       tour={details.tour}
       timeSlotStart={details.timeSlot}
-      price={details.price}
-      participants={details.booking.count_participants}
-      booking={details.booking}
+      price={details.bookedProductPrice}
+      participants={details.participantCountsBooked}
+      booking={details.productBooking}
     >
 
       <HeaderHome />
@@ -121,16 +140,16 @@ export default async function PageViewBookingTicket(
 
       <HeaderSubNavigationClient links={[
         {
-          url: `/Administrator/ViewBooking/${details.booking.id}/booking-status`,
+          url: `/Administrator/ViewBooking/${details.productBooking.id}/booking-status?productCode=${productCode}`,
           label: tCommon("booking_status"),
           mobileOnlyVisible: true
         },
         {
-          url: `/Administrator/ViewBooking/${details.booking.id}/tour-detail`,
+          url: `/Administrator/ViewBooking/${details.productBooking.id}/tour-detail?productCode=${productCode}`,
           label: tCommon("tour_detail")
         },
         {
-          url: `/Administrator/ViewBooking/${details.booking.id}/payment-detail`,
+          url: `/Administrator/ViewBooking/${details.productBooking.id}/payment-detail?productCode=${productCode}`,
           label: tCommon("payment_detail")
         }
       ]} />
@@ -252,7 +271,7 @@ export default async function PageViewBookingTicket(
             ...(detailType === "payment-detail" ? [
               <BookingPaymentDetails
                 key={'booking-payment-details'}
-                booking={details.booking}
+                booking={details.productBooking}
                 payments={details.payments}
                 refunds={details.refunds}
               />

@@ -6,7 +6,7 @@ import IconText from "@/components/buttons/IconText";
 import { EBookingStatus, IDBBookingDetails, IDBTourIncludeDetails } from "@/utils/interface-database";
 import { formatTo12HourTime, longDateTimeForBookingItem, supabaseDateToDayOfWeekMonthDD } from "@/utils/dates-times";
 import PriceGroup from "@/components/typography/PriceGroup";
-import { IBookingPrice } from "@/redux/booking/bookingSlice";
+import { ISingleActivityPrice } from "@/redux/booking/bookingSlice";
 import ZIcon from "@/components/icons/ZIcon";
 import BookingGroupStats from "./BookingGroupStats";
 import { Dropdown } from "react-bootstrap";
@@ -25,7 +25,7 @@ export default function CartItemsWrap(
     {
       booking: IDBBookingDetails,
       tour: IDBTourIncludeDetails,
-      price: IBookingPrice
+      price: ISingleActivityPrice
     }
 ) {
 
@@ -84,7 +84,7 @@ function CartItem(
       booking: IDBBookingDetails,
       tour: IDBTourIncludeDetails,
       guestType: "adult" | "child" | "infant",
-      price: IBookingPrice
+      price: ISingleActivityPrice
     }
 ) {
 
@@ -160,7 +160,11 @@ function CartItem(
           <hr />
 
           <div className="price-content-wrap">
-            <PriceGroup type="shopping-cart-item" price={X1Price()} discountPercent={tour.discount} />
+            <PriceGroup
+              type="shopping-cart-item"
+              price={X1Price()}
+            // discountPercent={tour.discount}
+            />
           </div>
 
         </div>
@@ -170,7 +174,11 @@ function CartItem(
           <hr />
 
           <div className="price-content-wrap">
-            <PriceGroup type="shopping-cart-item" price={X1Price()} discountPercent={tour.discount} />
+            <PriceGroup
+              type="shopping-cart-item"
+              price={X1Price()}
+            // discountPercent={tour.discount}
+            />
           </div>
         </div>
 

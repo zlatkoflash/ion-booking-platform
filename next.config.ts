@@ -8,6 +8,7 @@ const withNextIntl = createNextIntlPlugin(
 
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ['*.trycloudflare.com'],
   /* config options here */
   images: {
     remotePatterns: [
@@ -23,6 +24,15 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**', // Allows all image paths inside this bucket
       },
+      // imgcdn.bokun.tools
+      {
+        protocol: 'https',
+        hostname: 'imgcdn.bokun.tools',
+        port: '',
+        pathname: '/**',
+      },
+
+
     ],
   },
 };

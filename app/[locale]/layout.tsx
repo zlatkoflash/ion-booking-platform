@@ -27,6 +27,9 @@ import { getApiData } from "@/utils/api";
 import ServerIsDown from "./ServerStatusScreens/ServerIsDown";
 import ZToasterGlobal from "@/components/toaster/ZToasterGlobal";
 import LogoutTimer from "@/components/LogoutTimer/LogoutTimer";
+import { initialState } from "@/redux/booking/bookingSlice";
+import { getCartSessionId, getCartSessionId_single_product_check_price } from "@/utils/cart-server";
+import { getCartDetails } from "@/utils/cart";
 
 /*const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -84,6 +87,10 @@ export default async function RootLayout({
   console.log("after serverStatus:", serverStatus);
   console.log("server status is working.... ");
 
+  const cart_session_id = await getCartSessionId();
+  const cart_session_id_single_product_check_price = await getCartSessionId_single_product_check_price();
+  const cartDetails = await getCartDetails(cart_session_id);
+
   // Build the exact initial state structure
   const preloadedState = {
     auth: {
@@ -93,6 +100,15 @@ export default async function RootLayout({
       browser_user_id: null, // Will be set by AuthInitializer
       modalAuth: { show: false, contentType: "" as const }
     },
+
+    booking: {
+      ...initialState,
+      cart: {
+        cart_session_id: cart_session_id,
+        cart_session_id_single_product_check_price: cart_session_id_single_product_check_price,
+        cartDetails: cartDetails.ok ? cartDetails.detailsCart : null
+      }
+    }
 
     // You can initialize booking state here too if needed
     // booking: { /* ... */ }

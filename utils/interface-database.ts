@@ -202,7 +202,7 @@ export enum EBookingStatus {
   ERROR_CREATING_BOKUN_RESERVATION = 'ERROR_CREATING_BOKUN_RESERVATION',
   // 1. Local Checkout Layer (The 15-minute buffer)
   PENDING_HOLD = 'PENDING_HOLD',   // User clicked checkout, seats are temporarily locked in Supabase
-  EXPIRED = 'EXPIRED',             // 15-minute countdown ran out; seats are automatically freed
+  // EXPIRED = 'EXPIRED',             // 15-minute countdown ran out; seats are automatically freed
 
   // 2. Operational Lifecycle Layer
   RESERVED = 'RESERVED',           // "Reserve Now & Pay Later" path (Bokun hold active, unpaid)
@@ -210,6 +210,8 @@ export enum EBookingStatus {
 
   // 3. Termination Layer
   CANCELLED = 'CANCELLED',         // Booking cancelled by user or operator
+
+  TIMEOUT = 'TIMEOUT',
 }
 
 export enum EBookingCancellationReason {
@@ -222,6 +224,11 @@ export enum EBookingCancellationReason {
   I_BOOKED_THE_WRONG_DATE = "I_BOOKED_THE_WRONG_DATE",
   I_BOOKED_THE_WRONG_NUMBER_OF_PARTICIPANTS = "I_BOOKED_THE_WRONG_NUMBER_OF_PARTICIPANTS",
   OTHER_REASON = "OTHER_REASON",
+}
+
+export enum EBookingProductType {
+  PARENT_BOOKING = 'parent_booking',
+  ACTIVITY = 'activity'
 }
 
 export interface IDBBooking {
@@ -260,7 +267,7 @@ export interface IDBBooking {
   // default_payment_card_x4_last_numbers?: string,
   date_tour_start: string;
   date_tour_start_zone_0: string;
-  time_slot_id: string;
+  time_slot_id: number;
   start_time_label?: string;
   count_participants: IBookingParticipants;
   time_tour_start_string: string;
@@ -268,8 +275,10 @@ export interface IDBBooking {
   date_reserved: string;
   date_confirmed: string;
   date_cancelled: string;
-  initial_payment_is_done: boolean;
+  // initial_payment_is_done: boolean;
   count_max_edits: number;
+  confirmation_code_product: string;
+  product_type: EBookingProductType;
 }
 
 export interface IDBBookingDetails extends IDBBooking {
@@ -291,6 +300,7 @@ export interface IDBBookingDetails extends IDBBooking {
   starts_in_0_to_30m: boolean;
   x24_hours_period_expired: boolean;
   to_start_the_event_we_have_72hours_or_more: boolean;
+  initial_payment_is_done: boolean;
 }
 
 

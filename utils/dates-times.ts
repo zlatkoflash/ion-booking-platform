@@ -308,3 +308,17 @@ export function DateToTimeAMPM(supabaseDateZ00: string, language = 'en-US'): str
     hour12: true,
   });
 }
+
+// Booked 05 Mar 2026, 13:09
+export function DateTimeIntegerToDateStringWithTime(date_time_interger: number, language = 'en-US'): string {
+  const date = new Date(date_time_interger);
+  return `${date.toLocaleDateString(language, {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  })}, ${date.toLocaleTimeString(language, {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  })}`;
+}

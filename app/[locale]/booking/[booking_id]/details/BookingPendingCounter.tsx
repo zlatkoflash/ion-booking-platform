@@ -16,7 +16,7 @@ export default function BookingPendingCounter({
 }: BookingPendingCounterProps) {
 
   const router = useRouter();
-  const booking = useAppSelector((state) => state.booking.booking);
+  const booking = useAppSelector((state) => state.booking.booked_product);
   const tour = useAppSelector((state) => state.booking.tour);
 
   const [timeLeft, setTimeLeft] = useState<string>("");
@@ -85,7 +85,7 @@ export default function BookingPendingCounter({
           variation="danger" // Swapped variation to mirror a systemic warning layout
         />
         {
-          tour !== null && <>
+          /*tour !== null && <>
             <ButtonDefault
               variant="outline-primary"
               className="w-100 mb-4"
@@ -95,7 +95,7 @@ export default function BookingPendingCounter({
               }}
             />
             <div></div>
-          </>
+          </>*/
 
         }
 

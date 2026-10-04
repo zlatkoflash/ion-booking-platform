@@ -49,6 +49,7 @@
   "login_or_signup": "Log in or Sign-up for a faster checkout and to redeem available Rewards",
   "choose_when_to_pay": "Choose when to pay",
   "pay_now": "Pay now",
+  "add_to_cart": "Add to cart",
   "no_extra_fees_you_ll_be_charged": "No extra fees. You'll be charged {price} on {date}",
   "now": "now",
   "reserve_now_and_pay_later": "Reserve now & pay later",
@@ -137,6 +138,7 @@
   "email": "Email",
   "pay_with": "Pay with",
   "apple_pay": "Apple Pay",
+  "express_checkout": "Express Checkout",
   "debit_credit_card": "Debit/Credit Card",
   "paypal": "Paypal",
   "pay_price_securely": "Pay {price} securely",
@@ -159,5 +161,7 @@
   "subject": "Subject",
   "booking_question_group_tour_feedback": "Booking question, group tour, feedback...",
   "message": "Message",
-  "tell_us_how_we_can_help": "Tell us how we can help..."
+  "tell_us_how_we_can_help": "Tell us how we can help...",
+  "processing_booking": "Processing your booking...",
+  "processing_booking_description": "Please wait while we confirm your payment details and finalize your reservation. Do not close or refresh this page."
 }
