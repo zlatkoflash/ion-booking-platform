@@ -30,7 +30,7 @@ function BtnCartToBookingConfirmation() {
 
   const ProcessCartToConfirmation = async () => {
 
-    const date = '2026-11-04'
+    const date = '2026-11-05'
 
 
     const detailsForProcess = await getApiData<{
@@ -64,7 +64,7 @@ function BtnCartToBookingConfirmation() {
       cart.cart_session_id,
       detailsForProcess.tour as IDBTourIncludeDetails,
       detailsForProcess.timeSlot as IBookingTimeActivitySlot,
-      { adults: 0, children: 2, infants: 0 },
+      { adults: 0, children: 1, infants: 0 },
       date,
       browserGuestId as string,
       locale as string

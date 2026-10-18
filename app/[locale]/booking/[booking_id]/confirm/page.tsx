@@ -100,7 +100,7 @@ export default async function ConfirmPage(
       {
         details.bokunBooking.activityBookings.map((activityBooking) => {
 
-          console.log("activityBooking::::", activityBooking);
+          // console.log("activityBooking::::", activityBooking);
 
           return (
             <div key={`activityBooking-${activityBooking.bookingId}`} className="mb-5">

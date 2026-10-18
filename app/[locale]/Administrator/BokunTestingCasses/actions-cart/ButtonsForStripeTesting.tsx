@@ -5,6 +5,7 @@ import { getApiData } from "@/utils/api";
 
 export default function ButtonsForStripeTesting() {
   return <>
+    <BtnAnalizeBookedProductRefunding />
     <BtnRetriveIntent />
     <BtnRetriveRefunds />
     <BtnDoRefund />
@@ -14,6 +15,28 @@ export default function ButtonsForStripeTesting() {
   </>
 }
 
+
+function BtnAnalizeBookedProductRefunding() {
+
+  const bookingId = "3918f11c-85f5-43f7-8886-2f099c218e52";
+
+  const action = async () => {
+    try {
+      const data = await getApiData('/administrator/stripe-analize-booked-product-refunding', 'POST', {
+        booking_id: bookingId
+      }, 'authorize', 'application/json');
+      console.log("data stripe analize booked product refunding: ", data);
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  return <>
+    <ButtonDefault label={`Analize Booked Product Refunding for booking ${bookingId}`} variant="primary" onClick={() => {
+      action();
+    }} />
+  </>
+}
 
 function BtnRetriveIntent() {
 

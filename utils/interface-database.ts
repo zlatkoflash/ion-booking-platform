@@ -409,6 +409,9 @@ export interface IDBPaymentDetails extends IDBPayment {
   payment_card_last_x4_digits: string;
 }
 
+export interface IDBPaymentWithRefunds extends IDBPayment {
+  total_refunded: number;
+}
 
 
 export interface IDBRefund {
@@ -434,4 +437,19 @@ export interface INewsletterEmail {
   id: number;
   created_at: string; // Postgres timestamp with time zone
   email: string | null;
+}
+
+
+export interface IBlueprintEmail {
+  id: number;
+  recipient: string;
+  sender: string;
+  subject: string;
+  email_type: string;
+  subject_id: string;
+  status: string;
+  provider_message_id?: string;
+  error_message: string;
+  metadata: Record<string, any>;
+  sent_at: string; // ISO 8601 timestamp
 }

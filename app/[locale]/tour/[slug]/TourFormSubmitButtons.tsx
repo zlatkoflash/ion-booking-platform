@@ -90,7 +90,8 @@ export default function TourFormSubmitButtons() {
         label={tForms("reserve_now_and_pay_later")}
         variant="outline-primary"
         loading={price.loading || loading}
-        disabled={price.total === 0}
+        // disabled={price.total === 0}
+        disabled={true}
         onClick={(e) => {
           CreateBookingItem()
         }}
@@ -98,7 +99,8 @@ export default function TourFormSubmitButtons() {
       <ButtonDefault
         label={tForms("book_tour_for", { price: `€${price.total.toFixed(2)}` })}
         loading={price.loading || loading}
-        disabled={price.total === 0}
+        // disabled={price.total === 0}
+        disabled={true}
         onClick={(e) => {
           CreateBookingItem()
         }}

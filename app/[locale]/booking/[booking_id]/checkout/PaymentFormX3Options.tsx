@@ -64,7 +64,10 @@ export default function PaymentFormX3Options(
     <>
 
       {
-        payWith === "apple-pay" && <Elements stripe={stripePromise} options={stripeOptionsApplePay}>
+        payWith === "apple-pay" && <Elements stripe={stripePromise} options={{
+          ...stripeOptionsApplePay,
+          paymentMethodCreation: "manual"
+        }}>
           <RadioSlidingPanels
             panelId="payment-forms"
             title={tForms("pay_with")}

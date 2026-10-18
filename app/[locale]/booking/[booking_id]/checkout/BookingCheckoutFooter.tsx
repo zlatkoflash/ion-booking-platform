@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "@/translations-engine/routing";
 import { getApiData } from "@/utils/api";
 import { AttachDefaultPaymentForBooking, ConfirmReservedBooking } from "@/utils/booking-client";
+import { attachPaymentMethodToCustomer, checkCardDetails, getCustomerIntent, setupCustomerPaymentMethod_card, setupCustomerPaymentMethod_paypal } from "@/utils/checkout-client";
 import { EBookingStatus, IDBBookingDetails } from "@/utils/interface-database";
 import { getStripeCustomerId_ByBooking } from "@/utils/stripe";
 import { CardCvcElement, CardExpiryElement, CardNumberElement, ExpressCheckoutElement, useElements, useStripe } from "@stripe/react-stripe-js";
@@ -83,7 +84,7 @@ export default function BookingCheckoutFooter(
   }, [stripe]);
 
   // cards functions
-  const checkCardDetails = async (): Promise<{
+  /*const checkCardDetails = async (): Promise<{
     ok: boolean;
     cardElement: StripeCardNumberElement | null;
   }> => {
@@ -99,8 +100,8 @@ export default function BookingCheckoutFooter(
       return { ok: false, cardElement: null };
     }
     return { ok: true, cardElement };
-  }
-  const setupCustomerPaymentMethod_card = async (
+  }*/
+  /*const setupCustomerPaymentMethod_card = async (
     customerIntent: { clientSecret: string },
     cardElementDetails: { cardElement: StripeCardNumberElement | null },
     billing_details: any
@@ -120,14 +121,6 @@ export default function BookingCheckoutFooter(
       payment_method: {
 
         card: cardElementDetails.cardElement as StripeCardNumberElement,
-        /*billing_details: {
-          name: cardHolderName,
-          email: booking?.customer_details.email_address,
-          address: {
-            line1: booking?.customer_details.address,
-            city: booking?.customer_details.city,
-          }
-        },*/
         billing_details: billing_details
       },
     });
@@ -145,9 +138,9 @@ export default function BookingCheckoutFooter(
       ok: true,
       setupIntent
     };
-  }
+  }*/
 
-  const setupCustomerPaymentMethod_paypal = async (
+  /*const setupCustomerPaymentMethod_paypal = async (
     customerIntent: {
       clientSecret: string
     },
@@ -174,9 +167,9 @@ export default function BookingCheckoutFooter(
       return { ok: false, setupIntent: null };
     }
     return { ok: true, setupIntent: null };
-  }
+  }*/
 
-  const getCustomerIntent = async (stripe_customer_id: string): Promise<{ ok: boolean, message: string, clientSecret: string }> => {
+  /*const getCustomerIntent = async (stripe_customer_id: string): Promise<{ ok: boolean, message: string, clientSecret: string }> => {
     const customerIntentDetails = await getApiData<{
       ok: boolean,
       message: string,
@@ -208,9 +201,9 @@ export default function BookingCheckoutFooter(
     }
 
     return customerIntentDetails;
-  }
+  }*/
 
-  const attachPaymentMethodToCustomer = async (
+  /*const attachPaymentMethodToCustomer = async (
     stripeCustomerId_details: {
       stripe_customer_id: string;
     },
@@ -256,24 +249,10 @@ export default function BookingCheckoutFooter(
       ok: true,
       message: details.message
     };
-  }
+  }*/
 
   const bookTheExperience = async () => {
-    /*const resultAfterReservation = await getApiData<{
-      ok: boolean,
-      message: string,
-      bookingHash: string | null
-    }>(
-      "/booking-public/book-the-experience",
-      "POST",
-      {
-        booking_id: parentBooking?.id,
-        whenToPay: whenToPay,
-        language: locale
-      },
-      authUser !== null ? "authorize" : "not-authorize",
-      "application/json"
-    );*/
+
     const resultAfterConfirmation = await ConfirmReservedBooking(
       parentBooking?.id as string,
       whenToPay,
@@ -329,10 +308,12 @@ export default function BookingCheckoutFooter(
       stripeCustomerId_details as {
         stripe_customer_id: string;
       },
-      {
+      /*{
         ok: true,
         setupIntent: setupIntent
-      }
+      },*/
+      setupIntent.payment_method as string,
+      authUser
     );
     if (details_setPaymentMethod.ok !== true) {
       setErrorMessage(details_setPaymentMethod.message)
@@ -386,26 +367,37 @@ export default function BookingCheckoutFooter(
 
     console.log("stripeCustomerId_details:", stripeCustomerId_details);
 
-
-
-
     const customerIntent = await getCustomerIntent(
+      payWith,
       stripeCustomerId_details?.stripe_customer_id as string
     );
-    if (customerIntent.ok === false) { return; }
+    if (customerIntent.ok === false) {
+      setLoading(false);
+      setErrorMessage(customerIntent.message);
+      return;
+    }
 
     let paymentMethodIntentDetails: {
       ok: boolean,
-      setupIntent: SetupIntent | null
+      setupIntent: SetupIntent | null,
+      message?: string
     } | null = null;
 
     if (payWith === "debit-credit-card") {
-      const cardElementDetails = await checkCardDetails();
-      if (cardElementDetails.ok !== true) return;
+      const cardElementDetails = await checkCardDetails(
+        elements,
+        CardNumberElement
+      );
+      if (cardElementDetails.ok !== true) {
+        setLoading(false);
+        setErrorMessage(tValidations("cardInfoNotAvailable"))
+        return;
+      }
 
 
 
       paymentMethodIntentDetails = await setupCustomerPaymentMethod_card(
+        stripe,
         customerIntent,
         cardElementDetails,
         billing_details
@@ -415,6 +407,9 @@ export default function BookingCheckoutFooter(
     }
     else if (payWith === "paypal") {
       paymentMethodIntentDetails = await setupCustomerPaymentMethod_paypal(
+        stripe,
+        `${window.location.origin}/booking/${parentBooking?.id}/checkout?payWith=${payWith}`,
+        elements,
         customerIntent,
         billing_details
       );
@@ -423,14 +418,19 @@ export default function BookingCheckoutFooter(
       // if(paymentMethodIntentDetails?.ok!==true)return;
     }
 
-    if (paymentMethodIntentDetails === null || paymentMethodIntentDetails.ok !== true) return;
+    if (paymentMethodIntentDetails === null || paymentMethodIntentDetails.ok !== true) {
+      setLoading(false);
+      setErrorMessage(paymentMethodIntentDetails?.message || tValidations("paymentGatewayNotAvailable"))
+      return;
+    }
 
 
     const details_setPaymentMethod = await attachPaymentMethodToCustomer(
       stripeCustomerId_details as {
         stripe_customer_id: string;
       },
-      paymentMethodIntentDetails
+      paymentMethodIntentDetails.setupIntent?.payment_method as string,
+      authUser
     );
     if (details_setPaymentMethod.ok !== true) {
       setErrorMessage(details_setPaymentMethod.message);
@@ -483,6 +483,7 @@ export default function BookingCheckoutFooter(
 
 
         {
+          // domain must be https for apple pay and google pay - this is the case on production so the element to show
           // domain must be verified for apple pay
           payWith === "apple-pay" && <>
             <div className="mb-5">
@@ -514,7 +515,63 @@ export default function BookingCheckoutFooter(
                   console.log('User cancelled or closed the wallet sheet.');
                 }}
                 onConfirm={async (event) => {
-                  console.log('Payment authorization confirmed. Processing token...');
+                  console.log('Payment authorization confirmed. Processing token...', event);
+
+                  if (elements === null || stripe === null) return;
+
+                  try {
+                    // 1. Create the payment method from the elements instance (Google Pay data)
+                    const { error, paymentMethod } = await stripe.createPaymentMethod({
+                      elements,
+                    });
+
+                    if (error) {
+                      console.error("Failed to create payment method:", error.message);
+                      return;
+                    }
+
+                    if (paymentMethod) {
+                      // 2. YOU GOT IT! This is your Payment Method ID (e.g., pm_12345...)
+                      const paymentMethodId = paymentMethod.id;
+                      console.log("Success! Payment Method ID:", paymentMethodId);
+
+                      const stripeCustomerId_details = await getStripeCustomerId_ByBooking(parentBooking?.id as string);
+
+                      const details_setPaymentMethod = await attachPaymentMethodToCustomer(
+                        stripeCustomerId_details as {
+                          stripe_customer_id: string;
+                        },
+                        // paymentMethodIntentDetails,
+                        paymentMethod.id,
+                        authUser
+                      );
+                      if (details_setPaymentMethod.ok !== true) {
+                        setErrorMessage(details_setPaymentMethod.message);
+                        setLoading(false);
+                        return;
+                      };
+
+                      const resultAttachPMToBooking = await AttachDefaultPaymentForBooking(
+                        parentBooking?.id as string,
+                        // setupIntent?.payment_method as string,
+                        paymentMethod.id,
+                        authUser
+                      );
+                      if (resultAttachPMToBooking.ok !== true) {
+                        setErrorMessage(resultAttachPMToBooking.message)
+                        setLoading(false);
+                        return;
+                      }
+
+                      await bookTheExperience();
+
+
+                    }
+                  } catch (err) {
+                    console.error("An unexpected error occurred:", err);
+                  }
+
+
                 }}
               />
             </div>

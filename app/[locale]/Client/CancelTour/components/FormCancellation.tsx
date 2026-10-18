@@ -41,6 +41,8 @@ export default function FormCancellation(
 
   const [cancellingBooking, setCancellingBooking] = useState<boolean>(false);
 
+  console.log("booking:::::", booking);
+
   const CancelTheBookingFinally = async () => {
 
     setCancellingBooking(true);
@@ -62,7 +64,7 @@ export default function FormCancellation(
       setErrorWhileCancelling(details.message)
       // TODO: SHOW MESSAGE
     } else {
-      router.push(`/Client/ViewBookingTicket/${booking.id}/tour-detail`);
+      router.push(`/Client/ViewBookingTicket/${booking.id}/tour-detail?productCode=${booking.confirmation_code_product}`);
       dispatch(setGlobalToaster(
         {
           show: true,
